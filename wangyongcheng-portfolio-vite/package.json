@@ -5,14 +5,14 @@
   "engines": {
     "node": ">=22.13.0"
   },
- "scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
-  "lint": "eslint .",
-  "test": "node --test tests/rendered-html.test.mjs",
-  "db:generate": "drizzle-kit generate"
-}
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "test": "node --test tests/rendered-html.test.mjs",
+    "db:generate": "drizzle-kit generate"
+  },
   "dependencies": {
     "drizzle-orm": "0.45.2",
     "next": "16.2.6",
@@ -38,5 +38,5 @@
     "wrangler": "4.92.0"
   },
   "type": "module",
-  "displayName": "\u738b\u6c38\u57ce \u00b7 \u82f1\u8bed\u4e0e\u6cd5\u5f8b\u53d1\u5c55\u6863\u6848"
+  "displayName": "王永城 · 英语与法律发展档案"
 }
