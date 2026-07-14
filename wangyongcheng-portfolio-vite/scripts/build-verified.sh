@@ -25,4 +25,8 @@ timeout \
   "${SITES_BUILD_TIMEOUT:-3m}" \
   "${vinext}" build
 
-bash "${script_dir}/validate-artifact.sh"
+# EdgeOne's OpenNext adapter processes the Vinext output after this command
+# finishes. At this stage it may legitimately be a pure/static build without
+# dist/server/index.js or dist/.openai/hosting.json, so do not require the
+# OpenAI Sites-specific artifact shape here.
+echo "Vinext build completed; handing output to the deployment adapter."
