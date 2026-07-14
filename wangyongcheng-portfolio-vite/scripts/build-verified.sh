@@ -12,21 +12,25 @@ command -v timeout >/dev/null || {
   exit 69
 }
 
-vinext="${SITES_PROJECT_ROOT}/node_modules/.bin/vinext"
-if [[ ! -x "${vinext}" ]]; then
-  echo "vinext is unavailable. Run npm run install:ci and wait for it to finish before building." >&2
+next_bin="${SITES_PROJECT_ROOT}/node_modules/.bin/next"
+if [[ ! -x "${next_bin}" ]]; then
+  echo "Next.js is unavailable. Install dependencies before building." >&2
   exit 69
 fi
 
-echo "Running bounded vinext build..."
+# EdgeOne loads @edgeone/opennextjs-pages and therefore expects a standard
+# Next.js .next directory, including .next/required-server-files.json.
+# Vinext emits a different artifact shape and cannot be consumed by that hook.
+echo "Running bounded Next.js build for EdgeOne OpenNext..."
 timeout \
   --signal=TERM \
   --kill-after="${SITES_BUILD_KILL_AFTER:-10s}" \
-  "${SITES_BUILD_TIMEOUT:-3m}" \
-  "${vinext}" build
+  "${SITES_BUILD_TIMEOUT:-5m}" \
+  "${next_bin}" build
 
-# EdgeOne's OpenNext adapter processes the Vinext output after this command
-# finishes. At this stage it may legitimately be a pure/static build without
-# dist/server/index.js or dist/.openai/hosting.json, so do not require the
-# OpenAI Sites-specific artifact shape here.
-echo "Vinext build completed; handing output to the deployment adapter."
+test -f "${SITES_PROJECT_ROOT}/.next/required-server-files.json" || {
+  echo "Next.js build completed without .next/required-server-files.json." >&2
+  exit 66
+}
+
+echo "Next.js build completed; handing .next output to EdgeOne OpenNext."
