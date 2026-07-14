@@ -26,8 +26,8 @@ export default function AboutSiteContent() {
 
       <header className="site-header archive-header information-header">
         <Link className="wordmark" href="/" aria-label={english ? "Back to home" : "返回首页"}>
-          <span className="wordmark-mark">T</span>
-          <span className="wordmark-name">Tommy <em>English × Law × AI</em></span>
+          <span className="wordmark-mark">{english ? "T" : "王"}</span>
+          <span className="wordmark-name">{english ? "Tommy" : "王永城"} <em>English × Law × AI</em></span>
         </Link>
         <div className="header-tools">
           <nav aria-label={english ? "About this site navigation" : "网站说明导航"} id="information-navigation">

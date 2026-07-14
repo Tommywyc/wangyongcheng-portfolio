@@ -99,20 +99,22 @@ export default function Home() {
 
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="返回首页顶部">
-          <span className="wordmark-mark">T</span>
+          <span className="wordmark-mark">{english ? "T" : "王"}</span>
           <span className="wordmark-name">
-            Tommy <em>English × Law × AI</em>
+            {english ? "Tommy" : "王永城"} <em>English × Law × AI</em>
           </span>
         </a>
 
         <div className="header-tools">
           <nav className="header-index" id="home-navigation" aria-label={english ? "Page index" : "页面索引"}>
-            <a href="#identity"><span>{english ? "Profile" : "个人档案"}</span></a>
-            <a href="#academic"><span>{english ? "Academic Profile" : "学术概况"}</span></a>
-            <a href="#work"><span>{english ? "Selected Work" : "成果展示"}</span></a>
-            <a href="/evidence"><span>{english ? "Evidence Room" : "证据资料室"}</span></a>
-            <a href="#direction"><span>{english ? "Direction" : "发展方向"}</span></a>
-            <a href="#current-inquiry"><span>{english ? "Current Focus" : "当前关注"}</span></a>
+            {[
+              ["01", english ? "Profile" : "个人档案", "#identity"],
+              ["02", english ? "Academic Profile" : "学术概况", "#academic"],
+              ["03", english ? "Selected Work" : "成果展示", "#work"],
+              ["04", english ? "Evidence Room" : "证据资料室", "/evidence"],
+              ["05", english ? "Direction" : "发展方向", "#direction"],
+              ["06", english ? "Current Focus" : "当前关注", "#current-inquiry"],
+            ].map(([index, label, href]) => <a href={href} key={href}><em>{index}</em><span>{label}</span></a>)}
           </nav>
           <MobileMenuButton
             closeLabel={english ? "Close" : "关闭"}
@@ -128,7 +130,7 @@ export default function Home() {
       <section className="hero" id="top">
         <div className="hero-grid" aria-hidden="true" />
         <div className="hero-copy" id="main-content">
-          <p className="eyebrow">A living archive of language, ideas &amp; responsibility</p>
+          <p className="eyebrow">Introduction</p>
           <h1>
             {english ? <>Understand the world through language.<br /><span>Take responsibility through rules.</span></> : <>以语言理解世界，<br /><span>以规则承担责任。</span></>}
           </h1>
@@ -141,14 +143,14 @@ export default function Home() {
           </div>
           <div className="hero-actions hero-section-links" aria-label={english ? "Section shortcuts" : "首页板块快捷入口"}>
             {[
-              [english ? "Read my profile" : "阅读个人档案", "#identity"],
-              [english ? "View academic profile" : "查看学术概况", "#academic"],
-              [english ? "Browse selected work" : "浏览成果展示", "#work"],
-              [english ? "View Evidence" : "查看证据", "/evidence"],
-              [english ? "Explore my direction" : "阅读发展方向", "#direction"],
-              [english ? "Current focus" : "查看当前关注", "#current-inquiry"],
-            ].map(([label, href]) => (
-              <a href={href} key={label}><span>{label}</span><i aria-hidden="true">{arrow}</i></a>
+              ["01", english ? "Read my profile" : "阅读个人档案", "#identity"],
+              ["02", english ? "View academic profile" : "查看学术概况", "#academic"],
+              ["03", english ? "Browse selected work" : "浏览成果展示", "#work"],
+              ["04", english ? "View Evidence" : "查看证据", "/evidence"],
+              ["05", english ? "Explore my direction" : "阅读发展方向", "#direction"],
+              ["06", english ? "Current focus" : "查看当前关注", "#current-inquiry"],
+            ].map(([index, label, href]) => (
+              <a href={href} key={href}><em>{index}</em><span>{label}</span><i aria-hidden="true">{arrow}</i></a>
             ))}
           </div>
         </div>
@@ -175,7 +177,7 @@ export default function Home() {
       <section className="identity-section" id="identity">
         <div className="identity-layout identity-layout-compact">
           <div className="identity-heading">
-            <p className="eyebrow">02 · Profile</p>
+            <p className="eyebrow">01 · Profile</p>
             <h2>{english ? "Language grounds my work. Rules and technology sharpen my questions." : "以语言为基，理解规则，也理解技术。"}</h2>
             <p className="identity-side-note">{english ? "First-year undergraduate · English major" : "大一 · 英语专业 · 持续生长的学习档案"}</p>
           </div>
@@ -265,7 +267,7 @@ export default function Home() {
         <details className="academic-disclosure" id="academic">
           <summary>
             <div className="academic-summary-title">
-              <p className="eyebrow">Academic profile</p>
+              <p className="eyebrow">02 · Academic Profile</p>
               <h3>{english ? "Academic Profile" : "学术概况"}</h3>
             </div>
             <div className="academic-glance" aria-label={english ? "Academic highlights" : "学术概况摘要"}>
@@ -315,7 +317,7 @@ export default function Home() {
       <section className="work-section" id="work">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Selected work · 2025—2026</p>
+            <p className="eyebrow">03 · Selected Work · 2025—2026</p>
             <h2>{english ? "Selected Work" : "精选成果"}</h2>
           </div>
           <p>
@@ -370,7 +372,7 @@ export default function Home() {
 
       <section className="evidence-entry" id="evidence">
         <div>
-          <p className="eyebrow">05 · Evidence room</p>
+          <p className="eyebrow">04 · Evidence room</p>
           <h2>{english ? "Evidence, separated from the narrative." : "证据独立成室，首页只留入口。"}</h2>
         </div>
         <div>
@@ -381,7 +383,7 @@ export default function Home() {
 
       <section className="direction-section" id="direction">
         <div className="direction-intro">
-          <p className="eyebrow">06 · English × Law × AI</p>
+          <p className="eyebrow">05 · English × Law × AI</p>
           <h2>{english ? "Language, rules and intelligent systems." : "以语言理解规则，也理解技术如何重塑规则。"}</h2>
           <p>
             {english ? "English, law and AI are not three separate labels here. I use language to enter complex texts, rules to examine responsibility, and technology literacy to understand change. The question is not only what AI can do, but what accuracy, agency and accountability must remain when it enters real decisions." : "英语、法律与 AI 在这里不是三个并列标签。以语言进入复杂文本，以规则审视责任，以技术理解变革。关注的不只是 AI 能做什么，更是当技术进入真实决策时，准确性、主体性与责任如何被保留。"}
@@ -417,7 +419,7 @@ export default function Home() {
 
       <section className="site-about-section" id="site-note" aria-label={english ? "About this site" : "关于网站"}>
         <div className="about-strip">
-          <p className="eyebrow">About this site</p>
+          <p className="eyebrow">08 · About this site</p>
           <p>
             {english ? "This is a living academic portfolio. It brings together a central direction, representative work, academic profile and questions still in progress." : "这是一个持续更新的个人学习档案，汇集核心方向、代表性成果、学术概况与仍在推进的问题。"}
           </p>

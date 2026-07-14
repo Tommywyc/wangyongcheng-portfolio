@@ -603,6 +603,28 @@ a {
   line-height: 1.8;
 }
 
+/* Give the complete archive the same full-width deep-blue treatment as the evidence entry. */
+.all-work-cta {
+  margin: 4rem calc(50% - 50vw) 0;
+  padding: clamp(4.5rem, 8vw, 7rem) max(1.5rem, calc((100vw - 1240px) / 2));
+  border-top: 0;
+  background: var(--ink);
+  color: var(--white);
+}
+
+.all-work-cta .eyebrow {
+  color: #adcae4;
+}
+
+.all-work-cta > div > p:last-child {
+  color: rgba(255, 253, 248, 0.68);
+}
+
+.all-work-cta .archive-link {
+  border-bottom-color: rgba(255, 253, 248, 0.7);
+  color: var(--white);
+}
+
 .archive-link {
   display: inline-flex;
   min-width: 10rem;
@@ -2604,7 +2626,7 @@ footer {
   }
 
   .hero {
-    padding-top: 10rem;
+    padding-top: 9.2rem;
   }
 }
 
@@ -3537,7 +3559,7 @@ footer {
 /* Final spacing pass: the résumé panel ends with its contact band instead of a stretched blank row. */
 @media (min-width: 901px) {
   .hero {
-    padding-top: 7.2rem;
+    padding-top: 6.8rem;
   }
 
   .hero-copy {
@@ -3557,7 +3579,7 @@ footer {
 
 @media (max-width: 700px) {
   .hero {
-    padding-top: 6.2rem;
+    padding-top: 5.8rem;
   }
 }
 

@@ -43,7 +43,7 @@ export default function CurrentInquiry({ english }: CurrentInquiryProps) {
     <section aria-labelledby="current-inquiry-title" className="current-inquiry-section" id="current-inquiry">
       <header className="inquiry-heading">
         <div>
-          <p className="eyebrow">Current Inquiry</p>
+        <p className="eyebrow">06 · Current Focus</p>
           <h2 id="current-inquiry-title">{english ? "Questions in progress" : "当前关注"}</h2>
         </div>
         <div className="inquiry-context">

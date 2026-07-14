@@ -10,7 +10,7 @@ export default function OpenToConversation({ english }: OpenToConversationProps)
   return (
     <section aria-labelledby="conversation-title" className="conversation-section" id="conversation">
       <div className="conversation-copy">
-        <p className="eyebrow">Open to Conversation</p>
+        <p className="eyebrow">07 · Open to Conversation</p>
         <h2 id="conversation-title">{english ? "Open to conversation" : "欢迎交流"}</h2>
         <p>
           {english

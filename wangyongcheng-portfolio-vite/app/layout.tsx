@@ -29,8 +29,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    siteName: "王永城 · Wang Yongcheng",
-    title: "王永城 Wang Yongcheng｜English × Law × AI",
+    siteName: "王永城 Tommy Wang｜ English × Law × AI",
+    title: "王永城 Tommy Wang｜ English × Law × AI",
     description:
       "以语言理解世界，以规则承担责任。查看王永城的研究写作、实践成果与跨学科发展档案。",
     locale: "zh_CN",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "王永城 Wang Yongcheng｜English × Law × AI",
+    title: "王永城 Tommy Wang｜ English × Law × AI",
     description:
       "以语言理解世界，以规则承担责任。查看研究写作、实践成果与跨学科发展档案。",
     images: [

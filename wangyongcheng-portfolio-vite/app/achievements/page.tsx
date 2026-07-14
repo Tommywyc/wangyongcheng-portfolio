@@ -20,9 +20,9 @@ export default function AchievementsPage() {
 
       <header className="site-header archive-header">
         <Link className="wordmark" href="/" aria-label="返回首页">
-          <span className="wordmark-mark">T</span>
+          <span className="wordmark-mark">王</span>
           <span className="wordmark-name">
-            Tommy <em>English × Law × AI</em>
+            王永城 <em>English × Law × AI</em>
           </span>
         </Link>
         <div className="header-tools">

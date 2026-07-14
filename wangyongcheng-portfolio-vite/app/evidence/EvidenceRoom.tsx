@@ -55,8 +55,8 @@ export default function EvidenceRoom() {
 
       <header className="site-header archive-header evidence-header">
         <Link className="wordmark" href="/" aria-label={english ? "Back to homepage" : "返回首页"}>
-          <span className="wordmark-mark">T</span>
-          <span className="wordmark-name">Tommy <em>English × Law × AI</em></span>
+          <span className="wordmark-mark">{english ? "T" : "王"}</span>
+          <span className="wordmark-name">{english ? "Tommy" : "王永城"} <em>English × Law × AI</em></span>
         </Link>
         <div className="header-tools evidence-header-tools">
           <nav aria-label={english ? "Evidence navigation" : "资料室导航"} id="evidence-navigation">
