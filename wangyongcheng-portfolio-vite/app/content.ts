@@ -361,7 +361,7 @@ export const achievements: Achievement[] = [
     description:
       "探索将语义关联分析用于英语作文的连贯性与表达质量评估，形成可用于智能评估的技术方法。",
     status: "进行中",
-    result: "目标申请专利 · G06F",
+    result: "申请材料准备中",
   },
   {
     id: "ai-education-digital-ethics",
@@ -400,8 +400,6 @@ export const achievements: Achievement[] = [
     description: "围绕信息茧房、算法推荐与检索意识完成竞赛微视频作品。",
     status: "进行中",
     result: "信息素养大赛参赛作品 · 结果待公布",
-    featured: true,
-    accent: "copper",
     evidenceId: "evidence-information-literacy-script",
   },
   {
@@ -427,7 +425,6 @@ export const achievements: Achievement[] = [
     title: "加入中国共产主义青年团",
     description: "于2026年6月4日正式加入中国共产主义青年团。",
     status: "已完成",
-    evidenceId: "evidence-youth-league-membership",
   },
   {
     id: "campus-bus-volunteer",
@@ -447,15 +444,17 @@ export const achievements: Achievement[] = [
     date: "2026.09—",
     sortDate: "2026-09-01",
     category: "学生工作",
-    role: "西南交通大学青年志愿者联合会课程建设部部长",
+    role: "西南交通大学青年志愿者联合会课程建设部部长（拟于2026年9月履任）",
     title: "课程建设与宣讲运营",
     description:
-      "负责或参与课程素材建设、劳育课程宣讲支持、宣讲人员统筹、课程运营台账、数据整理与反馈优化。",
-    status: "任职中",
+      "拟于2026年9月履任，届时将参与课程素材建设、劳育课程宣讲支持、宣讲人员统筹、课程运营台账、数据整理与反馈优化。",
   },
 ];
 
-export const featuredAchievements = achievements.filter((item) => item.featured);
+export const featuredAchievements = [
+  ...achievements.filter((item) => item.featured && item.id === "ai-learning-gap-paper"),
+  ...achievements.filter((item) => item.featured && item.id !== "ai-learning-gap-paper"),
+];
 
 export const academicProfile = {
   semesters: [
@@ -480,7 +479,7 @@ export const academicProfile = {
   ],
   research: [
     "2篇期末英文研究论文已完成",
-    "英语作文智能评估方法：目标申请G06F专利",
+    "英语作文智能评估方法：申请材料准备中",
     "AI教育与数字伦理调研与研究",
     "AI与法律翻译准确性与风险研究",
   ],
@@ -488,30 +487,30 @@ export const academicProfile = {
 
 export const pathway = [
   {
-    stage: "FOUNDATION",
-    time: "2025—2027",
-    title: "以成绩建立选择权",
+    stage: "LANGUAGE",
+    time: "持续推进",
+    title: "语言与研究能力",
     description:
-      "保研资格首先由学业表现决定。以GPA和专业排名为底盘，把英语专业的阅读、写作、演讲与翻译能力沉淀为稳定、可验证的学术基础。",
-    focus: "GPA · CET-6 · TEM-4",
-    actions: ["持续提升专业排名", "完成CET-6与TEM-4", "保持研究型英文写作输出"],
+      "将英语专业的阅读、写作、演讲与翻译能力沉淀为稳定、可验证的学术与沟通基础，并以研究型写作持续训练问题意识。",
+    focus: "研究写作 · 演讲 · 翻译",
+    actions: ["夯实学术英语能力", "保持研究型写作输出", "形成基于证据的清晰表达"],
   },
   {
-    stage: "BRIDGE",
-    time: "2026—2028",
-    title: "建立英语 × 法律能力桥接",
+    stage: "RULES",
+    time: "持续推进",
+    title: "规则、文本与跨语境问题",
     description:
-      "不把法律停留在兴趣层面，而是通过民法系统阅读、案例摘要、模拟法庭、法律英语与AI法律翻译研究，把语言能力转化为理解规则、处理文本和识别风险的能力。",
-    focus: "Case Brief · Legal English · AI & Law",
-    actions: ["形成民法与案例分析基础", "推进AI与法律翻译研究", "通过律所或法律相关实践验证方向"],
+      "通过民法系统阅读、案例摘要、模拟法庭与法律英语，不把对法律的关注停留在兴趣层面，而是练习理解规则、处理文本与识别风险。",
+    focus: "案例摘要 · 法律英语 · 模拟法庭",
+    actions: ["形成民法与案例分析基础", "练习清晰的规则型论证", "在法律相关实践中检验问题意识"],
   },
   {
-    stage: "ADVANCE",
-    time: "2028—",
-    title: "进入法律硕士与涉外实践",
+    stage: "TECH / AI",
+    time: "持续推进",
+    title: "技术理解与数字伦理",
     description:
-      "以推免或考试进入法律硕士（非法学）为关键节点，在研究、实习和真实法律文本处理中继续明确涉外律师、国际仲裁、企业合规与法律传播的具体落点。",
-    focus: "J.M. · Compliance · Arbitration",
-    actions: ["形成可提交的英语×法律成果", "争取法律相关实习与推荐机会", "聚焦涉外法治的具体职业场景"],
+      "研究智能系统如何重塑学习与法律文本，重点关注技术进入真实决策时的准确性、学习者主体性、责任边界与潜在风险。",
+    focus: "AI 素养 · 数字伦理 · Legal Tech",
+    actions: ["推进 AI 教育与法律翻译研究", "把技术问题与语言、规则相互连接", "以可验证文本与证据约束技术判断"],
   },
 ];

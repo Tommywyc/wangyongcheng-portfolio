@@ -3,8 +3,39 @@
 import { useEffect, useState } from "react";
 import { academicProfile, featuredAchievements, pathway } from "./content";
 import BackToTopButton from "./components/BackToTopButton";
+import ContactButton from "./components/ContactButton";
+import CurrentInquiry from "./components/CurrentInquiry";
+import MobileMenuButton from "./components/MobileMenuButton";
+import OpenToConversation from "./components/OpenToConversation";
 
 const arrow = "↗";
+
+const featuredDetails: Record<string, { contribution: string; capability: string; contributionEn: string; capabilityEn: string }> = {
+  "moot-court": {
+    contribution: "围绕法庭角色分工、规则理解与团队论证完成竞赛训练。",
+    capability: "在角色分工与团队论证中形成规则拆解、证据组织与协作表达能力，能够将复杂争点转化为清晰主张。",
+    contributionEn: "Completed competition training through role allocation, rule analysis and team argumentation.",
+    capabilityEn: "Developed rule analysis, evidence organization and collaborative advocacy, turning complex issues into clear propositions.",
+  },
+  "ai-learning-gap-paper": {
+    contribution: "独立完成文献综述、机制分析与反证讨论，并形成英文研究论文。",
+    capability: "提升研究问题收束、文献证据筛选与英文学术论证能力，能把“AI是否促进学习”拆解为主体性与公平机制。",
+    contributionEn: "Completed the literature review, mechanism analysis and counterargument as an original English research paper.",
+    capabilityEn: "Strengthened question-framing, evidence selection and English academic argumentation by separating AI learning claims into agency and equity mechanisms.",
+  },
+  "window-stone": {
+    contribution: "完成英文演讲稿创作与现场表达，以苏州园林与云冈石窟讨论文明交流。",
+    capability: "强化英文演讲的叙事设计、跨文化素材整合与现场表达能力，把抽象的文明交流转化为听众可感知的比较。",
+    contributionEn: "Wrote and delivered an English speech using a Suzhou garden and the Yungang Grottoes to discuss cultural exchange.",
+    capabilityEn: "Strengthened speech design, cross-cultural synthesis and live delivery by turning an abstract idea of cultural exchange into a concrete comparison.",
+  },
+  "qionglai-livestream": {
+    contribution: "承担英文台词补位、流程衔接与补充说明，保障直播表达连续性。",
+    capability: "锻炼英语即时补位、信息提炼与跨角色协作能力，能在直播节奏中补足表达缺口并保持观众理解。",
+    contributionEn: "Supported English script backup, live transitions and supplementary explanations to keep the livestream coherent.",
+    capabilityEn: "Practiced real-time English support, information distillation and cross-role collaboration to keep audience understanding intact during a live flow.",
+  },
+};
 
 const featuredEnglish: Record<string, { category: string; period: string; role: string; title: string; englishTitle?: string; description: string; result: string }> = {
   "“求索杯”模拟法庭": { category:"Competition Award", period:"Freshman · Spring", role:"Moot court team member", title:'“Quest Cup” Moot Court Competition', description:"Competed in the university-level moot court competition organized by the School of Public Administration at Southwest Jiaotong University.", result:"Merit Award · 7th among 28 teams" },
@@ -27,16 +58,16 @@ const academicEnglish = {
   ],
   research:[
     "Two final-term English research papers completed",
-    "AI-assisted English writing assessment: G06F patent application planned",
+    "AI-assisted English writing assessment: application materials in preparation",
     "Research on AI in education and digital ethics",
     "Research on accuracy and risk in AI-assisted legal translation",
   ],
 };
 
 const pathwayEnglish = [
-  { stage:"FOUNDATION", time:"2025—2027", title:"Build options through academic strength", description:"Academic performance is the foundation of postgraduate recommendation. I am turning reading, writing, speaking and translation into stable, verifiable academic competence.", focus:"GPA · CET-6 · TEM-4", actions:["Improve my major ranking", "Complete CET-6 and TEM-4", "Sustain research-oriented English writing"] },
-  { stage:"BRIDGE", time:"2026—2028", title:"Connect English with legal competence", description:"I am moving law beyond personal interest through civil-law study, case briefs, moot court, legal English and research on AI-assisted legal translation.", focus:"Case Brief · Legal English · AI & Law", actions:["Build foundations in civil law and case analysis", "Advance research on AI and legal translation", "Test the direction through legal practice"] },
-  { stage:"ADVANCE", time:"2028—", title:"Move into legal education and cross-border practice", description:"The next milestone is a Juris Master program for non-law graduates, followed by deeper exploration of cross-border legal services, arbitration, compliance and legal communication.", focus:"J.M. · Compliance · Arbitration", actions:["Produce substantial English × Law work", "Seek legal internships and recommendations", "Identify a concrete role in foreign-related legal practice"] },
+  { stage:"LANGUAGE", time:"ONGOING", title:"Language and research foundation", description:"I turn English reading, writing, speaking and translation into reliable, verifiable academic and communicative ability.", focus:"Research Writing · Speech · Translation", actions:["Strengthen academic English", "Sustain research-oriented writing", "Build evidence-based expression"] },
+  { stage:"RULES", time:"ONGOING", title:"Rules, texts and cross-context questions", description:"Through civil-law study, case briefs, moot court and legal English, I move beyond interest toward careful reading of rules, texts and responsibility.", focus:"Case Brief · Legal English · Moot Court", actions:["Build civil-law and case-analysis foundations", "Practice clear rule-based argumentation", "Test questions through legal-related practice"] },
+  { stage:"TECH / AI", time:"ONGOING", title:"Technology literacy and digital ethics", description:"I examine how intelligent systems reshape learning and legal texts, focusing on accuracy, human agency, accountability and risks when technology enters real decisions.", focus:"AI Literacy · Digital Ethics · Legal Tech", actions:["Advance AI-in-education and legal-translation research", "Connect technology questions with language and rules", "Keep claims grounded in verifiable texts and evidence"] },
 ];
 
 export default function Home() {
@@ -48,13 +79,16 @@ export default function Home() {
 
   useEffect(() => {
     const saved = window.localStorage.getItem("portfolio-language");
-    if (saved === "en") setLanguage("en");
+    const frame = window.requestAnimationFrame(() => {
+      if (saved === "en") setLanguage("en");
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {
     window.localStorage.setItem("portfolio-language", language);
     document.documentElement.lang = english ? "en" : "zh-CN";
-    document.title = english ? "Wang Yongcheng · English × Law" : "王永城 · 英语与法律发展档案";
+    document.title = "王永城 Tommy｜English × Law × AI";
   }, [english, language]);
 
   return (
@@ -65,20 +99,26 @@ export default function Home() {
 
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="返回首页顶部">
-          <span className="wordmark-mark">WY</span>
+          <span className="wordmark-mark">T</span>
           <span className="wordmark-name">
-            王永城 <em>Wang Yongcheng</em>
+            Tommy <em>English × Law × AI</em>
           </span>
         </a>
 
         <div className="header-tools">
-          <nav className="header-index" aria-label={english ? "Page index" : "页面索引"}>
+          <nav className="header-index" id="home-navigation" aria-label={english ? "Page index" : "页面索引"}>
             <a href="#identity"><span>{english ? "Profile" : "个人档案"}</span></a>
             <a href="#academic"><span>{english ? "Academic Profile" : "学术概况"}</span></a>
             <a href="#work"><span>{english ? "Selected Work" : "成果展示"}</span></a>
             <a href="/evidence"><span>{english ? "Evidence Room" : "证据资料室"}</span></a>
             <a href="#direction"><span>{english ? "Direction" : "发展方向"}</span></a>
+            <a href="#current-inquiry"><span>{english ? "Current Focus" : "当前关注"}</span></a>
           </nav>
+          <MobileMenuButton
+            closeLabel={english ? "Close" : "关闭"}
+            label={english ? "Menu" : "菜单"}
+            navId="home-navigation"
+          />
           <button className="language-switch" type="button" onClick={() => setLanguage(english ? "zh" : "en")} aria-label={english ? "切换到中文" : "Switch to English"}>
             <span className={!english ? "active" : ""}>中</span><i>/</i><span className={english ? "active" : ""}>EN</span>
           </button>
@@ -87,45 +127,38 @@ export default function Home() {
 
       <section className="hero" id="top">
         <div className="hero-grid" aria-hidden="true" />
-        <nav className="hero-index" aria-label={english ? "Profile index" : "能力索引"}>
-          <a href="#identity"><em>01</em><span>Profile</span></a>
-          <i />
-          <a href="#academic"><em>02</em><span>Academic</span></a>
-          <i />
-          <a href="#work"><em>03</em><span>Selected Work</span></a>
-          <i />
-          <a href="/evidence"><em>04</em><span>Evidence Room</span></a>
-          <i />
-          <a href="#direction"><em>05</em><span>Direction</span></a>
-        </nav>
-
         <div className="hero-copy" id="main-content">
           <p className="eyebrow">A living archive of language, ideas &amp; responsibility</p>
           <h1>
             {english ? <>Understand the world through language.<br /><span>Take responsibility through rules.</span></> : <>以语言理解世界，<br /><span>以规则承担责任。</span></>}
           </h1>
           <p className="hero-intro">
-            {english ? "I am Wang Yongcheng, an English major at Southwest Jiaotong University. I explore how language connects expression, technology and rules, while moving toward law through academic study, public speaking, competition and interdisciplinary research." : "我是王永城，西南交通大学英语专业学生。我关注语言如何连接表达、技术与规则，并在英语学习、公众演讲、竞赛实践和跨学科研究中逐步走向法律。"}
+            {english ? "I am Tommy, an English major at Southwest Jiaotong University. I explore how language connects expression, technology and rules, with particular attention to how AI reshapes learning, communication and legal texts." : "我是王永城，西南交通大学英语专业学生。我关注语言如何连接表达、技术与规则，并特别关心 AI 如何重塑学习、沟通与法律文本。"}
           </p>
+          <div className="hero-application-callout">
+            <p>{english ? "For research, practical projects and long-term opportunities at the intersection of language, rules and technology." : "面向语言、规则与技术交汇处的研究、实践项目与长期发展机会。"}</p>
+            <a href="#resumes">{english ? "Go to résumés" : "直达简历区"} <span aria-hidden="true">↓</span></a>
+          </div>
           <div className="hero-actions hero-section-links" aria-label={english ? "Section shortcuts" : "首页板块快捷入口"}>
             {[
-              ["01", english ? "Read my profile" : "阅读个人档案", "#identity"],
-              ["02", english ? "View academic profile" : "查看学术概况", "#academic"],
-              ["03", english ? "Browse selected work" : "浏览成果展示", "#work"],
-              ["04", english ? "View Evidence" : "查看证据", "/evidence"],
-              ["05", english ? "Explore my direction" : "阅读发展方向", "#direction"],
-            ].map(([number, label, href]) => (
-              <a href={href} key={number}><em>{number}</em><span>{label}</span><i aria-hidden="true">{arrow}</i></a>
+              [english ? "Read my profile" : "阅读个人档案", "#identity"],
+              [english ? "View academic profile" : "查看学术概况", "#academic"],
+              [english ? "Browse selected work" : "浏览成果展示", "#work"],
+              [english ? "View Evidence" : "查看证据", "/evidence"],
+              [english ? "Explore my direction" : "阅读发展方向", "#direction"],
+              [english ? "Current focus" : "查看当前关注", "#current-inquiry"],
+            ].map(([label, href]) => (
+              <a href={href} key={label}><span>{label}</span><i aria-hidden="true">{arrow}</i></a>
             ))}
           </div>
         </div>
 
         <aside className="hero-media" aria-label={english ? "Portrait and profile statement" : "个人形象与定位"}>
-          <img src="/images/hero-library.webp" alt={english ? "Wang Yongcheng in a library" : "王永城在图书馆中的正式形象照"} />
+          <img alt={english ? "Portrait of Tommy in a library" : "王永城的个人肖像"} fetchPriority="high" height="844" src="/images/hero-library.webp" width="1500" />
           <div className="hero-note">
-            <span className="hero-note-index">01</span>
             <p>{english ? "Language is the entry point" : "语言是入口"}</p>
-            <p>{english ? "Rules are the core" : "规则是核心"}</p>
+            <p>{english ? "Rules are the coordinate" : "规则是坐标"}</p>
+            <p>{english ? "Technology ethics is the lens" : "技术伦理是视角"}</p>
             <p>{english ? "Cross-cultural communication is the advantage" : "跨文化沟通是优势"}</p>
           </div>
         </aside>
@@ -134,6 +167,8 @@ export default function Home() {
           <span>EN</span>
           <span>/</span>
           <span>LAW</span>
+          <span>/</span>
+          <span>AI</span>
         </div>
       </section>
 
@@ -141,43 +176,43 @@ export default function Home() {
         <div className="identity-layout identity-layout-compact">
           <div className="identity-heading">
             <p className="eyebrow">02 · Profile</p>
-            <h2>{english ? "Language is my foundation. Law is the direction I am building toward." : "以英语为基，向法律生长。"}</h2>
+            <h2>{english ? "Language grounds my work. Rules and technology sharpen my questions." : "以语言为基，理解规则，也理解技术。"}</h2>
             <p className="identity-side-note">{english ? "First-year undergraduate · English major" : "大一 · 英语专业 · 持续生长的学习档案"}</p>
           </div>
 
           <div className="identity-copy">
             <p>
-              {english ? "I am Wang Yongcheng, an English major at Southwest Jiaotong University. I am building an English × Law pathway: first securing academic options through strong performance and language competence, then testing that direction through research writing, public speaking, moot court and work on AI-assisted legal translation." : "我是王永城，西南交通大学外国语学院英语专业学生。我的主线不是简单地把英语和法律并列，而是先以学业表现与语言能力建立选择权，再通过英文研究、公众演讲、模拟法庭和AI法律翻译等实践，逐步验证英语×法律与涉外法治方向。"}
+              {english ? "I am Tommy, an English major at Southwest Jiaotong University. My path is not to place English, law and AI side by side, but to connect them: using language to enter complex texts, rules to examine responsibility, and technology literacy to understand change." : "我是王永城，西南交通大学外国语学院英语专业学生。我的主线不是简单地把英语、法律和 AI 并列，而是让三者彼此连接：以语言进入复杂文本，以规则审视责任，以技术理解变革。"}
             </p>
             <p>
-              {english ? "My current focus is to improve my academic ranking, produce research-based English work, and turn interdisciplinary interests into verifiable texts, projects and practical experience." : "现阶段，我关注学业排名、研究型英文写作和跨学科项目积累，希望让兴趣最终沉淀为可验证的文本、成果与实践经历。"}
+              {english ? "My current focus is to strengthen academic performance and research-based English writing, while turning questions about AI, digital ethics and legal translation into verifiable texts, projects and practical experience." : "现阶段，我关注学业表现、研究型英文写作与跨学科项目积累，并尝试将对 AI、数字伦理与法律翻译的关注沉淀为可验证的文本、成果与实践经历。"}
             </p>
             <div className="identity-facts" aria-label={english ? "Profile facts" : "个人信息概览"}>
               <div><span>{english ? "Institution" : "学校"}</span><strong>{english ? "Southwest Jiaotong University" : "西南交通大学"}</strong></div>
               <div><span>{english ? "Major" : "专业"}</span><strong>{english ? "English" : "英语专业"}</strong></div>
-              <div><span>{english ? "Direction" : "方向"}</span><strong>English × Law</strong></div>
+              <div><span>{english ? "Direction" : "方向"}</span><strong>English × Law × AI</strong></div>
             </div>
           </div>
         </div>
 
         <div className="identity-showcase">
           <figure className="identity-portrait">
-            <img src="/images/profile-formal.webp" alt={english ? "Formal portrait of Wang Yongcheng" : "王永城正式证件形象照"} />
-            <figcaption>{english ? "Wang Yongcheng · English × Law" : "王永城 · English × Law"}</figcaption>
+            <img alt={english ? "Formal portrait of Tommy" : "王永城的正式个人肖像"} height="1350" loading="lazy" src="/images/profile-formal.webp" width="900" />
+            <figcaption>{english ? "Tommy · English × Law × AI" : "王永城 · Tommy"}</figcaption>
           </figure>
 
           <div className="identity-scene-stack" aria-label={english ? "Study scenes" : "学习场景"}>
             <figure className="identity-scene identity-scene-wide">
-              <img src="/images/research-study.webp" alt={english ? "Research writing in the library" : "在图书馆进行研究写作"} />
+              <img alt={english ? "Tommy working on research writing in the library" : "王永城在图书馆进行研究写作"} height="933" loading="lazy" src="/images/research-study.webp" width="1400" />
               <figcaption>{english ? "Research writing" : "研究写作"}</figcaption>
             </figure>
             <figure className="identity-scene">
-              <img src="/images/law-study.webp" alt={english ? "Studying English and law" : "阅读英语与法律书籍"} />
-              <figcaption>{english ? "English × Law" : "英语 × 法律"}</figcaption>
+              <img alt={english ? "Tommy studying English and law" : "王永城阅读英语与法律书籍"} height="1125" loading="lazy" src="/images/law-study.webp" width="900" />
+              <figcaption>{english ? "English × Law × AI" : "英语 × 法律 × AI"}</figcaption>
             </figure>
           </div>
 
-          <div className="resume-suite">
+          <div className="resume-suite" id="resumes">
             <div className="resume-suite-heading">
               <p className="eyebrow">Two résumés · Chinese &amp; English</p>
               <h3>{english ? "Choose the version that fits the application." : "两份简历，对应两种申请场景。"}</h3>
@@ -187,26 +222,36 @@ export default function Home() {
               <article>
                 <span>01 · Academic</span>
                 <h4>{english ? "Academic Application" : "学术申请版"}</h4>
-                <p>{english ? "For research programs, scholarships, summer schools and faculty contact. Highlights GPA, ranking, papers and research directions." : "适合研究项目、奖学金、夏校与导师联系，突出GPA、排名、论文及研究方向。"}</p>
+                <p>{english ? "For research programs, scholarships, summer schools and faculty contact. Shows grades, research writing and defined AI-related questions." : "适合研究项目、奖学金、夏校与导师联系，突出成绩、研究写作与明确的 AI 议题。"}</p>
+                <ul className="resume-highlights" aria-label={english ? "Academic résumé highlights" : "学术申请版重点"}>
+                  <li>{english ? "GPA 3.6 → 3.8 / 4.0" : "GPA 3.6 → 3.8 / 4.0"}</li>
+                  <li>{english ? "Ranked 28 / 56 in the first semester" : "大一上专业排名 28 / 56"}</li>
+                  <li>{english ? "Two independently completed English research papers" : "独立完成两篇英文研究论文"}</li>
+                </ul>
                 <div className="resume-downloads">
-                  <a href="/wang-yongcheng-academic-resume-cn.pdf" download>{english ? "Chinese PDF" : "中文 PDF"} <span aria-hidden="true">↓</span></a>
-                  <a href="/wang-yongcheng-academic-resume.pdf" download>{english ? "English PDF" : "英文 PDF"} <span aria-hidden="true">↓</span></a>
+                  <a aria-label={english ? "Download academic résumé, Chinese PDF" : "下载学术申请版简历，中文 PDF"} href="/tommy-academic-resume-cn.pdf" download>{english ? "Chinese PDF" : "中文 PDF"} <span aria-hidden="true">↓</span></a>
+                  <a aria-label={english ? "Download academic résumé, English PDF" : "下载学术申请版简历，英文 PDF"} href="/tommy-academic-resume.pdf" download>{english ? "English PDF" : "英文 PDF"} <span aria-hidden="true">↓</span></a>
                 </div>
               </article>
               <article>
                 <span>02 · Practice</span>
                 <h4>{english ? "Practice Application" : "实践申请版"}</h4>
-                <p>{english ? "For internships, competitions, student organizations and volunteer projects. Highlights speech, moot court, livestreaming, leadership and service." : "适合实习、竞赛、学生组织与志愿项目，突出演讲、模拟法庭、直播、学生工作及志愿服务。"}</p>
+                <p>{english ? "For internships, competitions, student organizations and volunteer projects. Shows concrete work in speaking, advocacy, English livestream support and on-site coordination." : "适合实习、竞赛、学生组织与志愿项目，突出在演讲、论证、英文直播支持与现场统筹中的具体行动。"}</p>
+                <ul className="resume-highlights" aria-label={english ? "Practice résumé highlights" : "实践申请版重点"}>
+                  <li>{english ? "Speech writing · Moot-court argument · Livestream support" : "演讲稿创作 · 模拟法庭论证 · 英文直播补位"}</li>
+                  <li>{english ? "Student-organization operations and volunteer coordination" : "学生组织运营与志愿服务统筹"}</li>
+                  <li>{english ? "Structured communication, coordination and delivery" : "结构化表达、协调与交付能力"}</li>
+                </ul>
                 <div className="resume-downloads">
-                  <a href="/wang-yongcheng-practice-resume-cn.pdf" download>{english ? "Chinese PDF" : "中文 PDF"} <span aria-hidden="true">↓</span></a>
-                  <a href="/wang-yongcheng-practice-resume.pdf" download>{english ? "English PDF" : "英文 PDF"} <span aria-hidden="true">↓</span></a>
+                  <a aria-label={english ? "Download practice résumé, Chinese PDF" : "下载实践申请版简历，中文 PDF"} href="/tommy-practice-resume-cn.pdf" download>{english ? "Chinese PDF" : "中文 PDF"} <span aria-hidden="true">↓</span></a>
+                  <a aria-label={english ? "Download practice résumé, English PDF" : "下载实践申请版简历，英文 PDF"} href="/tommy-practice-resume.pdf" download>{english ? "English PDF" : "英文 PDF"} <span aria-hidden="true">↓</span></a>
                 </div>
               </article>
             </div>
             <div className="profile-contact-band">
               <div>
                 <span>{english ? "Current focus" : "当前重点"}</span>
-                <strong>{english ? "Academic standing · Research writing · English × Law" : "专业排名 · 研究写作 · 英语 × 法律"}</strong>
+                <strong>{english ? "Academic standing · Research writing · English × Law × AI" : "学业表现 · 研究写作 · 英语 × 法律 × AI"}</strong>
               </div>
               <a className="contact-link" href="mailto:w3194510963@gmail.com">
                 <span>{english ? "Contact" : "联系邮箱"}</span>
@@ -291,6 +336,12 @@ export default function Home() {
                 {item.englishTitle ? <p>{item.englishTitle}</p> : null}
               </div>
               <p className="work-summary">{item.description}</p>
+              <div className="work-proof-line">
+                <span>{english ? "Contribution" : "具体承担"}</span>
+                <p>{english ? featuredDetails[item.id]?.contributionEn : featuredDetails[item.id]?.contribution}</p>
+                <span>{english ? "Capability" : "能力展现"}</span>
+                <p>{english ? featuredDetails[item.id]?.capabilityEn : featuredDetails[item.id]?.capability}</p>
+              </div>
               <div className="work-result">
                 <strong>{item.result ?? item.status}</strong>
                 <div className="work-actions">
@@ -330,10 +381,10 @@ export default function Home() {
 
       <section className="direction-section" id="direction">
         <div className="direction-intro">
-          <p className="eyebrow">06 · English × Law</p>
-          <h2>{english ? "From English toward Law." : "从英语出发，走向法律。"}</h2>
+          <p className="eyebrow">06 · English × Law × AI</p>
+          <h2>{english ? "Language, rules and intelligent systems." : "以语言理解规则，也理解技术如何重塑规则。"}</h2>
           <p>
-            {english ? "This is more than a change of academic field. It is a path that preserves options through academic performance, approaches legal questions through English, and tests the direction through research and practice. Each step should leave behind verifiable grades, texts and experience." : "这不是一次简单的“跨专业”，而是一条以学业表现保留选择权、以英语能力进入法律问题、再以研究与实践验证方向的路径。每一步都需要留下可被检验的成绩、文本和经历。"}
+            {english ? "English, law and AI are not three separate labels here. I use language to enter complex texts, rules to examine responsibility, and technology literacy to understand change. The question is not only what AI can do, but what accuracy, agency and accountability must remain when it enters real decisions." : "英语、法律与 AI 在这里不是三个并列标签。以语言进入复杂文本，以规则审视责任，以技术理解变革。关注的不只是 AI 能做什么，更是当技术进入真实决策时，准确性、主体性与责任如何被保留。"}
           </p>
         </div>
 
@@ -359,20 +410,33 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="about-strip" id="site-note">
+      </section>
+
+      <CurrentInquiry english={english} />
+      <OpenToConversation english={english} />
+
+      <section className="site-about-section" id="site-note" aria-label={english ? "About this site" : "关于网站"}>
+        <div className="about-strip">
           <p className="eyebrow">About this site</p>
           <p>
-            {english ? "This is a living academic portfolio. The page presents my central direction, representative work, academic profile and current development pathway." : "这是一个持续更新的个人学习档案。首页保留最重要的主线与代表性成果；“全部成就”记录完整经历，并明确区分获奖、参赛、任职与进行中项目。"}
+            {english ? "This is a living academic portfolio. It brings together a central direction, representative work, academic profile and questions still in progress." : "这是一个持续更新的个人学习档案，汇集核心方向、代表性成果、学术概况与仍在推进的问题。"}
           </p>
-          <a href="#top">{english ? "Back to top ↑" : "回到顶部 ↑"}</a>
+          <span className="about-strip-note">{english ? "Sensitive details and additional evidence are available on request." : "敏感内容及更多证据联系后提供"}</span>
+          <span className="about-strip-note about-strip-language-note">{english ? "Bilingual switching is available on the homepage, Evidence Room and this Accessibility, Privacy & About This Site page; archive pages remain Chinese-first." : "双语切换仅在首页、证据资料室及“无障碍、隐私和内容呈现”页面提供；其余归档页面以中文呈现。"}</span>
         </div>
       </section>
 
+      <ContactButton />
       <BackToTopButton />
 
       <footer>
-        <span>王永城 · Wang Yongcheng</span>
-        <span>English / Research / Law</span>
+        <span>王永城 · Tommy</span>
+        <nav aria-label={english ? "Site information" : "网站说明"}>
+          <a href="/about-site#accessibility">Accessibility</a>
+          <a href="/about-site#privacy">Privacy</a>
+          <a href="/about-site#about">About This Site</a>
+        </nav>
+        <span>English × Law × AI</span>
         <span>Last updated · 2026.07</span>
       </footer>
     </main>

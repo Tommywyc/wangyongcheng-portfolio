@@ -1,25 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { evidenceCategories, type EvidenceItem } from "../evidence-data";
 import BackToTopButton from "../components/BackToTopButton";
+import ContactButton from "../components/ContactButton";
+import MobileMenuButton from "../components/MobileMenuButton";
 
 const arrow = "↗";
 
 export default function EvidenceRoom() {
   const [language, setLanguage] = useState<"zh" | "en">("zh");
   const [preview, setPreview] = useState<EvidenceItem | null>(null);
+  const previousFocus = useRef<HTMLElement | null>(null);
   const english = language === "en";
+
+  const openPreview = (item: EvidenceItem) => {
+    previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setPreview(item);
+  };
 
   useEffect(() => {
     const saved = window.localStorage.getItem("portfolio-language");
-    if (saved === "en") setLanguage("en");
+    const frame = window.requestAnimationFrame(() => {
+      if (saved === "en") setLanguage("en");
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {
     window.localStorage.setItem("portfolio-language", language);
     document.documentElement.lang = english ? "en" : "zh-CN";
-    document.title = english ? "Evidence Room · Wang Yongcheng" : "证据资料室 · 王永城";
+    document.title = english ? "Evidence Room｜王永城 Tommy｜English × Law × AI" : "证据资料室｜王永城 Tommy｜English × Law × AI";
   }, [english, language]);
 
   useEffect(() => {
@@ -33,6 +45,7 @@ export default function EvidenceRoom() {
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", closeOnEscape);
+      window.requestAnimationFrame(() => previousFocus.current?.focus());
     };
   }, [preview]);
 
@@ -41,16 +54,17 @@ export default function EvidenceRoom() {
       <a className="skip-link" href="#evidence-main">{english ? "Skip to evidence" : "跳到证据内容"}</a>
 
       <header className="site-header archive-header evidence-header">
-        <a className="wordmark" href="/" aria-label={english ? "Back to homepage" : "返回首页"}>
-          <span className="wordmark-mark">WY</span>
-          <span className="wordmark-name">王永城 <em>Wang Yongcheng</em></span>
-        </a>
+        <Link className="wordmark" href="/" aria-label={english ? "Back to homepage" : "返回首页"}>
+          <span className="wordmark-mark">T</span>
+          <span className="wordmark-name">Tommy <em>English × Law × AI</em></span>
+        </Link>
         <div className="header-tools evidence-header-tools">
-          <nav aria-label={english ? "Evidence navigation" : "资料室导航"}>
-            <a href="/">{english ? "Home" : "首页"}</a>
-            <a href="/achievements">{english ? "Archive" : "全部成就"}</a>
+          <nav aria-label={english ? "Evidence navigation" : "资料室导航"} id="evidence-navigation">
+            <Link href="/">{english ? "Home" : "首页"}</Link>
+            <Link href="/achievements">{english ? "Archive" : "全部成就"}</Link>
             <a href="#evidence-main">{english ? "Evidence" : "证据资料室"}</a>
           </nav>
+          <MobileMenuButton closeLabel={english ? "Close" : "关闭"} label={english ? "Menu" : "菜单"} navId="evidence-navigation" />
           <button className="language-switch" type="button" onClick={() => setLanguage(english ? "zh" : "en")} aria-label={english ? "切换到中文" : "Switch to English"}>
             <span className={!english ? "active" : ""}>中</span><i>/</i><span className={english ? "active" : ""}>EN</span>
           </button>
@@ -89,7 +103,7 @@ export default function EvidenceRoom() {
                 {group.items.map((item) => (
                   <article className={`evidence-card${item.document ? " evidence-document" : ""}`} id={item.id} key={item.id}>
                     {item.image ? (
-                      <button className="evidence-card-link" type="button" onClick={() => setPreview(item)} aria-label={`${english ? item.titleEn : item.title} · ${english ? "Preview evidence" : "预览证据"}`}>
+                      <button className="evidence-card-link" type="button" onClick={() => openPreview(item)} aria-label={`${english ? item.titleEn : item.title} · ${english ? "Preview evidence" : "预览证据"}`}>
                         <img src={item.image} alt={english ? item.titleEn : item.title} loading="lazy" />
                         <div className="evidence-card-copy">
                           <p>{english ? item.metaEn : item.meta}</p>
@@ -98,12 +112,12 @@ export default function EvidenceRoom() {
                         </div>
                       </button>
                     ) : (
-                      <a href={item.href} target="_blank" rel="noreferrer" aria-label={`${english ? item.titleEn : item.title} · ${english ? "Open evidence" : "打开证据"}`}>
+                      <a href={item.href} {...(!item.restricted ? { target: "_blank", rel: "noopener noreferrer" } : {})} aria-label={`${english ? item.titleEn : item.title} · ${item.restricted ? (english ? "Request evidence" : "联系获取") : (english ? "Open evidence" : "打开证据")}`}>
                         <div className="document-mark" aria-hidden="true"><span>DOC</span><strong>{item.documentLabel ?? "Original Research"}</strong></div>
                       <div className="evidence-card-copy">
                         <p>{english ? item.metaEn : item.meta}</p>
                         <h3>{english ? item.titleEn : item.title}</h3>
-                        <span>{english ? "View Evidence" : "查看证据"} {arrow}</span>
+                        <span>{item.restricted ? (english ? "Request Evidence" : "联系获取") : (english ? "View Evidence" : "查看证据")} {arrow}</span>
                       </div>
                       </a>
                     )}
@@ -115,27 +129,34 @@ export default function EvidenceRoom() {
         </div>
       </section>
 
+      <ContactButton />
       <BackToTopButton />
 
       {preview?.image ? (
         <div className="evidence-lightbox" onClick={() => setPreview(null)} role="presentation">
           <section aria-label={english ? "Evidence image preview" : "证据图片预览"} aria-modal="true" className="evidence-lightbox-dialog" onClick={(event) => event.stopPropagation()} role="dialog">
-            <button className="evidence-lightbox-close" onClick={() => setPreview(null)} type="button">
+            <button aria-label={english ? "Close evidence preview" : "关闭证据预览"} autoFocus className="evidence-lightbox-close" onClick={() => setPreview(null)} type="button">
               <span aria-hidden="true">×</span>{english ? "Close" : "关闭"}
             </button>
             <img alt={english ? preview.titleEn : preview.title} src={preview.image} />
             <div>
               <p>{english ? preview.metaEn : preview.meta}</p>
               <h2>{english ? preview.titleEn : preview.title}</h2>
-              <a href={preview.href} rel="noreferrer" target="_blank">{english ? "Open original" : "打开原图"} {arrow}</a>
+              <a href={preview.href} rel="noopener noreferrer" target="_blank">{english ? "Open original" : "打开原图"} {arrow}</a>
             </div>
           </section>
         </div>
       ) : null}
 
       <footer>
-        <span>王永城 · Wang Yongcheng</span>
-        <a href="/">{english ? "Back to homepage" : "返回首页"}</a>
+        <span>王永城 · Tommy</span>
+        <nav aria-label={english ? "Site information" : "网站说明"}>
+          <Link href="/">{english ? "Back to homepage" : "返回首页"}</Link>
+          <Link href="/about-site#accessibility">Accessibility</Link>
+          <Link href="/about-site#privacy">Privacy</Link>
+          <Link href="/about-site#about">About This Site</Link>
+        </nav>
+        <span className="evidence-privacy-note">{english ? "Sensitive content and additional evidence are available on request." : "敏感内容及更多证据联系后提供"}</span>
         <span>Last updated · 2026.07</span>
       </footer>
     </main>

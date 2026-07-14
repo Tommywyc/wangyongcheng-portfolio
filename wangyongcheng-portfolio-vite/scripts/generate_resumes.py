@@ -87,9 +87,9 @@ def draw_header(c, subtitle):
     c.rect(0, h - 116, w, 116, fill=1, stroke=0)
     c.setFillColor(WHITE)
     c.setFont("DejaVuSans-Bold", 22)
-    c.drawString(30, h - 48, "WANG YONGCHENG")
+    c.drawString(30, h - 48, "TOMMY")
     c.setFont("DejaVuSans", 8.0)
-    c.drawString(31, h - 66, "ENGLISH · RESEARCH · LAW")
+    c.drawString(31, h - 66, "ENGLISH · LAW · AI")
     c.setFillColor(colors.HexColor("#ADCAE4"))
     c.setFont("DejaVuSans-Bold", 7.3)
     c.drawString(31, h - 91, subtitle.upper())
@@ -119,7 +119,7 @@ def draw_sidebar(c, version):
     c.drawString(x + 16, top, "PROFILE")
     top -= 16
     if version == "academic":
-        profile = "English major building an interdisciplinary pathway across language, law and artificial intelligence. Current priority: stronger academic standing and verifiable research outputs."
+        profile = "English major exploring questions across language, rules and artificial intelligence. Current priority: stronger academic standing and verifiable research outputs."
         metrics = [
             ("3.6 / 4.0", "Fall GPA"),
             ("3.8 / 4.0", "Spring GPA"),
@@ -188,9 +188,9 @@ def draw_cn_header(c, subtitle):
     c.rect(0, h - 116, w, 116, fill=1, stroke=0)
     c.setFillColor(WHITE)
     c.setFont("NotoSerifSC", 21)
-    c.drawString(30, h - 48, "王永城")
+    c.drawString(30, h - 48, "王永城 · Tommy")
     c.setFont("DejaVuSans", 7.5)
-    c.drawString(31, h - 66, "ENGLISH · RESEARCH · LAW")
+    c.drawString(31, h - 66, "ENGLISH · LAW · AI")
     c.setFillColor(colors.HexColor("#ADCAE4"))
     c.setFont("NotoSerifSC", 9.2)
     c.drawString(31, h - 91, subtitle)
@@ -219,7 +219,7 @@ def draw_cn_sidebar(c, version):
     c.drawString(x + 16, top, "个人定位")
     top -= 16
     if version == "academic":
-        profile = "英语专业本科生，正以语言、法律与人工智能的交叉问题为长期发展方向。"
+        profile = "英语专业本科生，持续关注语言、规则与人工智能的交叉问题。"
         metrics = [("3.6 / 4.0", "大一上 GPA"), ("3.8 / 4.0", "大一下 GPA"), ("28 / 56", "大一上排名"), ("568", "CET-4"), ("2", "英文研究论文")]
         keywords = "学业表现<br/>英文研究写作<br/>AI 教育与伦理<br/>AI 与法律翻译"
     else:
@@ -269,26 +269,26 @@ def academic_resume(path):
     y = bullets(c, [
         "B.A. candidate in English, School of Foreign Languages, Southwest Jiaotong University. Freshman; developing an English x Law pathway with an AI research component.",
         "Fall GPA: 3.6/4.0, major rank 28/56. Spring GPA: 3.8/4.0, rank pending. CET-4: 568.",
-    ], x, y, width, gap=4) - 5
+    ], x, y, width, gap=2.75) - 5
 
     y = section(c, "SELECTED ENGLISH RESEARCH PAPERS", x, y, width)
     y = bullets(c, [
-        "Does AI Equalize Learners or Widen the Gap? A 2,990-word, 11-page paper examining learner agency, skill development and educational equity through literature review and mechanism analysis.",
+        "Independently completed Does AI Equalize Learners or Widen the Gap?, a 2,990-word, 11-page paper using literature review, mechanism analysis and counterargument to examine learner agency, skill development and educational equity.",
         "The Alienation of Love: Guilt, Control, and the Shadow of Filial Piety in Dead Poets Society. A literary analysis of parental control, guilt and emotional alienation.",
     ], x, y, width, gap=4) - 5
 
     y = section(c, "ONGOING RESEARCH", x, y, width)
     y = bullets(c, [
-        "Semantic-association-based intelligent assessment of English writing; target: a G06F-related patent application.",
+        "Semantic-association-based intelligent assessment of English writing; patent application materials in preparation.",
         "AI in education and digital ethics: learner agency, educational equity, data responsibility and governance.",
         "AI and legal translation: accuracy, terminology consistency and risk in contracts, regulations and patent texts.",
-    ], x, y, width, gap=3.5) - 4
+    ], x, y, width, gap=2.75) - 4
 
     y = section(c, "RELATED PRACTICE & RECOGNITION", x, y, width)
     y = bullets(c, [
-        "Merit Award in the university-level Quest Cup Moot Court Competition; ranked 7th among 28 teams.",
-        "Second Prize for The Window and the Stone (84.33); Team Second Prize in a cross-border English livestream practicum.",
-    ], x, y, width, gap=3.5) - 4
+        "Quest Cup Moot Court: analyzed rules, organized team arguments and earned a university-level Merit Award, ranking 7th among 28 teams.",
+        "The Window and the Stone: wrote and delivered the English speech (Second Prize, 84.33); also supported English script backup and live transitions in a cross-border livestream practicum (Team Second Prize).",
+    ], x, y, width, gap=2.75) - 4
 
     y = section(c, "NEXT-STAGE PRIORITIES", x, y, width)
     bullets(c, [
@@ -311,34 +311,34 @@ def practice_resume(path):
     y = bullets(c, [
         "B.A. candidate in English, School of Foreign Languages, Southwest Jiaotong University. Freshman focused on communication, rules and project collaboration.",
         "CET-4: 568. Fall GPA: 3.6/4.0. Spring GPA: 3.8/4.0.",
-    ], x, y, width, gap=4) - 5
+    ], x, y, width, gap=2.75) - 5
 
     y = section(c, "COMPETITIONS & PROJECT PRACTICE", x, y, width)
     y = bullets(c, [
-        "Second Prize for the English speech The Window and the Stone (84.33), exploring cultural exchange through public speaking.",
-        "Merit Award in the university-level Quest Cup Moot Court Competition; ranked 7th among 28 teams.",
-        "Cross-border English livestream practicum for Qionglai intangible-cultural-heritage liquor; supported scripts, transitions and supplementary explanations; Team Second Prize.",
-    ], x, y, width, gap=3.5) - 4
+        "Wrote and delivered The Window and the Stone (Second Prize, 84.33), using a Suzhou garden and the Yungang Grottoes to present cultural exchange clearly to a live audience.",
+        "Quest Cup Moot Court: analyzed competition rules, prepared team arguments and earned a university-level Merit Award, ranking 7th among 28 teams.",
+        "Cross-border English livestream practicum for Qionglai intangible-cultural-heritage liquor: provided English script backup, live transitions and supplementary explanations; Team Second Prize.",
+    ], x, y, width, gap=2.75) - 4
 
     y = section(c, "CAMPUS LEADERSHIP", x, y, width)
     y = bullets(c, [
-        "Comprehensive English class representative (freshman year): course communication, assignment coordination and final-review materials.",
-        "Organization Department member, School of Foreign Languages Student Union: supported the welcome gala, university sports meeting and multicultural campus event.",
-        "Project Department member, University Youth Volunteers Union; incoming Curriculum Development Department head for sophomore fall.",
-    ], x, y, width, gap=3.5) - 4
+        "Comprehensive English class representative (freshman year): coordinated course notices and assignments, organized final-review materials and supported classroom operations.",
+        "Organization Department member, School of Foreign Languages Student Union: supported on-site setup, attendance and order for the welcome gala, university sports meeting and multicultural campus event.",
+        "Project Department member, University Youth Volunteers Union; scheduled to assume the role of Curriculum Development Department head in September 2026.",
+    ], x, y, width, gap=2.75) - 4
 
     y = section(c, "VOLUNTEER SERVICE", x, y, width)
     y = bullets(c, [
         "50 recorded volunteer hours; 81 total Second Classroom hours, including 26 hours in social practice and volunteer service.",
-        "Served twice at the National Higher Education Self-Study Examination site and twice in multilingual campus shuttle support.",
-        "Additional service: Gongga Cup volleyball, university anniversary, children's community care, alma mater outreach and hometown promotion.",
-    ], x, y, width, gap=3.5) - 4
+        "Served twice at the National Higher Education Self-Study Examination site and twice in multilingual campus shuttle support, guiding travel and answering practical questions for international students.",
+        "Delivered additional service in Gongga Cup volleyball, university anniversary, children's community care, five-class alma mater outreach and hometown promotion.",
+    ], x, y, width, gap=2.75) - 4
 
     y = section(c, "WORKING STYLE", x, y, width)
     bullets(c, [
-        "Structured in public speaking, live transitions and cross-cultural communication; turns tasks into reusable materials.",
-        "Process-minded, responsible and reflective; suited to student organizations, volunteer projects and competition operations.",
-    ], x, y, width, gap=3.5)
+        "Uses structured communication in public speaking, live transitions and cross-cultural settings; turns one-off tasks into reusable materials and clear handoffs.",
+        "Works with responsibility, coordination and reflection in student organizations, volunteer projects and competition operations.",
+    ], x, y, width, gap=2.75)
 
     draw_footer(c, "Practice version · Speech / Moot Court / Livestream / Leadership / Service")
     c.showPage()
@@ -353,27 +353,27 @@ def academic_resume_cn(path):
 
     y = cn_section(c, "教育背景与学术概况", x, y, width)
     y = bullets(c, [
-        "西南交通大学外国语学院英语专业本科生（2025年至今）。以学业表现和语言能力建立选择权，并持续推进英语 × 法律与 AI 的交叉探索。",
+        "西南交通大学外国语学院英语专业本科生（2025年至今）。以学业表现和语言能力为基础，持续推进英语 × 法律 × AI 的交叉探索。",
         "大一上 GPA 3.6/4.0，专业排名 28/56；大一下 GPA 3.8/4.0，排名待公布。CET-4 568 分。",
     ], x, y, width, gap=5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "英文研究论文", x, y, width)
     y = bullets(c, [
-        "《Does AI Equalize Learners or Widen the Gap?》：约 2990 词、11 页，围绕学习者能动性、技能发展与教育公平完成文献综述、机制分析与反证讨论。",
+        "独立完成《Does AI Equalize Learners or Widen the Gap?》：约 2990 词、11 页，围绕学习者能动性、技能发展与教育公平完成文献综述、机制分析与反证讨论。",
         "《The Alienation of Love: Guilt, Control, and the Shadow of Filial Piety in Dead Poets Society》：分析亲子控制、负罪感与情感异化。",
     ], x, y, width, gap=5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "正在推进的研究", x, y, width)
     y = bullets(c, [
-        "基于语义关联分析的英语作文智能评估方法：探索连贯性与表达质量评估，目标申请 G06F 相关专利。",
+        "基于语义关联分析的英语作文智能评估方法：探索连贯性与表达质量评估，申请材料准备中。",
         "AI 教育与数字伦理：关注学习者主体性、教育公平、数据责任与治理。",
         "AI 与法律翻译：研究大模型翻译合同、法规与专利文本时的准确性、术语一致性与风险。",
     ], x, y, width, gap=4.5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "相关实践与成果", x, y, width)
     y = bullets(c, [
-        "“求索杯”模拟法庭校级优胜奖，28 支队伍第 7 名；英语系实习活动演讲比赛二等奖，84.33 分。",
-        "非遗邛崃酒跨境英文直播实训团体二等奖，负责英文台词补位、衔接救场与补充说明。",
+        "“求索杯”模拟法庭：完成规则分析与团队论证准备，获校级优胜奖、28 支队伍第 7 名；英语系实习活动演讲比赛二等奖，84.33 分。",
+        "非遗邛崃酒跨境英文直播实训团体二等奖：承担英文台词补位、流程衔接与补充说明。",
     ], x, y, width, gap=5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "下一阶段重点", x, y, width)
@@ -401,29 +401,29 @@ def practice_resume_cn(path):
 
     y = cn_section(c, "竞赛与项目实践", x, y, width)
     y = bullets(c, [
-        "《The Window and the Stone》英语演讲比赛二等奖（84.33 分），以苏州园林花窗与云冈石窟讨论文明交流。",
-        "“求索杯”模拟法庭校级优胜奖，28 支队伍第 7 名；在法庭角色分工、规则理解与团队论证中完成训练。",
-        "非遗邛崃酒跨境英文直播实训：承担英文台词补位、流程衔接和补充说明，团队获二等奖。",
+        "完成《The Window and the Stone》英文演讲稿创作与现场表达，以苏州园林花窗与云冈石窟讨论文明交流，获二等奖（84.33 分）。",
+        "“求索杯”模拟法庭：完成规则分析、角色分工与团队论证准备，获校级优胜奖、28 支队伍第 7 名。",
+        "非遗邛崃酒跨境英文直播实训：承担英文台词补位、流程衔接与补充说明，团队获二等奖。",
     ], x, y, width, gap=4.5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "学生工作", x, y, width)
     y = bullets(c, [
-        "综合英语课代表（大一全年）：课程沟通、作业协调、期末复习资料整理与组织。",
-        "外国语学院学生会组织部部员：参与迎新晚会、校运动会与“五洲风情”活动的组织支持。",
-        "西南交通大学青年志愿者联合会活动项目部部员；大二上拟任课程建设部部长。",
+        "综合英语课代表（大一全年）：发布课程通知、协调作业收发、整理期末复习资料并支持课堂运行。",
+        "外国语学院学生会组织部部员：参与迎新晚会、校运动会与“五洲风情”活动的现场布置、签到与秩序支持。",
+        "西南交通大学青年志愿者联合会活动项目部部员；拟于 2026 年 9 月履任课程建设部部长。",
     ], x, y, width, gap=4.5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "志愿服务与综合素养", x, y, width)
     y = bullets(c, [
         "累计记录志愿服务 50 小时、第二课堂 81 学时，其中社会实践与志愿服务 26 学时。",
-        "两次参加高等教育自学考试志愿服务；两次参与“畅行校车，语暖中外”多语种暖心志愿活动。",
-        "参与贡嘎杯高校男排、校庆、儿童关爱、母校宣讲与“返家乡”古镇推广等服务。",
+        "两次参加高等教育自学考试志愿服务；两次参与“畅行校车，语暖中外”多语种暖心志愿活动，为留学生提供校车出行指引。",
+        "参与贡嘎杯高校男排、校庆、儿童关爱、五班母校宣讲与“返家乡”古镇推广等服务。",
     ], x, y, width, gap=4.5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "工作方式", x, y, width)
     bullets(c, [
-        "在演讲、直播与跨文化沟通中保持结构化表达；能将一次性任务整理为可复用的材料和流程。",
-        "重视责任、协作与复盘，适合学生组织、志愿项目、竞赛运营与对外沟通场景。",
+        "在演讲、直播与跨文化沟通中保持结构化表达；能将一次性任务整理为可复用的材料、流程与交接信息。",
+        "重视责任、协调与复盘，适合学生组织、志愿项目、竞赛运营与对外沟通场景。",
     ], x, y, width, gap=4.5, pstyle=CN_BODY)
 
     draw_cn_footer(c, "实践申请版 · 演讲 / 模拟法庭 / 直播 / 学生工作 / 志愿服务")
@@ -433,10 +433,10 @@ def practice_resume_cn(path):
 
 def main():
     OUTPUT.mkdir(parents=True, exist_ok=True)
-    academic = OUTPUT / "wang-yongcheng-academic-resume.pdf"
-    practice = OUTPUT / "wang-yongcheng-practice-resume.pdf"
-    academic_cn = OUTPUT / "wang-yongcheng-academic-resume-cn.pdf"
-    practice_cn = OUTPUT / "wang-yongcheng-practice-resume-cn.pdf"
+    academic = OUTPUT / "tommy-academic-resume.pdf"
+    practice = OUTPUT / "tommy-practice-resume.pdf"
+    academic_cn = OUTPUT / "tommy-academic-resume-cn.pdf"
+    practice_cn = OUTPUT / "tommy-practice-resume-cn.pdf"
     academic_resume(academic)
     practice_resume(practice)
     academic_resume_cn(academic_cn)
