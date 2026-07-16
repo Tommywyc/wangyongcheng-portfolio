@@ -9,6 +9,26 @@ import MobileMenuButton from "../components/MobileMenuButton";
 
 const arrow = "↗";
 
+type EvidenceType = "certificate" | "score" | "appointment" | "platform" | "research" | "field";
+
+const evidenceTypeLabels: Record<EvidenceType, [string, string]> = {
+  certificate: ["证书", "Certificate"],
+  score: ["成绩记录", "Score record"],
+  appointment: ["任职记录", "Appointment record"],
+  platform: ["平台记录", "Platform record"],
+  research: ["研究文档", "Research document"],
+  field: ["活动现场", "Field record"],
+};
+
+function getEvidenceTypes(item: EvidenceItem): EvidenceType[] {
+  if (item.document) return ["research"];
+  if (/cet4|second-classroom|yunda-run-certificate/.test(item.id)) return ["score", "platform"];
+  if (/representative|student-union|debate-team|activity-project|campus-civilization|volunteer-assessment/.test(item.id)) return ["appointment", "platform"];
+  if (/moot-court|speech|livestream|class-meeting/.test(item.id)) return ["certificate", "platform"];
+  if (/guocai|neccs|yunda-run-route|gongga-cup-registration|transport-approval/.test(item.id)) return ["platform"];
+  return ["field", "platform"];
+}
+
 export default function EvidenceRoom() {
   const [language, setLanguage] = useState<"zh" | "en">("zh");
   const [preview, setPreview] = useState<EvidenceItem | null>(null);
@@ -108,6 +128,9 @@ export default function EvidenceRoom() {
                         <div className="evidence-card-copy">
                           <p>{english ? item.metaEn : item.meta}</p>
                           <h3>{english ? item.titleEn : item.title}</h3>
+                          <div className="evidence-type-tags" aria-label={english ? "Evidence types" : "证据类型"}>
+                            {getEvidenceTypes(item).map((type) => <span key={type}>{evidenceTypeLabels[type][english ? 1 : 0]}</span>)}
+                          </div>
                           <span>{english ? "View Evidence" : "查看证据"} {arrow}</span>
                         </div>
                       </button>
@@ -117,6 +140,9 @@ export default function EvidenceRoom() {
                       <div className="evidence-card-copy">
                         <p>{english ? item.metaEn : item.meta}</p>
                         <h3>{english ? item.titleEn : item.title}</h3>
+                        <div className="evidence-type-tags" aria-label={english ? "Evidence types" : "证据类型"}>
+                          {getEvidenceTypes(item).map((type) => <span key={type}>{evidenceTypeLabels[type][english ? 1 : 0]}</span>)}
+                        </div>
                         <span>{item.restricted ? (english ? "Request Evidence" : "联系获取") : (english ? "View Evidence" : "查看证据")} {arrow}</span>
                       </div>
                       </a>

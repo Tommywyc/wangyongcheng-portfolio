@@ -24,21 +24,11 @@
   },
   "include": [
     "next-env.d.ts",
-    "app/**/*.ts",
-    "app/**/*.tsx",
+    "**/*.ts",
+    "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
   ],
-  "exclude": [
-    "node_modules",
-    "db",
-    "worker",
-    "build",
-    "scripts",
-    "tests",
-    "examples",
-    "vite.config.ts",
-    "vite.config.js",
-    "drizzle.config.ts"
-  ]
+  "exclude": ["node_modules"]
 }

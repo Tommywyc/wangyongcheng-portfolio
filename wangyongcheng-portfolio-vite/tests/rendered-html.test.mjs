@@ -30,15 +30,15 @@ test("renders static homepage metadata and structured data", async () => {
   assert.match(html, /name="description" content="王永城，西南交通大学英语专业本科生。围绕 English × Law × AI/);
   assert.match(html, /rel="canonical" href="https:\/\/www\.wangyongcheng\.com\/"/);
   assert.match(html, /name="robots" content="index, follow/);
-  assert.match(html, /property="og:title" content="王永城 Wang Yongcheng｜English × Law × AI"/);
+  assert.match(html, /property="og:title" content="王永城 Tommy Wang｜ English × Law × AI"/);
   assert.match(html, /property="og:image" content="https:\/\/www\.wangyongcheng\.com\/images\/og-image-preview\.png"/);
   assert.match(html, /name="twitter:card" content="summary_large_image"/);
   assert.match(html, /"@type":"ProfilePage"/);
   assert.match(html, /"@type":"Person"/);
   assert.doesNotMatch(html, /name="keywords"/i);
 
-  const direction = html.indexOf("06 · English × Law × AI");
-  const inquiry = html.indexOf("Current Inquiry");
+  const direction = html.indexOf("05 · English × Law × AI");
+  const inquiry = html.indexOf("06 · Current Focus");
   const conversation = html.indexOf("Open to Conversation");
   assert.ok(direction >= 0 && inquiry > direction && conversation > inquiry);
 });
