@@ -74,12 +74,12 @@ export default function AboutSiteContent() {
           <h2 id="about-title">{english ? "About this site" : "关于网站"}</h2>
           <p>{english ? "This is Tommy Wang’s academic and growth portfolio. Through English × Law × AI, it records research writing, public speaking, moot court, student work, volunteer service and questions still in progress." : "这是王永城的个人学术与成长作品集，围绕 English × Law × AI，记录研究写作、公众表达、模拟法庭、学生工作、志愿服务和仍在推进的问题。"}</p>
           <p>{english ? "Its presentation prioritizes accessibility, privacy and clear typography. Content changes with actual study and practice, distinguishing completed work, ongoing inquiry and planned commitments." : "网站设计关注无障碍、隐私与清晰排版。内容会随真实学习与实践进展更新，并区分已完成成果、正在研究的问题与未来拟履任事项。"}</p>
-          <p>{english ? "Bilingual switching is provided only on the homepage, Evidence Room and this Accessibility, Privacy & About This Site page. Other archive pages are presented in Chinese first to preserve the original record context." : "双语切换仅在首页、证据资料室及本“无障碍、隐私和内容呈现”页面提供；其余归档页面以中文优先呈现，以保留原始记录语境。"}</p>
+          <p>{english ? "Bilingual switching is available across the homepage, achievement archive, Evidence Room, complete evidence archive, case-study pages and this site-information page." : "首页、全部成就、证据资料室、证据完整归档、代表成果页及本网站说明页均支持中英文切换。"}</p>
         </section>
       </div>
 
-      <ContactButton />
-      <BackToTopButton />
+      <ContactButton english={english} />
+      <BackToTopButton english={english} />
 
       <footer>
         <span>Tommy · English × Law × AI</span>

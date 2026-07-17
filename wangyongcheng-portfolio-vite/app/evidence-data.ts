@@ -87,3 +87,45 @@ export const evidenceCategories: EvidenceCategory[] = [
     ],
   },
 ];
+
+const gpaEvidence: EvidenceItem = {
+  id: "evidence-gpa",
+  title: "大一 GPA 成绩记录",
+  titleEn: "Freshman GPA Record",
+  meta: "大一上 3.6 / 4.0 · 大一下 3.8 / 4.0 · 完整成绩单联系后提供",
+  metaEn: "Fall 3.6 / 4.0 · Spring 3.8 / 4.0 · full transcript available on request",
+  href: "mailto:w3194510963@gmail.com?subject=Evidence%20request%20%E2%80%94%20Freshman%20GPA%20Record",
+  document: true,
+  restricted: true,
+  documentLabel: "Academic Record",
+};
+
+const evidenceById = new Map(evidenceCategories.flatMap((group) => group.items).map((item) => [item.id, item]));
+const selectEvidence = (ids: string[]) => ids.map((id) => evidenceById.get(id)).filter((item): item is EvidenceItem => Boolean(item));
+
+export const coreEvidenceCategories: EvidenceCategory[] = [
+  {
+    label: "学业证明",
+    labelEn: "Academic Proof",
+    items: [gpaEvidence, ...selectEvidence(["evidence-cet4", "evidence-ai-paper", "evidence-literature-paper"])],
+  },
+  {
+    label: "代表成果",
+    labelEn: "Signature Work",
+    items: selectEvidence(["evidence-moot-court", "evidence-speech", "evidence-livestream"]),
+  },
+  {
+    label: "服务与领导力",
+    labelEn: "Service & Leadership",
+    items: selectEvidence(["evidence-volunteer", "evidence-student-union-organization", "evidence-comprehensive-english-representative", "evidence-activity-project-department"]),
+  },
+];
+
+const coreIds = new Set(coreEvidenceCategories.flatMap((group) => group.items).map((item) => item.id));
+
+// The complete archive deliberately retains every original record. The selected
+// page establishes evidence strength; this page preserves the full 38-item trail.
+export const archiveEvidenceCategories: EvidenceCategory[] = evidenceCategories;
+
+export const coreEvidenceIds = coreIds;
+export const totalEvidenceCount = evidenceCategories.reduce((sum, group) => sum + group.items.length, 0);

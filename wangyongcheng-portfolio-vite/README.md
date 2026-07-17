@@ -38,13 +38,6 @@ python3 scripts/generate_resumes.py
 
 All résumé variants use the shared brand line: `ENGLISH · LAW · AI`.
 
-## Portfolio updates
-
-- The résumé area includes a selection guide for academic and practice applications.
-- Selected work uses the shared structure: contribution, result and capability.
-- The evidence room labels records by type, including certificates, score records, appointment records, platform records and research documents.
-- The About This Site section contains the current quarterly update and the next planned updates.
-
 ## Privacy
 
 Public evidence is redacted where needed. Sensitive content and additional evidence are available after contact and confirmation of purpose.

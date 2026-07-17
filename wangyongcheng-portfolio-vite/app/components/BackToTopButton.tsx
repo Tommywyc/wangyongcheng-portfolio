@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function BackToTopButton() {
+export default function BackToTopButton({ english = false }: { english?: boolean }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function BackToTopButton() {
 
   return (
     <button
-      aria-label="返回顶部"
+      aria-label={english ? "Back to top" : "返回顶部"}
       className={`back-to-top${visible ? " is-visible" : ""}`}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       type="button"

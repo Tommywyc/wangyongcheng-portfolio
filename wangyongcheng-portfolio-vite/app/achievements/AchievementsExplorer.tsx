@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { achievements, periodOrder, type Achievement } from "../content";
+import { achievementEnglish, categoryEnglish, periodEnglish, statusEnglish } from "../achievement-translations";
+import { coreEvidenceIds } from "../evidence-data";
 
 type ViewMode = "time" | "tags";
 
@@ -18,31 +20,32 @@ const periodDateLabels: Record<string, string> = {
 const chronological = (items: Achievement[]) =>
   [...items].sort((a, b) => (a.sortDate ?? "9999-12-31").localeCompare(b.sortDate ?? "9999-12-31"));
 
-function AchievementCard({ item }: { item: Achievement }) {
+function AchievementCard({ item, english }: { item: Achievement; english: boolean }) {
+  const translated = achievementEnglish[item.id];
   return (
     <article className="archive-card">
       <div className="archive-card-meta">
-        <span>{item.date}</span>
-        <span>{item.category}</span>
-        {item.status ? <span className={`status status-${item.status}`}>{item.status}</span> : null}
+        <span>{english ? translated?.date ?? item.date : item.date}</span>
+        <span>{english ? categoryEnglish[item.category] : item.category}</span>
+        {item.status ? <span className={`status status-${item.status}`}>{english ? statusEnglish[item.status] : item.status}</span> : null}
       </div>
       <div className="archive-card-copy">
-        <p className="archive-role">{item.role}</p>
-        <h3>{item.title}</h3>
-        {item.englishTitle ? <p className="archive-english">{item.englishTitle}</p> : null}
-        <p className="archive-description">{item.description}</p>
+        <p className="archive-role">{english ? translated?.role : item.role}</p>
+        <h3>{english ? translated?.title : item.title}</h3>
+        {!english && item.englishTitle ? <p className="archive-english">{item.englishTitle}</p> : null}
+        <p className="archive-description">{english ? translated?.description : item.description}</p>
         {item.result ? (
-          <strong className={`archive-result ${item.status === "获奖" ? "archive-result-award" : ""}`}>
-            {item.result}
+          <strong className={`archive-result ${item.category === "竞赛获奖" || item.category === "班级荣誉" ? "archive-result-award" : ""}`}>
+            {english ? translated?.result : item.result}
           </strong>
         ) : null}
-        {item.evidenceId ? <a className="archive-evidence-link" href={`/evidence#${item.evidenceId}`}>查看证据 <span aria-hidden="true">↗</span></a> : null}
+        {item.evidenceId ? <a className="archive-evidence-link" href={`${coreEvidenceIds.has(item.evidenceId) ? "/evidence" : "/evidence/archive"}#${item.evidenceId}`}>{english ? "View evidence" : "查看证据"} <span aria-hidden="true">↗</span></a> : null}
       </div>
     </article>
   );
 }
 
-export default function AchievementsExplorer() {
+export default function AchievementsExplorer({ english }: { english: boolean }) {
   const [view, setView] = useState<ViewMode>("time");
   const [activeCategory, setActiveCategory] = useState("全部");
 
@@ -68,9 +71,9 @@ export default function AchievementsExplorer() {
   );
 
   return (
-    <section className="archive-explorer" aria-label="完整成就浏览器">
+    <section className="archive-explorer" aria-label={english ? "Complete achievements archive" : "完整成就浏览器"}>
       <div className="view-toolbar">
-        <div className="view-switch" role="tablist" aria-label="浏览方式">
+        <div className="view-switch" role="tablist" aria-label={english ? "Archive view" : "浏览方式"}>
           <button
             aria-controls="achievements-panel-time"
             aria-selected={view === "time"}
@@ -81,7 +84,7 @@ export default function AchievementsExplorer() {
             tabIndex={view === "time" ? 0 : -1}
             type="button"
           >
-            按时间
+            {english ? "Timeline" : "按时间"}
           </button>
           <button
             aria-controls="achievements-panel-tags"
@@ -93,10 +96,10 @@ export default function AchievementsExplorer() {
             tabIndex={view === "tags" ? 0 : -1}
             type="button"
           >
-            按标签
+            {english ? "Categories" : "按标签"}
           </button>
         </div>
-        <p>{achievements.length} 项经历 · 持续更新</p>
+        <p>{english ? `${achievements.length} entries · continually updated` : `${achievements.length} 项经历 · 持续更新`}</p>
       </div>
 
       {view === "time" ? (
@@ -107,12 +110,12 @@ export default function AchievementsExplorer() {
               <section className="timeline-period" key={period}>
                 <header>
                   <p>{periodDateLabels[period]}</p>
-                  <h2>{period}</h2>
+                  <h2>{english ? periodEnglish[period] : period}</h2>
                   <span>{items.length.toString().padStart(2, "0")}</span>
                 </header>
                 <div className="timeline-items">
                   {items.map((item) => (
-                    <AchievementCard item={item} key={item.id} />
+                    <AchievementCard english={english} item={item} key={item.id} />
                   ))}
                 </div>
               </section>
@@ -121,7 +124,7 @@ export default function AchievementsExplorer() {
         </div>
       ) : (
         <div aria-labelledby="achievements-tab-tags" className="tag-view" id="achievements-panel-tags" role="tabpanel">
-          <div className="category-filter" aria-label="按标签筛选">
+          <div className="category-filter" aria-label={english ? "Filter by category" : "按标签筛选"}>
             {["全部", ...categories].map((category) => (
               <button
                 className={activeCategory === category ? "active" : ""}
@@ -129,7 +132,7 @@ export default function AchievementsExplorer() {
                 onClick={() => setActiveCategory(category)}
                 type="button"
               >
-                {category}
+                {english ? (category === "全部" ? "All" : categoryEnglish[category]) : category}
                 <span>
                   {category === "全部"
                     ? achievements.length
@@ -141,11 +144,11 @@ export default function AchievementsExplorer() {
           <div className="tag-results" aria-live="polite">
             <div className="tag-results-heading">
               <p className="eyebrow">Filtered archive</p>
-              <h2>{activeCategory}</h2>
+              <h2>{english ? (activeCategory === "全部" ? "All" : categoryEnglish[activeCategory]) : activeCategory}</h2>
             </div>
             <div className="timeline-items">
               {filtered.map((item) => (
-                <AchievementCard item={item} key={item.id} />
+                <AchievementCard english={english} item={item} key={item.id} />
               ))}
             </div>
           </div>

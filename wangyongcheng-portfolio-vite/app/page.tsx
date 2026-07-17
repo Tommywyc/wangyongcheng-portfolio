@@ -4,51 +4,43 @@ import { useEffect, useState } from "react";
 import { academicProfile, featuredAchievements, pathway } from "./content";
 import BackToTopButton from "./components/BackToTopButton";
 import ContactButton from "./components/ContactButton";
-import CurrentInquiry from "./components/CurrentInquiry";
+import CurrentInquiry, { progressUpdates } from "./components/CurrentInquiry";
 import MobileMenuButton from "./components/MobileMenuButton";
 import OpenToConversation from "./components/OpenToConversation";
 
 const arrow = "↗";
 
-const featuredDetails: Record<string, { contribution: string; result: string; capability: string; contributionEn: string; resultEn: string; capabilityEn: string }> = {
+const featuredDetails: Record<string, { contribution: string; outcome: string; capability: string; contributionEn: string; outcomeEn: string; capabilityEn: string }> = {
   "moot-court": {
     contribution: "围绕法庭角色分工、规则理解与团队论证完成竞赛训练。",
-    result: "完成28支队伍同场竞赛，获校级优胜奖并位列第7名。",
+    outcome: "获得校级优胜奖，在28支参赛队伍中排名第7。",
     capability: "在角色分工与团队论证中形成规则拆解、证据组织与协作表达能力，能够将复杂争点转化为清晰主张。",
     contributionEn: "Completed competition training through role allocation, rule analysis and team argumentation.",
-    resultEn: "Competed among 28 teams, earning a Merit Award and placing 7th.",
+    outcomeEn: "Received a Merit Award and placed 7th among 28 teams.",
     capabilityEn: "Developed rule analysis, evidence organization and collaborative advocacy, turning complex issues into clear propositions.",
   },
   "ai-learning-gap-paper": {
-    contribution: "独立完成文献综述、机制分析与反证讨论，并形成英文研究论文。",
-    result: "完成约2990词、11页英文研究论文，形成围绕学习者能动性与教育公平的分析框架。",
+    contribution: "独立收束研究问题，完成文献检索、结构设计、机制分析与英文写作。",
+    outcome: "形成约2990词、11页的英文研究论文，围绕学习者主体性与教育公平提出机制化分析。",
     capability: "提升研究问题收束、文献证据筛选与英文学术论证能力，能把“AI是否促进学习”拆解为主体性与公平机制。",
-    contributionEn: "Completed the literature review, mechanism analysis and counterargument as an original English research paper.",
-    resultEn: "Completed a 2,990-word, 11-page English paper with an analytical framework for learner agency and educational equity.",
+    contributionEn: "Independently framed the question and completed the literature search, structure, mechanism analysis and English writing.",
+    outcomeEn: "Produced an 11-page, approximately 2,990-word research paper analyzing learner agency and educational equity.",
     capabilityEn: "Strengthened question-framing, evidence selection and English academic argumentation by separating AI learning claims into agency and equity mechanisms.",
   },
   "window-stone": {
     contribution: "完成英文演讲稿创作与现场表达，以苏州园林与云冈石窟讨论文明交流。",
-    result: "以84.33分获得英语系实习活动演讲比赛二等奖。",
+    outcome: "获得英语系实习活动演讲比赛二等奖，成绩84.33分。",
     capability: "强化英文演讲的叙事设计、跨文化素材整合与现场表达能力，把抽象的文明交流转化为听众可感知的比较。",
     contributionEn: "Wrote and delivered an English speech using a Suzhou garden and the Yungang Grottoes to discuss cultural exchange.",
-    resultEn: "Earned Second Prize with a score of 84.33 in the department practicum speech competition.",
+    outcomeEn: "Received Second Prize in the English practicum speech competition with a score of 84.33.",
     capabilityEn: "Strengthened speech design, cross-cultural synthesis and live delivery by turning an abstract idea of cultural exchange into a concrete comparison.",
-  },
-  "information-literacy": {
-    contribution: "参与信息茧房主题微视频的检索、脚本整理与项目表达。",
-    result: "完成信息素养大赛参赛作品与提交脚本，结果待公布。",
-    capability: "训练算法议题的资料检索、信息判断与面向公众的结构化表达能力。",
-    contributionEn: "Contributed research, script organization and project communication for a micro-video on filter bubbles.",
-    resultEn: "Completed the information-literacy competition entry and submission script; result pending.",
-    capabilityEn: "Practiced research, information judgment and structured public communication around algorithmic issues.",
   },
   "qionglai-livestream": {
     contribution: "承担英文台词补位、流程衔接与补充说明，保障直播表达连续性。",
-    result: "完成跨境电商直播实训，团队获得团体二等奖。",
+    outcome: "协助团队完成跨境英文直播实训并获得团体竞赛二等奖。",
     capability: "锻炼英语即时补位、信息提炼与跨角色协作能力，能在直播节奏中补足表达缺口并保持观众理解。",
     contributionEn: "Supported English script backup, live transitions and supplementary explanations to keep the livestream coherent.",
-    resultEn: "Completed the cross-border e-commerce livestream practicum; the team received Second Prize.",
+    outcomeEn: "Helped the team complete the cross-border English livestream and receive Team Second Prize.",
     capabilityEn: "Practiced real-time English support, information distillation and cross-role collaboration to keep audience understanding intact during a live flow.",
   },
 };
@@ -104,7 +96,7 @@ export default function Home() {
   useEffect(() => {
     window.localStorage.setItem("portfolio-language", language);
     document.documentElement.lang = english ? "en" : "zh-CN";
-    document.title = "王永城 Tommy｜English × Law × AI";
+    document.title = english ? "Tommy Wang｜English × Law × AI" : "王永城 Tommy｜English × Law × AI";
   }, [english, language]);
 
   return (
@@ -114,7 +106,7 @@ export default function Home() {
       </a>
 
       <header className="site-header">
-        <a className="wordmark" href="#top" aria-label="返回首页顶部">
+        <a className="wordmark" href="#top" aria-label={english ? "Back to top of homepage" : "返回首页顶部"}>
           <span className="wordmark-mark">{english ? "T" : "王"}</span>
           <span className="wordmark-name">
             {english ? "Tommy" : "王永城"} <em>English × Law × AI</em>
@@ -154,17 +146,17 @@ export default function Home() {
             {english ? "I am Tommy, an English major at Southwest Jiaotong University. I explore how language connects expression, technology and rules, with particular attention to how AI reshapes learning, communication and legal texts." : "我是王永城，西南交通大学英语专业学生。我关注语言如何连接表达、技术与规则，并特别关心 AI 如何重塑学习、沟通与法律文本。"}
           </p>
           <div className="hero-application-callout">
-            <p>{english ? "For research, practical projects and long-term opportunities at the intersection of language, rules and technology." : "面向语言、规则与技术交汇处的研究、实践项目与长期发展机会。"}</p>
+            <div>
+              <strong>{english ? "Open to opportunities" : "正在寻找的机会"}</strong>
+              <p>{english ? "Undergraduate research opportunities, summer schools, moot-court collaboration, and AI × language projects." : "本科生研究机会、夏校、模拟法庭合作，以及 AI × 语言项目。"}</p>
+            </div>
             <a href="#resumes">{english ? "Go to résumés" : "直达简历区"} <span aria-hidden="true">↓</span></a>
           </div>
           <div className="hero-actions hero-section-links" aria-label={english ? "Section shortcuts" : "首页板块快捷入口"}>
             {[
-              ["01", english ? "Read my profile" : "阅读个人档案", "#identity"],
-              ["02", english ? "View academic profile" : "查看学术概况", "#academic"],
-              ["03", english ? "Browse selected work" : "浏览成果展示", "#work"],
-              ["04", english ? "View Evidence" : "查看证据", "/evidence"],
-              ["05", english ? "Explore my direction" : "阅读发展方向", "#direction"],
-              ["06", english ? "Current focus" : "查看当前关注", "#current-inquiry"],
+              ["01", english ? "Read my profile" : "个人档案", "#identity"],
+              ["02", english ? "Browse selected work" : "成果展示", "#work"],
+              ["03", english ? "Explore my direction" : "发展方向", "#direction"],
             ].map(([index, label, href]) => (
               <a href={href} key={href}><em>{index}</em><span>{label}</span><i aria-hidden="true">{arrow}</i></a>
             ))}
@@ -236,15 +228,16 @@ export default function Home() {
               <h3>{english ? "Choose the version that fits the application." : "两份简历，对应两种申请场景。"}</h3>
               <p>{english ? "Each one-page résumé is available in both English and Chinese. The academic version foregrounds grades and research; the practice version foregrounds communication, projects, leadership and service." : "每份均提供中文与英文的一页PDF。学术申请版强调成绩与研究；实践申请版强调表达、项目、学生工作与志愿服务。"}</p>
             </div>
-            <div className="resume-selection-guide" aria-label={english ? "Résumé selection guide" : "简历选择指引"}>
-              <strong>{english ? "Selection guide" : "选择指引"}</strong>
-              <span>{english ? "Research, scholarships, summer schools and faculty contact → Academic Application" : "研究项目、奖学金、夏校、导师联系 → 学术申请版"}</span>
-              <span>{english ? "Internships, competitions, student organizations and service projects → Practice Application" : "实习、竞赛、学生组织、志愿项目 → 实践申请版"}</span>
-            </div>
+            <nav className="resume-decision-guide" aria-label={english ? "Choose a résumé by audience" : "按使用场景选择简历"}>
+              <span>{english ? "Choose by purpose" : "按用途快速选择"}</span>
+              <a href="#academic-resume"><strong>{english ? "Faculty & academic reviewers" : "老师 · 导师 · 学术评审"}</strong><small>{english ? "Start with the academic résumé" : "优先查看学术申请版"}</small></a>
+              <a href="#practice-resume"><strong>{english ? "Internships & project partners" : "实习 · 竞赛 · 项目合作"}</strong><small>{english ? "Start with the practice résumé" : "优先查看实践申请版"}</small></a>
+            </nav>
             <div className="resume-options">
-              <article>
+              <article id="academic-resume">
                 <span>01 · Academic</span>
                 <h4>{english ? "Academic Application" : "学术申请版"}</h4>
+                <strong className="resume-audience">{english ? "For faculty contact and academic selection" : "面向导师联系与学术选拔"}</strong>
                 <p>{english ? "For research programs, scholarships, summer schools and faculty contact. Shows grades, research writing and defined AI-related questions." : "适合研究项目、奖学金、夏校与导师联系，突出成绩、研究写作与明确的 AI 议题。"}</p>
                 <ul className="resume-highlights" aria-label={english ? "Academic résumé highlights" : "学术申请版重点"}>
                   <li>{english ? "GPA 3.6 → 3.8 / 4.0" : "GPA 3.6 → 3.8 / 4.0"}</li>
@@ -256,9 +249,10 @@ export default function Home() {
                   <a aria-label={english ? "Download academic résumé, English PDF" : "下载学术申请版简历，英文 PDF"} href="/tommy-academic-resume.pdf" download>{english ? "English PDF" : "英文 PDF"} <span aria-hidden="true">↓</span></a>
                 </div>
               </article>
-              <article>
+              <article id="practice-resume">
                 <span>02 · Practice</span>
                 <h4>{english ? "Practice Application" : "实践申请版"}</h4>
+                <strong className="resume-audience">{english ? "For internships, competitions and project work" : "面向实习、竞赛与项目合作"}</strong>
                 <p>{english ? "For internships, competitions, student organizations and volunteer projects. Shows concrete work in speaking, advocacy, English livestream support and on-site coordination." : "适合实习、竞赛、学生组织与志愿项目，突出在演讲、论证、英文直播支持与现场统筹中的具体行动。"}</p>
                 <ul className="resume-highlights" aria-label={english ? "Practice résumé highlights" : "实践申请版重点"}>
                   <li>{english ? "Speech writing · Moot-court argument · Livestream support" : "演讲稿创作 · 模拟法庭论证 · 英文直播补位"}</li>
@@ -342,7 +336,7 @@ export default function Home() {
             <h2>{english ? "Selected Work" : "精选成果"}</h2>
           </div>
           <p>
-            {english ? "These projects are presented for the abilities they developed: expression, retrieval, argumentation, collaboration and research." : "不把经历堆成清单，而是保留每个项目真正训练过的能力：表达、检索、论证、协作与研究。"}
+            {english ? "Not a ranking of awards, but four working contexts: building arguments from rules, framing a research question, shaping a public narrative and supporting a live team." : "不按奖项排序，而按四种典型工作场景呈现：基于规则构建论证、围绕问题完成研究、通过表达组织叙事、在现场支撑协作。"}
           </p>
         </div>
 
@@ -353,6 +347,7 @@ export default function Home() {
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <span>{item.category}</span>
                 <span>{item.date}</span>
+                <span className="status status-已完成">{english ? "Completed" : "已完成"}</span>
               </div>
               <div className="work-title">
                 <h3>{item.title}</h3>
@@ -362,15 +357,16 @@ export default function Home() {
               <div className="work-proof-line">
                 <span>{english ? "Contribution" : "具体承担"}</span>
                 <p>{english ? featuredDetails[item.id]?.contributionEn : featuredDetails[item.id]?.contribution}</p>
-                <span>{english ? "Result" : "形成结果"}</span>
-                <p>{english ? featuredDetails[item.id]?.resultEn : featuredDetails[item.id]?.result}</p>
+                <span>{english ? "Outcome" : "形成结果"}</span>
+                <p>{english ? featuredDetails[item.id]?.outcomeEn : featuredDetails[item.id]?.outcome}</p>
                 <span>{english ? "Capability" : "能力展现"}</span>
                 <p>{english ? featuredDetails[item.id]?.capabilityEn : featuredDetails[item.id]?.capability}</p>
               </div>
               <div className="work-result">
                 <div className="work-actions">
-                  {item.evidenceId ? <a className="evidence-jump" href={`/evidence#${item.evidenceId}`}>{english ? "View Evidence" : "查看证据"} <span aria-hidden="true">↗</span></a> : null}
-                  <div className="tag-row" aria-label="项目能力标签">
+                  <a className="work-detail-link" href={`/work/${item.id}`}>{english ? "Read case study" : "查看成果页"} <span aria-hidden="true">↗</span></a>
+                  {item.evidenceId ? <a className="evidence-jump" href={`/evidence#${item.evidenceId}`}>{english ? "View evidence" : "查看证据"} <span aria-hidden="true">↗</span></a> : null}
+                  <div className="tag-row" aria-label={english ? "Project capability tags" : "项目能力标签"}>
                     {[item.period, item.role].map((tag) => (
                       <span key={tag}>{tag}</span>
                     ))}
@@ -380,16 +376,16 @@ export default function Home() {
             </article>
           ))}
         </div>
-        {!english ? <div className="all-work-cta">
+        <div className="all-work-cta">
           <div>
             <p className="eyebrow">Complete archive</p>
-            <h3>这不是全部。</h3>
-            <p>进入完整档案，按时间或标签查看学生工作、志愿服务、学术研究与竞赛实践。</p>
+            <h3>{english ? "There is more to the record." : "这不是全部。"}</h3>
+            <p>{english ? "Explore the complete bilingual archive by timeline or capability category." : "进入完整档案，按时间或标签查看学生工作、志愿服务、学术研究与竞赛实践。"}</p>
           </div>
           <a className="archive-link" href="/achievements">
-            全部成就 <span aria-hidden="true">{arrow}</span>
+            {english ? "Complete archive" : "全部成就"} <span aria-hidden="true">{arrow}</span>
           </a>
-        </div> : null}
+        </div>
       </section>
 
       <section className="evidence-entry" id="evidence">
@@ -412,7 +408,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="pathway" aria-label="发展路径">
+        <div className="pathway" aria-label={english ? "Development pathways" : "发展路径"}>
           {paths.map((item, index) => (
             <article className="path-card" key={item.stage}>
               <div className="path-head">
@@ -442,26 +438,35 @@ export default function Home() {
       <section className="site-about-section" id="site-note" aria-label={english ? "About this site" : "关于网站"}>
         <div className="about-strip">
           <p className="eyebrow">08 · About this site</p>
-          <div className="about-overview">
-            <p>{english ? "This is a living academic portfolio. It brings together a central direction, representative work, academic profile and questions still in progress." : "这是一个持续更新的个人学习档案，汇集核心方向、代表性成果、学术概况与仍在推进的问题。"}</p>
-            <div className="about-strip-notes">
-              <span className="about-strip-note">{english ? "Sensitive details and additional evidence are available on request." : "敏感内容及更多证据联系后提供"}</span>
-              <span className="about-strip-note about-strip-language-note">{english ? "Bilingual switching is available on the homepage, Evidence Room and this Accessibility, Privacy & About This Site page; archive pages remain Chinese-first." : "双语切换仅在首页、证据资料室及“无障碍、隐私和内容呈现”页面提供；其余归档页面以中文呈现。"}</span>
-            </div>
+          <p>
+            {english ? "This is a living academic portfolio. It brings together a central direction, representative work, academic profile and questions still in progress." : "这是一个持续更新的个人学习档案，汇集核心方向、代表性成果、学术概况与仍在推进的问题。"}
+          </p>
+          <span className="about-strip-note">{english ? "Sensitive details and additional evidence are available on request." : "敏感内容及更多证据联系后提供"}</span>
+          <span className="about-strip-note about-strip-language-note">{english ? "Bilingual switching is available across the homepage, achievement archive, Evidence Room and key case-study pages." : "首页、全部成就、证据资料室与代表成果页均支持中英文切换。"}</span>
+        </div>
+        <div className="about-progress" aria-label={english ? "Portfolio progress updates" : "成长档案更新记录"}>
+          <header>
+            <p className="eyebrow">{english ? "Portfolio update" : "档案更新"}</p>
+            <h3>{english ? "A record that keeps moving." : "这份档案仍在更新。"}</h3>
+            <p>{english ? "Updated quarterly, or when a material result changes the record." : "按季度维护，重要成果或身份变化时同步更新。"}</p>
+          </header>
+          <div>
+            {progressUpdates.map((item) => (
+              <article key={`${item.date}-${item.title}`}>
+                <time>{item.date}</time>
+                <strong>{english ? item.titleEn : item.title}</strong>
+                <p>{english ? item.detailEn : item.detail}</p>
+              </article>
+            ))}
           </div>
-          <aside className="about-update" aria-label={english ? "Quarterly update and next steps" : "季度更新与下一步"}>
-            <strong>{english ? "Q3 2026 · Update" : "2026 年第三季度 · 更新记录"}</strong>
-            <p>{english ? "Updated: evidence classification, privacy redaction, bilingual key pages, two résumé tracks and the English × Law × AI direction." : "本季已更新：证据分类、隐私脱敏、核心页面双语、两份场景化简历与 English × Law × AI 主线。"}</p>
-            <p><b>{english ? "Next:" : "下一步："}</b>{english ? " add the freshman-spring ranking, CET-6 result, research progress and course-development work records when confirmed." : "成绩公布后补充大一下排名、CET-6结果、研究进展与课程建设部履职记录。"}</p>
-          </aside>
         </div>
       </section>
 
-      <ContactButton />
-      <BackToTopButton />
+      <ContactButton english={english} />
+      <BackToTopButton english={english} />
 
       <footer>
-        <span>王永城 · Tommy</span>
+        <span>{english ? "Tommy Wang" : "王永城 · Tommy"}</span>
         <nav aria-label={english ? "Site information" : "网站说明"}>
           <a href="/about-site#accessibility">Accessibility</a>
           <a href="/about-site#privacy">Privacy</a>

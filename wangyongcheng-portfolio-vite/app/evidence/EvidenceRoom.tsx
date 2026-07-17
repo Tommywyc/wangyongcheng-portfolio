@@ -2,38 +2,40 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { evidenceCategories, type EvidenceItem } from "../evidence-data";
+import { archiveEvidenceCategories, coreEvidenceCategories, totalEvidenceCount, type EvidenceItem } from "../evidence-data";
 import BackToTopButton from "../components/BackToTopButton";
 import ContactButton from "../components/ContactButton";
 import MobileMenuButton from "../components/MobileMenuButton";
 
 const arrow = "↗";
 
-type EvidenceType = "certificate" | "score" | "appointment" | "platform" | "research" | "field";
+const evidenceTypeGroups = {
+  certificate: new Set(["evidence-moot-court", "evidence-speech", "evidence-livestream", "evidence-class-meeting", "evidence-yunda-run-certificate"]),
+  score: new Set(["evidence-cet4", "evidence-second-classroom"]),
+  appointment: new Set(["evidence-comprehensive-english-representative", "evidence-student-union-organization", "evidence-debate-team", "evidence-activity-project-department", "evidence-campus-civilization", "evidence-volunteer-assessment"]),
+  platform: new Set(["evidence-volunteer", "evidence-childrens-day", "evidence-gongga-cup-registration", "evidence-transport-approval"]),
+  reference: new Set(["evidence-neccs-exam"]),
+  participation: new Set(["evidence-guocai-exam", "evidence-neccs-exam", "evidence-self-study-2025-site", "evidence-self-study-2025-field", "evidence-self-study-2026-materials", "evidence-self-study-2026-volunteer", "evidence-gongga-cup-registration", "evidence-gongga-cup-venue"]),
+} as const;
 
-const evidenceTypeLabels: Record<EvidenceType, [string, string]> = {
-  certificate: ["证书", "Certificate"],
-  score: ["成绩记录", "Score record"],
-  appointment: ["任职记录", "Appointment record"],
-  platform: ["平台记录", "Platform record"],
-  research: ["研究文档", "Research document"],
-  field: ["活动现场", "Field record"],
-};
-
-function getEvidenceTypes(item: EvidenceItem): EvidenceType[] {
-  if (item.document) return ["research"];
-  if (/cet4|second-classroom|yunda-run-certificate/.test(item.id)) return ["score", "platform"];
-  if (/representative|student-union|debate-team|activity-project|campus-civilization|volunteer-assessment/.test(item.id)) return ["appointment", "platform"];
-  if (/moot-court|speech|livestream|class-meeting/.test(item.id)) return ["certificate", "platform"];
-  if (/guocai|neccs|yunda-run-route|gongga-cup-registration|transport-approval/.test(item.id)) return ["platform"];
-  return ["field", "platform"];
+function evidenceType(item: EvidenceItem, english: boolean) {
+  if (item.document) return english ? "Research / project document" : "研究 / 项目文档";
+  if (evidenceTypeGroups.certificate.has(item.id)) return english ? "Official certificate" : "官方证书";
+  if (evidenceTypeGroups.score.has(item.id)) return english ? "Score record" : "成绩记录";
+  if (evidenceTypeGroups.appointment.has(item.id)) return english ? "Role / work record" : "任职 / 工作记录";
+  if (evidenceTypeGroups.participation.has(item.id)) return english ? "Participation record" : "参与记录";
+  if (evidenceTypeGroups.platform.has(item.id)) return english ? "Platform / registration record" : "平台 / 报名记录";
+  if (evidenceTypeGroups.reference.has(item.id)) return english ? "Format reference" : "考试形式参考";
+  return english ? "On-site photograph" : "现场照片";
 }
 
-export default function EvidenceRoom() {
+export default function EvidenceRoom({ archive = false }: { archive?: boolean }) {
   const [language, setLanguage] = useState<"zh" | "en">("zh");
   const [preview, setPreview] = useState<EvidenceItem | null>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
   const english = language === "en";
+  const visibleCategories = archive ? archiveEvidenceCategories : coreEvidenceCategories;
+  const visibleCount = visibleCategories.reduce((sum, group) => sum + group.items.length, 0);
 
   const openPreview = (item: EvidenceItem) => {
     previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -51,8 +53,10 @@ export default function EvidenceRoom() {
   useEffect(() => {
     window.localStorage.setItem("portfolio-language", language);
     document.documentElement.lang = english ? "en" : "zh-CN";
-    document.title = english ? "Evidence Room｜王永城 Tommy｜English × Law × AI" : "证据资料室｜王永城 Tommy｜English × Law × AI";
-  }, [english, language]);
+    document.title = archive
+      ? (english ? "Complete Evidence Archive｜Tommy Wang" : "证据完整归档｜王永城 Tommy")
+      : (english ? "Evidence Room｜Tommy Wang｜English × Law × AI" : "证据资料室｜王永城 Tommy｜English × Law × AI");
+  }, [archive, english, language]);
 
   useEffect(() => {
     if (!preview) return;
@@ -70,7 +74,7 @@ export default function EvidenceRoom() {
   }, [preview]);
 
   return (
-    <main className={english ? "evidence-page lang-en" : "evidence-page lang-zh"}>
+    <main className={`evidence-page ${archive ? "evidence-archive" : "evidence-selected"} ${english ? "lang-en" : "lang-zh"}`}>
       <a className="skip-link" href="#evidence-main">{english ? "Skip to evidence" : "跳到证据内容"}</a>
 
       <header className="site-header archive-header evidence-header">
@@ -81,8 +85,9 @@ export default function EvidenceRoom() {
         <div className="header-tools evidence-header-tools">
           <nav aria-label={english ? "Evidence navigation" : "资料室导航"} id="evidence-navigation">
             <Link href="/">{english ? "Home" : "首页"}</Link>
-            <Link href="/achievements">{english ? "Archive" : "全部成就"}</Link>
-            <a href="#evidence-main">{english ? "Evidence" : "证据资料室"}</a>
+            <Link href="/achievements">{english ? "Achievements" : "全部成就"}</Link>
+            <Link href="/evidence">{english ? "Selected evidence" : "核心证据"}</Link>
+            <Link href="/evidence/archive">{english ? "Full archive" : "完整归档"}</Link>
           </nav>
           <MobileMenuButton closeLabel={english ? "Close" : "关闭"} label={english ? "Menu" : "菜单"} navId="evidence-navigation" />
           <button className="language-switch" type="button" onClick={() => setLanguage(english ? "zh" : "en")} aria-label={english ? "切换到中文" : "Switch to English"}>
@@ -95,19 +100,19 @@ export default function EvidenceRoom() {
         <div className="hero-grid" aria-hidden="true" />
         <div>
           <p className="eyebrow">Evidence room · 2025—</p>
-          <h1>{english ? <>Evidence,<span>organized.</span></> : <>证据，<span>分类留存。</span></>}</h1>
-          <p>{english ? "Certificates, score records and original writing are organized by purpose. Each item can be opened directly, while identifiers unrelated to verification have been minimized." : "按用途整理证书、成绩记录与原创文本。每项资料均可直接打开核验，与证明无关的个人信息已尽量弱化。"}</p>
+          <h1>{archive ? (english ? <>Complete <span>archive.</span></> : <>证据，<span>完整归档。</span></>) : (english ? <>Evidence,<span>prioritized.</span></> : <>强证据，<span>优先呈现。</span></>)}</h1>
+          <p>{archive ? (english ? "Participation records, activity photographs and supporting materials are retained here for completeness." : "参与记录、活动现场与辅助材料集中留存在这里，作为完整经历档案。") : (english ? "The strongest academic, signature-work, service and leadership records are presented first. Supporting material remains available in the complete archive." : "先呈现最能说明学业、代表成果、服务与领导力的材料；其余参与记录和辅助材料收入完整归档。")}</p>
         </div>
         <aside>
-          <strong>{evidenceCategories.reduce((sum, group) => sum + group.items.length, 0)}</strong>
-          <span>{english ? "verified records" : "项核心资料"}</span>
-          <small>{english ? "Academic · Practice · Service · Campus · Writing" : "学业 · 实践 · 志愿 · 校园 · 写作"}</small>
+          <strong>{visibleCount}</strong>
+          <span>{archive ? (english ? "archived records" : "项归档资料") : (english ? "selected records" : "项核心证据")}</span>
+          <small>{english ? `${totalEvidenceCount} records retained in total` : `共留存 ${totalEvidenceCount} 项资料`}</small>
         </aside>
       </section>
 
       <section className="evidence-section evidence-page-content">
-        <nav className="evidence-category-index" aria-label={english ? "Evidence categories" : "证据分类索引"}>
-          {evidenceCategories.map((group, groupIndex) => (
+        <nav className={`evidence-category-index evidence-category-index-${visibleCategories.length}`} aria-label={english ? "Evidence categories" : "证据分类索引"}>
+          {visibleCategories.map((group, groupIndex) => (
             <a href={`#evidence-category-${groupIndex + 1}`} key={group.label}>
               <em>{String(groupIndex + 1).padStart(2, "0")}</em>
               <span>{english ? group.labelEn : group.label}</span>
@@ -115,8 +120,15 @@ export default function EvidenceRoom() {
             </a>
           ))}
         </nav>
+        <div className="evidence-tier-link">
+          <div>
+            <p className="eyebrow">{archive ? "Selected evidence" : "Complete archive"}</p>
+            <h2>{archive ? (english ? "Return to the strongest evidence." : "返回核心证据。") : (english ? "Need the complete record?" : "需要查看完整记录？")}</h2>
+          </div>
+          <Link href={archive ? "/evidence" : "/evidence/archive"}>{archive ? (english ? "Selected evidence" : "核心证据") : (english ? "Open full archive" : "进入完整归档")} <span aria-hidden="true">↗</span></Link>
+        </div>
         <div className="evidence-groups">
-          {evidenceCategories.map((group, groupIndex) => (
+          {visibleCategories.map((group, groupIndex) => (
             <section className="evidence-group" id={`evidence-category-${groupIndex + 1}`} key={group.label}>
               <header><span>{String(groupIndex + 1).padStart(2, "0")}</span><h2>{english ? group.labelEn : group.label}</h2><small>{group.items.length}</small></header>
               <div className={`evidence-grid evidence-grid-${group.items.length}`}>
@@ -126,11 +138,9 @@ export default function EvidenceRoom() {
                       <button className="evidence-card-link" type="button" onClick={() => openPreview(item)} aria-label={`${english ? item.titleEn : item.title} · ${english ? "Preview evidence" : "预览证据"}`}>
                         <img src={item.image} alt={english ? item.titleEn : item.title} loading="lazy" />
                         <div className="evidence-card-copy">
+                          <span className="evidence-type">{evidenceType(item, english)}</span>
                           <p>{english ? item.metaEn : item.meta}</p>
                           <h3>{english ? item.titleEn : item.title}</h3>
-                          <div className="evidence-type-tags" aria-label={english ? "Evidence types" : "证据类型"}>
-                            {getEvidenceTypes(item).map((type) => <span key={type}>{evidenceTypeLabels[type][english ? 1 : 0]}</span>)}
-                          </div>
                           <span>{english ? "View Evidence" : "查看证据"} {arrow}</span>
                         </div>
                       </button>
@@ -138,11 +148,9 @@ export default function EvidenceRoom() {
                       <a href={item.href} {...(!item.restricted ? { target: "_blank", rel: "noopener noreferrer" } : {})} aria-label={`${english ? item.titleEn : item.title} · ${item.restricted ? (english ? "Request evidence" : "联系获取") : (english ? "Open evidence" : "打开证据")}`}>
                         <div className="document-mark" aria-hidden="true"><span>DOC</span><strong>{item.documentLabel ?? "Original Research"}</strong></div>
                       <div className="evidence-card-copy">
+                        <span className="evidence-type">{evidenceType(item, english)}</span>
                         <p>{english ? item.metaEn : item.meta}</p>
                         <h3>{english ? item.titleEn : item.title}</h3>
-                        <div className="evidence-type-tags" aria-label={english ? "Evidence types" : "证据类型"}>
-                          {getEvidenceTypes(item).map((type) => <span key={type}>{evidenceTypeLabels[type][english ? 1 : 0]}</span>)}
-                        </div>
                         <span>{item.restricted ? (english ? "Request Evidence" : "联系获取") : (english ? "View Evidence" : "查看证据")} {arrow}</span>
                       </div>
                       </a>
@@ -155,8 +163,8 @@ export default function EvidenceRoom() {
         </div>
       </section>
 
-      <ContactButton />
-      <BackToTopButton />
+      <ContactButton english={english} />
+      <BackToTopButton english={english} />
 
       {preview?.image ? (
         <div className="evidence-lightbox" onClick={() => setPreview(null)} role="presentation">
@@ -166,6 +174,7 @@ export default function EvidenceRoom() {
             </button>
             <img alt={english ? preview.titleEn : preview.title} src={preview.image} />
             <div>
+              <span className="evidence-type">{evidenceType(preview, english)}</span>
               <p>{english ? preview.metaEn : preview.meta}</p>
               <h2>{english ? preview.titleEn : preview.title}</h2>
               <a href={preview.href} rel="noopener noreferrer" target="_blank">{english ? "Open original" : "打开原图"} {arrow}</a>
@@ -175,7 +184,7 @@ export default function EvidenceRoom() {
       ) : null}
 
       <footer>
-        <span>王永城 · Tommy</span>
+        <span>{english ? "Tommy Wang" : "王永城 · Tommy"}</span>
         <nav aria-label={english ? "Site information" : "网站说明"}>
           <Link href="/">{english ? "Back to homepage" : "返回首页"}</Link>
           <Link href="/about-site#accessibility">Accessibility</Link>

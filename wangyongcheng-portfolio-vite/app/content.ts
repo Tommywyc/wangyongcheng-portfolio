@@ -16,7 +16,7 @@ export type Achievement = {
   title: string;
   description: string;
   sortDate?: string;
-  status?: "获奖" | "进行中" | "已完成" | "任职中" | "未获奖";
+  status?: "已完成" | "进行中" | "计划中";
   featured?: boolean;
   result?: string;
   englishTitle?: string;
@@ -135,7 +135,7 @@ export const achievements: Achievement[] = [
     role: "参赛者",
     title: "外研社“国才杯”综合赛项",
     description: "参加校赛，未获奖、未晋级。",
-    status: "未获奖",
+    status: "已完成",
     evidenceId: "evidence-guocai-exam",
   },
   {
@@ -282,7 +282,7 @@ export const achievements: Achievement[] = [
     role: "模拟法庭赛队员",
     title: "“求索杯”模拟法庭",
     description: "参加西南交通大学公共管理学院“求索杯”校级科创竞赛模拟法庭赛。",
-    status: "获奖",
+    status: "已完成",
     result: "校级优胜奖 · 28支队伍第7名",
     featured: true,
     accent: "blue",
@@ -297,7 +297,7 @@ export const achievements: Achievement[] = [
     role: "参赛者",
     title: "全国大学生英语竞赛",
     description: "参加全国大学生英语竞赛，未获奖、未晋级。",
-    status: "未获奖",
+    status: "已完成",
     evidenceId: "evidence-neccs-exam",
   },
   {
@@ -310,7 +310,7 @@ export const achievements: Achievement[] = [
     title: "窗与石",
     englishTitle: "The Window and the Stone",
     description: "从苏州园林花窗与云冈石窟出发，讨论文明交流如何改变观看与创造的方式。",
-    status: "获奖",
+    status: "已完成",
     result: "英语系实习活动演讲比赛二等奖 · 84.33分",
     featured: true,
     accent: "copper",
@@ -326,7 +326,7 @@ export const achievements: Achievement[] = [
     title: "非遗邛崃酒跨境英文直播",
     description:
       "参加英语专业认知实习中的跨境电商直播实训，承担英文台词补位、衔接救场与补充说明工作。",
-    status: "获奖",
+    status: "已完成",
     result: "团体竞赛二等奖",
     featured: true,
     accent: "ink",
@@ -411,7 +411,7 @@ export const achievements: Achievement[] = [
     role: "班级成员",
     title: "《压力拜拜，快乐常在》心理主题班会",
     description: "所在班级参加2026年度西南交通大学“交心”心理班会展示会。",
-    status: "获奖",
+    status: "已完成",
     result: "二等奖",
     evidenceId: "evidence-class-meeting",
   },
@@ -448,6 +448,7 @@ export const achievements: Achievement[] = [
     title: "课程建设与宣讲运营",
     description:
       "拟于2026年9月履任，届时将参与课程素材建设、劳育课程宣讲支持、宣讲人员统筹、课程运营台账、数据整理与反馈优化。",
+    status: "计划中",
   },
 ];
 
