@@ -1923,12 +1923,14 @@ footer {
 
 @media (max-width: 768px) {
   .contact-float {
+    visibility: hidden;
     opacity: 0;
     pointer-events: none;
     transform: translateY(1rem) scale(0.92);
   }
 
   .contact-float[data-mobile-visible="true"] {
+    visibility: visible;
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0) scale(1);
@@ -2874,6 +2876,7 @@ footer {
   box-shadow: 0 12px 28px rgba(23, 40, 58, 0.16);
   color: var(--ink);
   cursor: pointer;
+  visibility: hidden;
   opacity: 0;
   pointer-events: none;
   transform: translateY(0.8rem) scale(0.92);
@@ -2881,6 +2884,7 @@ footer {
 }
 
 .back-to-top.is-visible {
+  visibility: visible;
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0) scale(1);
@@ -4976,17 +4980,12 @@ footer nav a:focus-visible {
     border-right: 0;
   }
 
-  .inquiry-card:last-child {
-    grid-column: 1 / -1;
-    border-top: 1px solid var(--line);
-  }
-
   .conversation-section {
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
   .site-header {
     width: calc(100% - 2rem);
     align-items: center;
@@ -5090,20 +5089,32 @@ footer nav a:focus-visible {
     margin-left: 0;
     justify-content: center;
   }
+}
 
+@media (max-width: 768px) {
   .hero {
     min-height: 0;
-    padding-top: 6.6rem;
+    padding-top: 5.8rem;
     padding-right: max(1rem, env(safe-area-inset-right));
     padding-left: max(1rem, env(safe-area-inset-left));
   }
 
   .hero-copy {
-    padding-top: 2.2rem;
+    padding-top: 0.75rem;
   }
 
   .hero h1 {
-    font-size: clamp(2.6rem, 13vw, 4.4rem);
+    font-size: clamp(1.8rem, 9.6vw, 2.5rem);
+    line-height: 1.15;
+  }
+
+  .lang-en .hero h1 {
+    font-size: clamp(1.8rem, 8.8vw, 2.5rem);
+    line-height: 1.08;
+  }
+
+  .hero-copy .eyebrow {
+    margin-bottom: 1.2rem;
   }
 
   .hero-media {
@@ -5255,7 +5266,7 @@ footer nav a:focus-visible {
   }
 
   .hero h1 {
-    font-size: 2.55rem;
+    font-size: clamp(1.8rem, 9.6vw, 2.1rem);
   }
 
   .resume-downloads {

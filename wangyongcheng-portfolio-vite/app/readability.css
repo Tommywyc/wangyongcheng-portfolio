@@ -1,0 +1,63 @@
+/* Shared control and auxiliary-text sizes; preserve the existing palette and layout. */
+.site-header .header-tools > nav,
+.site-header .header-tools .header-index span,
+.language-switch,
+.mobile-menu-button,
+.hero-section-links a > span,
+.hero-application-callout a,
+.resume-options .resume-downloads a,
+.work-links a,
+.archive-evidence-link {
+  font-size: 0.875rem;
+}
+
+.eyebrow,
+.site-header .header-tools .header-index em,
+.hero-section-links a > em,
+.hero-application-callout strong,
+.resume-options article > span,
+.resume-decision-guide > span,
+.resume-decision-guide strong,
+.resume-decision-guide small,
+.resume-audience,
+.archive-card-meta,
+.evidence-card-copy .evidence-type,
+.evidence-lightbox-dialog .evidence-type,
+.inquiry-context time,
+.inquiry-card > header p,
+.contact-float small,
+.back-to-top small,
+footer {
+  font-size: 0.75rem;
+}
+
+.hero-application-callout p,
+.resume-options p,
+.evidence-lightbox-dialog p,
+.evidence-lightbox-dialog a {
+  font-size: 0.875rem;
+}
+
+@media (max-width: 1100px) {
+  .site-header .header-tools > nav a,
+  .site-header .header-tools .header-index a {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 901px) {
+  .lang-en .hero h1 {
+    font-size: clamp(3rem, 4.6vw, 5rem);
+    line-height: 1.02;
+  }
+
+  .lang-en .hero-intro {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .lang-en .hero-section-links {
+    margin-top: 2rem;
+  }
+}

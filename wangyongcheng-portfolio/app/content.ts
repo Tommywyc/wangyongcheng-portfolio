@@ -1,3 +1,5 @@
+import facts from "./portfolio-facts.json";
+
 export type Achievement = {
   id: string;
   period: "大一全年" | "大一上" | "大一下" | "大一暑假" | "大二全年" | "大二上";
@@ -30,11 +32,12 @@ export const achievements: Achievement[] = [
   {
     id: "cet4",
     period: "大一全年",
-    date: "成绩已确认",
+    date: `${facts.cet4.releaseDate} · 成绩公布`,
+    sortDate: facts.cet4.releaseDateISO,
     category: "成长节点",
     role: "大学英语四级考生",
     title: "大学英语四级（CET-4）",
-    description: "四级笔试总分568分：听力177分、阅读220分、写作和翻译171分；口试成绩为良好。",
+    description: "2026年2月27日公布四级成绩，笔试总分568分：听力177分、阅读220分、写作和翻译171分；口试成绩为良好。",
     result: "CET-4 · 568分 · 口试良好",
     status: "已完成",
     evidenceId: "evidence-cet4",
@@ -398,7 +401,7 @@ export const achievements: Achievement[] = [
     role: "研究者",
     title: "生成式人工智能图像的作品属性认定与人类独创性贡献研究",
     englishTitle:
-      "Work Status and Human Originality in Generative AI Images",
+      facts.aiImageResearchTitleEn,
     description:
       "围绕生成式人工智能图像的作品属性认定，研究人类独创性贡献的识别与评价问题。",
     status: "进行中",
@@ -478,6 +481,18 @@ export const achievements: Achievement[] = [
       "已正式就任，负责课程素材建设、劳育课程宣讲支持、宣讲人员统筹、课程运营台账、数据整理与反馈优化。",
     status: "任职中",
   },
+  {
+    id: "labor-education-outreach",
+    period: "大二上",
+    date: facts.laborOutreach.date,
+    sortDate: facts.laborOutreach.dateISO,
+    category: "学生工作",
+    role: "课程建设部部长 · 课程宣讲人",
+    title: facts.laborOutreach.title,
+    description: facts.laborOutreach.summary,
+    status: "已完成",
+    evidenceId: "evidence-labor-education-outreach",
+  },
 ];
 
 export const featuredAchievements = [
@@ -501,7 +516,7 @@ export const academicProfile = {
     },
   ],
   qualifications: [
-    { label: "CET-4", value: "568", status: "成绩已确认", evidenceId: "evidence-cet4" },
+    { label: "CET-4", value: "568", status: `${facts.cet4.releaseDate} 公布`, evidenceId: "evidence-cet4" },
     { label: "CET-6", value: "521", status: "成绩已确认", evidenceId: "evidence-cet6" },
     { label: "国才中级", value: "223 · 良好", status: "成绩已确认", evidenceId: "evidence-etic-intermediate" },
     { label: "TEM-4", value: "—", status: "未考" },

@@ -1,30 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useEffect } from "react";
+import { LanguageAnchor, LanguageLink as Link, LanguageProvider, usePortfolioLanguage } from "../../components/PortfolioLanguage";
+import type { Language } from "../../language";
 import type { WorkCaseStudy } from "../../work-data";
 import BackToTopButton from "../../components/BackToTopButton";
 import ContactButton from "../../components/ContactButton";
 import MobileMenuButton from "../../components/MobileMenuButton";
 
-export default function WorkDetail({ study }: { study: WorkCaseStudy }) {
-  const [language, setLanguage] = useState<"zh" | "en">("zh");
-  const english = language === "en";
+export default function WorkDetail({ study, initialLanguage }: { study: WorkCaseStudy; initialLanguage?: Language }) {
+  const { language, setLanguage, english } = usePortfolioLanguage(initialLanguage);
   const text = (value: { zh: string; en: string }) => english ? value.en : value.zh;
 
   useEffect(() => {
-    if (window.localStorage.getItem("portfolio-language") === "en") setLanguage("en");
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("portfolio-language", language);
-    document.documentElement.lang = english ? "en" : "zh-CN";
     document.title = `${text(study.title)}｜${english ? "Selected Work" : "代表成果"}｜Tommy Wang`;
   }, [english, language, study]);
 
   return (
-    <main className={english ? "work-detail-page lang-en" : "work-detail-page lang-zh"}>
-      <a className="skip-link" href="#case-main">{english ? "Skip to case study" : "跳到成果内容"}</a>
+    <LanguageProvider language={language}><main lang={english ? "en" : "zh-CN"} className={english ? "work-detail-page lang-en" : "work-detail-page lang-zh"}>
+      <LanguageAnchor className="skip-link" href="#case-main">{english ? "Skip to case study" : "跳到成果内容"}</LanguageAnchor>
       <header className="site-header archive-header">
         <Link className="wordmark" href="/" aria-label={english ? "Back to homepage" : "返回首页"}>
           <span className="wordmark-mark">{english ? "T" : "王"}</span>
@@ -49,13 +43,14 @@ export default function WorkDetail({ study }: { study: WorkCaseStudy }) {
           <p className="eyebrow">{study.number} · {text(study.category)} · {study.date}</p>
           <h1>{text(study.title)}</h1>
           {study.subtitle ? <p className="case-subtitle">{study.subtitle}</p> : null}
-          <a href={`/evidence#${study.evidenceId}`}>{english ? "View supporting evidence" : "查看对应证据"} <span aria-hidden="true">↗</span></a>
+          <LanguageAnchor href={`/evidence#${study.evidenceId}`}>{english ? "View supporting evidence" : "查看对应证据"} <span aria-hidden="true">↗</span></LanguageAnchor>
         </header>
 
         <div className="case-content">
           <section className="case-question">
             <p className="eyebrow">01 · {english ? "Question" : "问题"}</p>
             <h2>{text(study.question)}</h2>
+            <div className="case-scope"><h3>{english ? "Scope and my role" : "项目范围与个人角色"}</h3><p>{text(study.scope)}</p></div>
           </section>
           <section>
             <p className="eyebrow">02 · {english ? "What I did" : "我具体做了什么"}</p>
@@ -64,7 +59,8 @@ export default function WorkDetail({ study }: { study: WorkCaseStudy }) {
           <section className="case-output">
             <p className="eyebrow">03 · {english ? "Output" : "最终产出"}</p>
             <h2>{text(study.output)}</h2>
-            <a href={`/evidence#${study.evidenceId}`}>{english ? "Open evidence record" : "打开证据记录"} <span aria-hidden="true">↗</span></a>
+            <LanguageAnchor href={`/evidence#${study.evidenceId}`}>{english ? "Open evidence record" : "打开证据记录"} <span aria-hidden="true">↗</span></LanguageAnchor>
+            <div className="case-limitation"><h3>{english ? "What this record does not establish" : "成果与证据的边界"}</h3><p>{text(study.limitation)}</p></div>
           </section>
           <section className="case-reflection">
             <p className="eyebrow">04 · {english ? "Reflection" : "反思"}</p>
@@ -78,6 +74,6 @@ export default function WorkDetail({ study }: { study: WorkCaseStudy }) {
       </article>
       <ContactButton english={english} />
       <BackToTopButton english={english} />
-    </main>
+    </main></LanguageProvider>
   );
 }

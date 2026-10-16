@@ -1,11 +1,18 @@
+"use client";
+
+import { useState } from "react";
+import { email, emailSubject, tryCopyText } from "../contact-utils";
+
 type OpenToConversationProps = {
   english: boolean;
 };
 
-const email = "w3194510963@gmail.com";
-const emailSubject = "Undergraduate Research / Project Collaboration — Tommy Wang";
-
 export default function OpenToConversation({ english }: OpenToConversationProps) {
+  const [copyState, setCopyState] = useState<{ kind: "email" | "subject"; success: boolean } | null>(null);
+  const copy = async (kind: "email" | "subject") => {
+    const success = await tryCopyText(kind === "email" ? email : emailSubject, navigator.clipboard);
+    setCopyState({ kind, success });
+  };
   const opportunities = english
     ? ["Undergraduate research", "Summer schools", "Moot-court collaboration", "AI × language projects"]
     : ["本科生研究机会", "夏校", "模拟法庭合作", "AI × 语言项目"];
@@ -26,6 +33,16 @@ export default function OpenToConversation({ english }: OpenToConversationProps)
         <div className="conversation-materials">
           <p><strong>{english ? "Suggested email subject" : "英文邮件主题建议"}</strong><span>{emailSubject}</span></p>
           <p>{english ? "Transcript, full papers and supporting application materials are available on request." : "成绩单、论文全文和推荐材料可按需提供。"}</p>
+        </div>
+        <div className="contact-copy-tools">
+          <div className="contact-copy-buttons">
+            <button type="button" onClick={() => void copy("email")}>{english ? "Copy email" : "复制邮箱"}</button>
+            <button type="button" onClick={() => void copy("subject")}>{english ? "Copy English subject" : "复制英文主题"}</button>
+          </div>
+          <p role="status" className="contact-copy-status">{copyState ? copyState.success
+            ? (english ? `${copyState.kind === "email" ? "Email" : "Subject"} copied.` : `${copyState.kind === "email" ? "邮箱" : "主题"}已复制。`)
+            : (english ? "Copy unavailable. Select and copy the text below." : "暂时无法自动复制，请选中下方文字手动复制。") : ""}</p>
+          {copyState && !copyState.success ? <label className="contact-copy-fallback"><span>{english ? "Text to copy" : "待复制文字"}</span><input readOnly value={copyState.kind === "email" ? email : emailSubject} onFocus={(event) => event.target.select()} /></label> : null}
         </div>
       </div>
 

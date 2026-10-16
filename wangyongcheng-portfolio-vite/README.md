@@ -32,7 +32,9 @@ Chinese/English switching is provided on the homepage, all achievements, Evidenc
 
 This directory is the configured EdgeOne project root. Keep the existing Next.js framework preset, installation command `npm ci --no-audit --no-fund`, and build command `npm run build`.
 
-The `app/` pages and `public/` assets are synchronized with the published Sites version 56. The homepage uses `/images/hero-library.png`, the latest portrait with a striped tie. CET-4 and CET-6 are both grouped under the full freshman year; CET-6 results were released on August 24, 2026.
+The `app/` pages and `public/` assets are synchronized with published Sites version 59 (source `31685d5065e1dee82d6b9facf60de44d24882187`). This includes bilingual language URLs and server-rendered metadata, archive search/filter controls, contact-copy controls, responsive portrait variants, and the October 16 labor-education course outreach with the latest wide-format photo. The approved portrait and sharing card remain unchanged. CET-4 and CET-6 are both grouped under the full freshman year; their result-release dates are February 27 and August 24, 2026, respectively.
+
+`npm test` builds the Next.js application and runs its data/utility tests. The complete Vinext server-rendering suite is retained in the Sites source mirror; its Worker-based tests are not run against Next.js output.
 
 The legacy `src/` and committed `dist/` belong to an older Vite application and are not used by the current Next.js build. Do not select `dist` as the current deployment output.
 

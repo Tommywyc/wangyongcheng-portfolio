@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./readability.css";
+import "./archive-tools.css";
 
 const siteUrl = "https://www.wangyongcheng.com/";
 const shareImage = `${siteUrl}images/og-image-preview.png`;
@@ -39,8 +41,8 @@ export const metadata: Metadata = {
       {
         url: shareImage,
         type: "image/png",
-        width: 1200,
-        height: 630,
+        width: 1735,
+        height: 906,
         alt: "王永城个人学术作品集，聚焦 English、Law 与 AI",
       },
     ],

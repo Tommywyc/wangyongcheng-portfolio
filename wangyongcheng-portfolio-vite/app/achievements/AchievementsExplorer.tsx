@@ -1,16 +1,20 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { achievements, periodOrder, type Achievement } from "../content";
 import { achievementEnglish, categoryEnglish, periodEnglish, statusEnglish } from "../achievement-translations";
 import { coreEvidenceIds } from "../evidence-data";
+import { matchesQuery } from "../archive-search";
+import ArchiveFilters from "../components/ArchiveFilters";
+import { useArchiveQuery } from "../components/useArchiveQuery";
+import { LanguageAnchor } from "../components/PortfolioLanguage";
 
 type ViewMode = "time" | "tags";
 
 const categories: string[] = Array.from(new Set(achievements.map((item) => item.category)));
 
 const periodDateLabels: Record<string, string> = {
-  大一全年: "2025.09—2026.06",
+  大一全年: "2025.09—2026.08",
   大一上: "2025.09—2026.01",
   大一下: "2026.02—2026.07",
   大一暑假: "2026.07—2026.08",
@@ -40,35 +44,26 @@ function AchievementCard({ item, english }: { item: Achievement; english: boolea
             {english ? translated?.result : item.result}
           </strong>
         ) : null}
-        {item.evidenceId ? <a className="archive-evidence-link" href={`${coreEvidenceIds.has(item.evidenceId) ? "/evidence" : "/evidence/archive"}#${item.evidenceId}`}>{english ? "View evidence" : "查看证据"} <span aria-hidden="true">↗</span></a> : null}
+        {item.evidenceId ? <LanguageAnchor className="archive-evidence-link" href={`${coreEvidenceIds.has(item.evidenceId) ? "/evidence" : "/evidence/archive"}#${item.evidenceId}`}>{english ? "View evidence" : "查看证据"} <span aria-hidden="true">↗</span></LanguageAnchor> : null}
       </div>
     </article>
   );
 }
 
 export default function AchievementsExplorer({ english }: { english: boolean }) {
-  const [view, setView] = useState<ViewMode>("time");
-  const [activeCategory, setActiveCategory] = useState("全部");
-
-  useEffect(() => {
-    const requestedCategory = new URLSearchParams(window.location.search).get("tag");
-    const frame = window.requestAnimationFrame(() => {
-      if (requestedCategory && categories.includes(requestedCategory)) {
-        setView("tags");
-        setActiveCategory(requestedCategory);
-      }
-    });
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
+  const [filters, updateFilters] = useArchiveQuery({ q: "", tag: "", view: "" });
+  const activeCategory = categories.includes(filters.tag) ? filters.tag : "全部";
+  const view: ViewMode = filters.view === "tags" || (!filters.view && activeCategory !== "全部") ? "tags" : "time";
+  const setView = (next: ViewMode) => updateFilters({ view: next });
 
   const filtered = useMemo(
     () =>
       chronological(
-        activeCategory === "全部"
-          ? achievements
-          : achievements.filter((item) => item.category === activeCategory),
+        achievements.filter((item) => (activeCategory === "全部" || item.category === activeCategory)
+          && matchesQuery(filters.q, [item.title, item.englishTitle, item.description, item.role, item.result, item.category, item.period, item.date, item.status,
+            ...Object.values(achievementEnglish[item.id] ?? {}), categoryEnglish[item.category], periodEnglish[item.period]].join(" "))),
       ),
-    [activeCategory],
+    [activeCategory, filters.q],
   );
 
   return (
@@ -110,10 +105,16 @@ export default function AchievementsExplorer({ english }: { english: boolean }) 
         <p>{english ? `${achievements.length} entries · continually updated` : `${achievements.length} 项经历 · 持续更新`}</p>
       </div>
 
+      <ArchiveFilters id="achievements" english={english} query={filters.q} value={activeCategory === "全部" ? "" : activeCategory}
+        label={english ? "Category" : "类别"} options={categories.map((category) => ({ value: category, label: english ? categoryEnglish[category] : category }))}
+        count={filtered.length} total={achievements.length} onQuery={(q) => updateFilters({ q }, true)}
+        onValue={(tag) => updateFilters({ tag })} onReset={() => updateFilters({ q: "", tag: "" })} />
+
       {view === "time" ? (
         <div aria-labelledby="achievements-tab-time" className="timeline-view" id="achievements-panel-time" role="tabpanel">
           {periodOrder.map((period) => {
-            const items = chronological(achievements.filter((item) => item.period === period));
+            const items = filtered.filter((item) => item.period === period);
+            if (!items.length) return null;
             return (
               <section className="timeline-period" key={period}>
                 <header>
@@ -132,23 +133,6 @@ export default function AchievementsExplorer({ english }: { english: boolean }) 
         </div>
       ) : (
         <div aria-labelledby="achievements-tab-tags" className="tag-view" id="achievements-panel-tags" role="tabpanel">
-          <div className="category-filter" aria-label={english ? "Filter by category" : "按标签筛选"}>
-            {["全部", ...categories].map((category) => (
-              <button
-                className={activeCategory === category ? "active" : ""}
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                type="button"
-              >
-                {english ? (category === "全部" ? "All" : categoryEnglish[category]) : category}
-                <span>
-                  {category === "全部"
-                    ? achievements.length
-                    : achievements.filter((item) => item.category === category).length}
-                </span>
-              </button>
-            ))}
-          </div>
           <div className="tag-results" aria-live="polite">
             <div className="tag-results-heading">
               <p className="eyebrow">Filtered archive</p>

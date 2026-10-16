@@ -1,27 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useEffect } from "react";
+import { LanguageLink as Link, LanguageProvider, usePortfolioLanguage } from "../components/PortfolioLanguage";
+import type { Language } from "../language";
 import BackToTopButton from "../components/BackToTopButton";
 import ContactButton from "../components/ContactButton";
 import MobileMenuButton from "../components/MobileMenuButton";
 
-export default function AboutSiteContent() {
-  const [language, setLanguage] = useState<"zh" | "en">("zh");
-  const english = language === "en";
+export default function AboutSiteContent({ initialLanguage }: { initialLanguage?: Language }) {
+  const { language, setLanguage, english } = usePortfolioLanguage(initialLanguage);
 
   useEffect(() => {
-    if (window.localStorage.getItem("portfolio-language") === "en") setLanguage("en");
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("portfolio-language", language);
-    document.documentElement.lang = english ? "en" : "zh-CN";
     document.title = english ? "Accessibility, Privacy & Content｜Tommy" : "网站说明｜王永城 Tommy";
   }, [english, language]);
 
   return (
-    <main className={`information-page ${english ? "lang-en" : "lang-zh"}`}>
+    <LanguageProvider language={language}><main lang={english ? "en" : "zh-CN"} className={`information-page ${english ? "lang-en" : "lang-zh"}`}>
       <a className="skip-link" href="#information-main">{english ? "Skip to main content" : "跳到主要内容"}</a>
 
       <header className="site-header archive-header information-header">
@@ -63,10 +57,10 @@ export default function AboutSiteContent() {
           <p className="eyebrow">Privacy Notice</p>
           <h2 id="privacy-title">{english ? "Privacy" : "隐私说明"}</h2>
           <p>{english ? "The site follows data minimisation: it has no advertising tracking, analytics, heatmaps, third-party comments or web forms, and it does not sell visitor data. No non-essential cookies are set." : "本网站采用数据最小化原则，不设置广告追踪，不使用网站分析、热力图、第三方评论或在线表单，也不出售访客个人数据。网站本身不设置非必要 Cookie。"}</p>
-          <p>{english ? "Language preference is stored only in localStorage on the visitor’s device, so the Chinese or English interface can be remembered. Images, fonts, PDFs and evidence are served as first-party static assets, without automatically embedded third-party video or imagery." : "语言切换偏好会保存在访问设备的本地存储（localStorage）中，仅用于在下次访问时保留中文或英文界面选择。网站图片、字体、PDF 与证据资料均从本站静态资源加载，没有自动嵌入第三方视频或外部图片。"}</p>
+          <p>{english ? "An explicit ?lang=en or ?lang=zh link takes priority over the language preference saved in localStorage on your device. Without either, the site defaults to Chinese. Internal page links preserve the selected language. Images, fonts, PDFs and evidence are first-party static assets, without automatically embedded third-party video or imagery." : "链接中的 ?lang=en 或 ?lang=zh 优先于设备本地存储中的语言偏好；两者都没有时默认中文，站内跨页链接保留所选语言。网站图片、字体、PDF 与证据资料均从本站静态资源加载，没有自动嵌入第三方视频或外部图片。"}</p>
           <p>{english ? "Contact uses a standard mail link. Information is used only for reply and follow-up when a visitor voluntarily opens an email client and sends a message. The hosting provider may process basic access logs for security, availability and operations." : "“联系我”使用标准邮件链接。只有当访客主动打开邮件客户端并发送邮件时，相关信息才会被用于回复和后续沟通。托管服务商可能出于网站安全、可用性与运行需要处理基础访问日志。"}</p>
           <p>{english ? "Public evidence removes student numbers, certificate numbers, QR codes, group numbers and other unnecessary verification data wherever possible. Sensitive materials and additional evidence are available only after contact and purpose confirmation." : "公开证据已尽量移除与核验无关的学号、证件号码、二维码、群号等信息；敏感内容及更多证据仅在联系并确认用途后提供。"}</p>
-          <p><strong>{english ? "Updated:" : "更新时间："}</strong>{english ? " October 15, 2026" : "2026 年 10 月 15 日"}</p>
+          <p><strong>{english ? "Updated:" : "更新时间："}</strong>{english ? " October 16, 2026" : "2026 年 10 月 16 日"}</p>
         </section>
 
         <section aria-labelledby="about-title" id="about">
@@ -88,8 +82,8 @@ export default function AboutSiteContent() {
           <Link href="/achievements">{english ? "All Achievements" : "全部成就"}</Link>
           <Link href="/evidence">{english ? "Evidence Room" : "证据资料室"}</Link>
         </nav>
-        <span>Last updated · 2026.10.15</span>
+        <span>Last updated · 2026.10.16</span>
       </footer>
-    </main>
+    </main></LanguageProvider>
   );
 }

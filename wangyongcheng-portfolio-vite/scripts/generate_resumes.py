@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import json
 import shutil
 
 from reportlab.lib import colors
@@ -18,6 +19,9 @@ OUTPUT = ROOT / "output" / "pdf"
 PUBLIC = ROOT / "public"
 PHOTO = PUBLIC / "images" / "profile-formal.webp"
 CN_FONT = ROOT / "assets" / "fonts" / "NotoSerifSC-Regular.ttf"
+FACTS = json.loads((ROOT / "app" / "portfolio-facts.json").read_text(encoding="utf-8"))
+CET4_RELEASE = FACTS["cet4"]["releaseDate"]
+OUTREACH_DATE = FACTS["laborOutreach"]["date"]
 
 NAVY = colors.HexColor("#17283A")
 BLUE = colors.HexColor("#315E91")
@@ -274,10 +278,10 @@ def academic_resume(path):
     y = section(c, "EDUCATION & ACADEMIC PROFILE", x, y, width)
     y = bullets(c, [
         "B.A. candidate in English, Southwest Jiaotong University, 2025 cohort. Developing an English x Law pathway with an AI research component.",
-        "Freshman GPA: fall 3.6/4.0 (rank 28/56), spring 3.8/4.0 (rank pending). CET-4: 568; CET-6: 521; ETIC Intermediate: Good, 223.",
+        f"Freshman GPA: fall 3.6/4.0 (rank 28/56), spring 3.8/4.0 (rank pending). CET-4: 568 (released {CET4_RELEASE}); CET-6: 521 (released 2026.08.24); ETIC Intermediate: Good, 223.",
     ], x, y, width, gap=2.75) - 5
 
-    y = section(c, "SELECTED ENGLISH RESEARCH PAPERS", x, y, width)
+    y = section(c, "SELECTED ENGLISH COURSE PAPERS", x, y, width)
     y = bullets(c, [
         "Independently completed Does AI Equalize Learners or Widen the Gap?, a 2,990-word, 11-page paper using literature review, mechanism analysis and counterargument to examine learner agency, skill development and educational equity.",
         "The Alienation of Love: Guilt, Control, and the Shadow of Filial Piety in Dead Poets Society. A literary analysis of parental control, guilt and emotional alienation.",
@@ -286,12 +290,12 @@ def academic_resume(path):
     y = section(c, "ONGOING RESEARCH", x, y, width)
     y = bullets(c, [
         "AI in education and digital ethics: learner agency, educational equity, data responsibility and governance.",
-        "Generative AI images: examining whether images qualify as works and how human contributions to originality can be identified and assessed.",
+        "Generative AI images: examining copyrightability and how human contributions to originality can be identified and assessed.",
     ], x, y, width, gap=2.75) - 4
 
     y = section(c, "RELATED PRACTICE & RECOGNITION", x, y, width)
     y = bullets(c, [
-        "Quest Cup Moot Court: analyzed rules, organized team arguments and earned a university-level Merit Award, ranking 7th among 28 teams.",
+        "Quest Cup Moot Court: analyzed rules and prepared arguments with the team; the team received a university-level Merit Award and placed 7th among 28 teams.",
         "English speech Second Prize (84.33); cross-border English livestream Team Second Prize; FLTRP National Talent Cup university-round Silver Award (English Integrated Skills).",
     ], x, y, width, gap=2.75) - 4
 
@@ -315,13 +319,13 @@ def practice_resume(path):
     y = section(c, "EDUCATION & POSITIONING", x, y, width)
     y = bullets(c, [
         "B.A. candidate in English, Southwest Jiaotong University, 2025 cohort. Focused on communication, rules and project collaboration.",
-        "CET-4: 568; CET-6: 521; ETIC Intermediate: Good, 223. Freshman GPA: fall 3.6/4.0, spring 3.8/4.0.",
+        f"CET-4: 568 (released {CET4_RELEASE}); CET-6: 521 (released 2026.08.24); ETIC Intermediate: Good, 223. Freshman GPA: fall 3.6/4.0, spring 3.8/4.0.",
     ], x, y, width, gap=2.75) - 5
 
     y = section(c, "COMPETITIONS & PROJECT PRACTICE", x, y, width)
     y = bullets(c, [
         "Wrote and delivered The Window and the Stone (Second Prize, 84.33), using a Suzhou garden and the Yungang Grottoes to present cultural exchange clearly to a live audience.",
-        "Quest Cup Moot Court: analyzed competition rules, prepared team arguments and earned a university-level Merit Award, ranking 7th among 28 teams.",
+        "Quest Cup Moot Court: analyzed rules and prepared arguments with the team; the team received a university-level Merit Award and placed 7th among 28 teams.",
         "Cross-border English livestream practicum for Qionglai intangible-cultural-heritage liquor: provided English script backup, live transitions and supplementary explanations; Team Second Prize.",
     ], x, y, width, gap=2.75) - 4
 
@@ -329,7 +333,7 @@ def practice_resume(path):
     y = bullets(c, [
         "Comprehensive English class representative (freshman year): coordinated course notices and assignments, organized final-review materials and supported classroom operations.",
         "Organization Department member, School of Foreign Languages Student Union: supported on-site setup, attendance and order for the welcome gala, university sports meeting and multicultural campus event.",
-        "Youth Volunteers Union Project Department member, Sep 2025-Jul 2026 (Excellent assessment); formally appointed Head of Course Development in July 2026.",
+        f"Youth Volunteers Union: Project Department member, Sep 2025-Jul 2026 (Excellent); Head, Course Development Department from July 2026. Presented Labor Education and Practice course information to other schools on {OUTREACH_DATE}.",
     ], x, y, width, gap=2.75) - 4
 
     y = section(c, "VOLUNTEER SERVICE", x, y, width)
@@ -359,10 +363,10 @@ def academic_resume_cn(path):
     y = cn_section(c, "教育背景与学术概况", x, y, width)
     y = bullets(c, [
         "西南交通大学外国语学院英语专业本科生（2025年至今）。以学业表现和语言能力为基础，持续推进英语 × 法律 × AI 的交叉探索。",
-        "大一上 GPA 3.6/4.0，专业排名 28/56；大一下 GPA 3.8/4.0，排名待公布。CET-4 568分，CET-6 521分；国才中级良好（223分）。",
+        f"大一上 GPA 3.6/4.0，排名28/56；大一下3.8/4.0，排名待公布。<br/>四级568（<nobr>{CET4_RELEASE}</nobr>公布），六级521（<nobr>2026.08.24</nobr>公布）；国才中级良好223分。",
     ], x, y, width, gap=5, pstyle=CN_BODY) - 5
 
-    y = cn_section(c, "英文研究论文", x, y, width)
+    y = cn_section(c, "英文课程研究论文", x, y, width)
     y = bullets(c, [
         "独立完成《Does AI Equalize Learners or Widen the Gap?》：约 2990 词、11 页，围绕学习者能动性、技能发展与教育公平完成文献综述、机制分析与反证讨论。",
         "《The Alienation of Love: Guilt, Control, and the Shadow of Filial Piety in Dead Poets Society》：分析亲子控制、负罪感与情感异化。",
@@ -400,7 +404,7 @@ def practice_resume_cn(path):
     y = cn_section(c, "教育背景与定位", x, y, width)
     y = bullets(c, [
         "西南交通大学外国语学院英语专业本科生（2025年至今），在公众表达、跨文化沟通、项目协作与志愿服务中持续训练实践能力。",
-        "CET-4 568分，CET-6 521分，国才中级良好（223分）；大一上 GPA 3.6/4.0，大一下 GPA 3.8/4.0。",
+        f"四级568分（<nobr>{CET4_RELEASE}</nobr>公布），六级521分（<nobr>2026.08.24</nobr>公布），国才中级良好223分；大一上 GPA 3.6/4.0，大一下3.8/4.0。",
     ], x, y, width, gap=5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "竞赛与项目实践", x, y, width)
@@ -414,7 +418,7 @@ def practice_resume_cn(path):
     y = bullets(c, [
         "综合英语课代表（大一全年）：发布课程通知、协调作业收发、整理期末复习资料并支持课堂运行。",
         "外国语学院学生会组织部部员：参与迎新晚会、校运动会与“五洲风情”活动的现场布置、签到与秩序支持。",
-        "青年志愿者联合会活动项目部干事（2025.09—2026.07），任职考核优秀；2026年7月正式就任课程建设部部长。",
+        f"青志联活动项目部干事（2025.09—2026.07），考核优秀；2026年7月任课程建设部部长，{OUTREACH_DATE}向其他学院宣讲学校劳动教育与实践课程信息。",
     ], x, y, width, gap=4.5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "志愿服务与综合素养", x, y, width)

@@ -1,0 +1,26 @@
+/* Phase two: bounded additions, preserving the established navy / cream palette. */
+.archive-search-tools { margin: 1.5rem 0 2.5rem; padding: 1.5rem; border: 1px solid #72889a; background: #1b3040; color: #f5f1e6; }
+.archive-filter-fields { display: grid; grid-template-columns: minmax(0, 2fr) minmax(12rem, 1fr) auto; align-items: end; gap: 1rem; }
+.archive-filter-fields label, .contact-copy-fallback { display: grid; min-width: 0; gap: .5rem; font-size: .875rem; }
+.archive-filter-fields input, .archive-filter-fields select, .contact-copy-fallback input { width: 100%; min-width: 0; min-height: 44px; padding: .65rem .8rem; border: 1px solid #72889a; border-radius: 0; background: #f5f1e6; color: #172b3a; font: inherit; }
+.archive-filter-fields input::placeholder { color: #52616a; }
+.archive-filter-fields button, .contact-copy-buttons button { min-height: 44px; padding: .65rem 1rem; border: 1px solid #e8d58f; border-radius: 0; background: transparent; color: #f5e8b1; font: inherit; cursor: pointer; }
+.archive-filter-fields button:disabled { opacity: .6; cursor: default; }
+.archive-search-tools .archive-filter-count { margin: 1rem 0 0; color: #d5e1e9; font-size: .875rem; }
+.archive-search-tools .archive-empty { margin: 1rem 0 0; color: #f5f1e6; }
+.archive-filter-fields :focus-visible, .contact-copy-tools :focus-visible { outline: 3px solid #a8c8e2; outline-offset: 3px; }
+.evidence-archive .evidence-category-index { grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+.contact-copy-tools { margin-top: 1.5rem; }
+.contact-copy-buttons { display: flex; flex-wrap: wrap; gap: .75rem; }
+.contact-copy-buttons button { background: #172b3a; border-color: #172b3a; color: #f5f1e6; }
+.contact-copy-status { min-height: 1.6em; margin: .75rem 0; font-size: .875rem; color: #354e60; }
+.contact-copy-fallback { margin-top: .75rem; }
+.case-scope, .case-limitation { margin-top: 2rem; padding: 1.5rem; border-left: 2px solid #b6cddd; background: #203747; }
+.case-content .case-scope h3, .case-content .case-limitation h3 { margin: 0 0 .75rem; color: #f5e8b1; font-size: 1rem; }
+.case-content .case-scope p, .case-content .case-limitation p { margin: 0; color: #d5e1e9; font-size: 1rem; line-height: 1.8; }
+@media (max-width: 700px) {
+  .archive-search-tools { padding: 1rem; }
+  .archive-filter-fields { grid-template-columns: minmax(0, 1fr); }
+  .archive-filter-fields button { justify-self: start; }
+  .case-scope, .case-limitation { padding: 1rem; }
+}

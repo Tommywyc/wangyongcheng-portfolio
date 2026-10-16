@@ -1,29 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useEffect } from "react";
+import { LanguageLink as Link, LanguageProvider, usePortfolioLanguage } from "../components/PortfolioLanguage";
+import type { Language } from "../language";
 import AchievementsExplorer from "./AchievementsExplorer";
 import BackToTopButton from "../components/BackToTopButton";
 import ContactButton from "../components/ContactButton";
 import MobileMenuButton from "../components/MobileMenuButton";
 
-export default function AchievementsPageContent() {
-  const [language, setLanguage] = useState<"zh" | "en">("zh");
-  const english = language === "en";
+export default function AchievementsPageContent({ initialLanguage }: { initialLanguage?: Language }) {
+  const { language, setLanguage, english } = usePortfolioLanguage(initialLanguage);
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("portfolio-language");
-    if (saved === "en") setLanguage("en");
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("portfolio-language", language);
-    document.documentElement.lang = english ? "en" : "zh-CN";
     document.title = english ? "Complete Archive｜Tommy Wang｜English × Law × AI" : "全部成就｜王永城 Tommy｜English × Law × AI";
   }, [english, language]);
 
   return (
-    <main className={english ? "lang-en" : "lang-zh"}>
+    <LanguageProvider language={language}><main lang={english ? "en" : "zh-CN"} className={english ? "lang-en" : "lang-zh"}>
       <a className="skip-link" href="#archive-main">{english ? "Skip to archive" : "跳到主要内容"}</a>
 
       <header className="site-header archive-header">
@@ -71,6 +64,6 @@ export default function AchievementsPageContent() {
         </nav>
         <span>Last updated · 2026.10.16</span>
       </footer>
-    </main>
+    </main></LanguageProvider>
   );
 }

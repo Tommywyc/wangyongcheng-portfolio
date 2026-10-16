@@ -15,8 +15,13 @@ export default function BackToTopButton({ english = false }: { english?: boolean
   return (
     <button
       aria-label={english ? "Back to top" : "返回顶部"}
+      aria-hidden={!visible}
       className={`back-to-top${visible ? " is-visible" : ""}`}
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      onClick={() => window.scrollTo({
+        top: 0,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+      })}
+      tabIndex={visible ? 0 : -1}
       type="button"
     >
       <span aria-hidden="true">↑</span>

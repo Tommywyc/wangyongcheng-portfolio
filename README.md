@@ -2,14 +2,14 @@
 
 ## 最新网站源码
 
-EdgeOne 实际部署目录为 [`wangyongcheng-portfolio-vite/`](./wangyongcheng-portfolio-vite/)，已同步第 **56** 版的全部页面和公开资源，使用 Next.js 构建。
+EdgeOne 实际部署目录为 [`wangyongcheng-portfolio-vite/`](./wangyongcheng-portfolio-vite/)，已同步第 **59** 版的全部页面和公开资源，使用 Next.js 构建。
 
 Sites 原始源码保留在 [`wangyongcheng-portfolio/`](./wangyongcheng-portfolio/)。两个目录的 `app/` 和 `public/` 内容一致，构建配置分别适配 EdgeOne 和 Sites。
 
 - 正式网站：https://wangyongcheng-portfolio.tommy-wyc.chatgpt.site
-- 源码版本：`7de298d18798a10674f509431aa6f0db76c09c04`
+- 源码版本：`31685d5065e1dee82d6b9facf60de44d24882187`
 - 同步日期：2026-10-16
-- 最新调整：CET-6 归入“大一全年”，成绩公布日期保留为 2026-08-24。
+- 最新调整：三阶段可读性、导航与双语优化；搜索筛选、邮件复制、可分享语言链接；新增 10 月 16 日劳动教育课程宣讲及最新现场照片；CET-4 成绩公布日期为 2026-02-27，CET-6 保留为 2026-08-24。
 - 包含页面、中英文内容、样式、图片、公开证据资料、四份简历、生成脚本、测试及构建配置。
 - 不包含依赖目录、缓存、登录凭据或未公开的原始证件。
 

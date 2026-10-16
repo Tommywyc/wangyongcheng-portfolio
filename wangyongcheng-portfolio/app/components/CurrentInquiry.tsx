@@ -1,3 +1,5 @@
+import facts from "../portfolio-facts.json";
+
 type CurrentInquiryProps = {
   english: boolean;
 };
@@ -17,16 +19,23 @@ export const currentInquiryContent = {
     {
       field: "AI & Copyright",
       question: "生成式人工智能图像能否构成作品，人类的独创性贡献如何认定？",
-      questionEn: "When can generative AI images qualify as works, and how should human originality be assessed?",
+      questionEn: "When are generative AI images copyrightable, and how should human contributions to originality be assessed?",
       description:
         "围绕生成式人工智能图像的作品属性认定，关注人类在生成过程中的独创性贡献及其识别与评价。",
       descriptionEn:
-        "I am examining the work status of generative AI images and how human contributions to originality during generation can be identified and assessed.",
+        "I am examining the copyrightability of generative AI images and how human contributions to originality during generation can be identified and assessed.",
     },
   ],
 } as const;
 
 export const progressUpdates = [
+  {
+    date: facts.laborOutreach.date,
+    title: facts.laborOutreach.title,
+    titleEn: facts.laborOutreach.titleEn,
+    detail: facts.laborOutreach.summary,
+    detailEn: facts.laborOutreach.summaryEn,
+  },
   {
     date: "2026.10",
     title: "语言与任职证明",
@@ -46,7 +55,7 @@ export const progressUpdates = [
     title: "研究推进",
     titleEn: "Research progress",
     detail: "当前研究方向更新为生成式人工智能图像的作品属性认定与人类独创性贡献。",
-    detailEn: "The current research direction examines work status and human originality in generative AI images.",
+    detailEn: "The current research direction examines the copyrightability of generative AI images and human contributions to originality.",
   },
   {
     date: "NEXT",

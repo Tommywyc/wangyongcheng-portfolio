@@ -1,3 +1,5 @@
+import facts from "./portfolio-facts.json";
+
 export type EvidenceItem = {
   id: string;
   title: string;
@@ -24,7 +26,7 @@ export const evidenceCategories: EvidenceCategory[] = [
     items: [
       { id: "evidence-cet6", title: "CET-6 成绩：521分", titleEn: "CET-6 Score · 521", meta: "2026.08.24 成绩公布 · 听力190 · 阅读191 · 写作和翻译140", metaEn: "Results released 2026.08.24 · Listening 190 · Reading 191 · Writing & Translation 140", href: "/evidence/cet6-521-redacted.png", image: "/evidence/cet6-521-redacted.png" },
       { id: "evidence-etic-intermediate", title: "国才考试（中级）· 良好", titleEn: "ETIC Intermediate · Good", meta: "2026.08.15 · 口头229 · 书面216 · 总分223", metaEn: "2026.08.15 · Oral 229 · Written 216 · Total 223", href: "/evidence/etic-intermediate-redacted.png", image: "/evidence/etic-intermediate-redacted.png" },
-      { id: "evidence-cet4", title: "CET-4 成绩：568分", titleEn: "CET-4 Score · 568", meta: "听力177 · 阅读220 · 写作和翻译171 · 口试良好", metaEn: "Listening 177 · Reading 220 · Writing & Translation 171 · Speaking: Good", href: "/evidence/cet4-568-redacted.jpg", image: "/evidence/cet4-568-redacted.jpg" },
+      { id: "evidence-cet4", title: "CET-4 成绩：568分", titleEn: "CET-4 Score · 568", meta: `${facts.cet4.releaseDate} 成绩公布 · 听力177 · 阅读220 · 写作和翻译171 · 口试良好`, metaEn: `Results released ${facts.cet4.releaseDate} · Listening 177 · Reading 220 · Writing & Translation 171 · Speaking: Good`, href: "/evidence/cet4-568-redacted.jpg", image: "/evidence/cet4-568-redacted.jpg" },
       { id: "evidence-second-classroom", title: "第二课堂成绩单", titleEn: "Second Classroom Record", meta: "累计81学时 · 社会实践与志愿服务26学时", metaEn: "81 total hours · 26 hours in social practice and volunteering", href: "/evidence/second-classroom-record.jpg", image: "/evidence/second-classroom-record.jpg" },
       { id: "evidence-comprehensive-english-representative", title: "综合英语课代表工作文档", titleEn: "Comprehensive English Class Representative Record", meta: "2025—2026 · 班级课程日历与事务协调", metaEn: "2025—2026 · course calendar and class coordination", href: "/evidence/comprehensive-english-representative.png", image: "/evidence/comprehensive-english-representative.png" },
     ],
@@ -65,6 +67,8 @@ export const evidenceCategories: EvidenceCategory[] = [
     label: "学生工作与校园活动",
     labelEn: "Student Leadership & Campus Life",
     items: [
+      { id: "evidence-labor-education-outreach", title: "劳动教育与实践课程宣讲 · 现场", titleEn: "Labor Education and Practice Course Outreach · Presentation", meta: `${facts.laborOutreach.date} · 面向其他学院的课程信息宣讲`, metaEn: `${facts.laborOutreach.date} · course information presented to other schools`, href: "/evidence/labor-education-outreach-2026-10-16-wide.jpg", image: "/evidence/labor-education-outreach-2026-10-16-wide.jpg" },
+      { id: "evidence-labor-education-materials", title: "劳动教育与实践课程宣讲 · 材料现场", titleEn: "Labor Education and Practice Course Outreach · Materials on Site", meta: `${facts.laborOutreach.date} · 宣讲现场的课程材料照片`, metaEn: `${facts.laborOutreach.date} · photograph of course materials at the presentation`, href: "/evidence/labor-education-materials-2026-10-16.jpg", image: "/evidence/labor-education-materials-2026-10-16.jpg" },
       { id: "evidence-volunteer-appointment", title: "活动项目部任职证明 · 优秀", titleEn: "Volunteer Project Department Appointment · Excellent", meta: "2025.09—2026.07 · 工作成绩优秀", metaEn: "2025.09—2026.07 · Excellent performance", href: "/evidence/volunteer-appointment-excellent-redacted.png", image: "/evidence/volunteer-appointment-excellent-redacted.png" },
       { id: "evidence-student-union-organization", title: "学生会组织部任职通知", titleEn: "Student Union Organization Department Appointment", meta: "2025.09 · 外国语学院学生会组织部干事", metaEn: "2025.09 · School of Foreign Languages Student Union", href: "/evidence/student-union-organization.jpg", image: "/evidence/student-union-organization.jpg" },
       { id: "evidence-welcome-gala-group", title: "学院迎新晚会", titleEn: "College Welcome Gala", meta: "2025.12.14 · “文化之声·世界回响”", metaEn: "2025.12.14 · Voices · Echoes", href: "/evidence/welcome-gala-group.jpg", image: "/evidence/welcome-gala-group.jpg" },
@@ -84,8 +88,8 @@ export const evidenceCategories: EvidenceCategory[] = [
     label: "学术写作",
     labelEn: "Academic Writing",
     items: [
-      { id: "evidence-ai-paper", title: "生成式AI与学习者能动性研究", titleEn: "Generative AI & Learner Agency Paper", meta: "大一下期末英文研究论文 · 完整原文联系后提供", metaEn: "Freshman spring research paper · full text available on request", href: "mailto:w3194510963@gmail.com?subject=Evidence%20request%20%E2%80%94%20Generative%20AI%20%26%20Learner%20Agency", document: true, restricted: true },
-      { id: "evidence-literature-paper", title: "《死亡诗社》中的爱、控制与孝道", titleEn: "Love, Control & Filial Piety in Dead Poets Society", meta: "大一上期末英文研究论文 · 完整原文联系后提供", metaEn: "Freshman fall research paper · full text available on request", href: "mailto:w3194510963@gmail.com?subject=Evidence%20request%20%E2%80%94%20Dead%20Poets%20Society%20Paper", document: true, restricted: true },
+      { id: "evidence-ai-paper", title: "生成式AI与学习者能动性研究", titleEn: "Generative AI & Learner Agency Paper", meta: "大一下期末英文研究论文 · 完整原文联系后提供", metaEn: "Freshman spring course research paper · full text available on request", href: "mailto:w3194510963@gmail.com?subject=Evidence%20request%20%E2%80%94%20Generative%20AI%20%26%20Learner%20Agency", document: true, restricted: true, documentLabel: "Course Paper" },
+      { id: "evidence-literature-paper", title: "《死亡诗社》中的爱、控制与孝道", titleEn: "Love, Control & Filial Piety in Dead Poets Society", meta: "大一上期末英文研究论文 · 完整原文联系后提供", metaEn: "Freshman fall course research paper · full text available on request", href: "mailto:w3194510963@gmail.com?subject=Evidence%20request%20%E2%80%94%20Dead%20Poets%20Society%20Paper", document: true, restricted: true, documentLabel: "Course Paper" },
       { id: "evidence-information-literacy-script", title: "信息茧房微视频提交脚本", titleEn: "Information Bubble Microvideo Submission Script", meta: "2026.07 · 信息素养大赛作品文档 · 完整材料联系后提供", metaEn: "2026.07 · information literacy competition document · full material available on request", href: "mailto:w3194510963@gmail.com?subject=Evidence%20request%20%E2%80%94%20Information%20Literacy%20Script", document: true, restricted: true, documentLabel: "Competition Script" },
     ],
   },

@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { LanguageLink as Link, LanguageProvider, usePortfolioLanguage } from "../components/PortfolioLanguage";
+import type { Language } from "../language";
 import { archiveEvidenceCategories, coreEvidenceCategories, totalEvidenceCount, type EvidenceItem } from "../evidence-data";
 import BackToTopButton from "../components/BackToTopButton";
 import ContactButton from "../components/ContactButton";
 import MobileMenuButton from "../components/MobileMenuButton";
+import ArchiveFilters from "../components/ArchiveFilters";
+import { useArchiveQuery } from "../components/useArchiveQuery";
+import { matchesQuery } from "../archive-search";
 
 const arrow = "↗";
 
@@ -30,14 +34,22 @@ function evidenceType(item: EvidenceItem, english: boolean) {
   return english ? "On-site photograph" : "现场照片";
 }
 
-export default function EvidenceRoom({ archive = false }: { archive?: boolean }) {
-  const [language, setLanguage] = useState<"zh" | "en">("zh");
+export default function EvidenceRoom({ archive = false, initialLanguage }: { archive?: boolean; initialLanguage?: Language }) {
+  const { language, setLanguage, english } = usePortfolioLanguage(initialLanguage);
   const [preview, setPreview] = useState<EvidenceItem | null>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
   const dialogRef = useRef<HTMLElement | null>(null);
-  const english = language === "en";
   const visibleCategories = archive ? archiveEvidenceCategories : coreEvidenceCategories;
   const visibleCount = visibleCategories.reduce((sum, group) => sum + group.items.length, 0);
+  const [filters, updateFilters] = useArchiveQuery({ q: "", type: "" });
+  const typeItems = Array.from(new Map(visibleCategories.flatMap((group) => group.items).map((item) => [evidenceType(item, false), item])).entries());
+  const activeType = typeItems.some(([type]) => type === filters.type) ? filters.type : "";
+  const groups = visibleCategories.map((group, groupIndex) => ({
+    ...group, groupIndex,
+    items: archive ? group.items.filter((item) => (!activeType || evidenceType(item, false) === activeType)
+      && matchesQuery(filters.q, [item.title, item.titleEn, item.meta, item.metaEn, group.label, group.labelEn, evidenceType(item, false), evidenceType(item, true)].join(" "))) : group.items,
+  })).filter((group) => group.items.length > 0);
+  const resultCount = groups.reduce((sum, group) => sum + group.items.length, 0);
 
   const openPreview = (item: EvidenceItem) => {
     previousFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -45,16 +57,6 @@ export default function EvidenceRoom({ archive = false }: { archive?: boolean })
   };
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("portfolio-language");
-    const frame = window.requestAnimationFrame(() => {
-      if (saved === "en") setLanguage("en");
-    });
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("portfolio-language", language);
-    document.documentElement.lang = english ? "en" : "zh-CN";
     document.title = archive
       ? (english ? "Complete Evidence Archive｜Tommy Wang" : "证据完整归档｜王永城 Tommy")
       : (english ? "Evidence Room｜Tommy Wang｜English × Law × AI" : "证据资料室｜王永城 Tommy｜English × Law × AI");
@@ -89,7 +91,7 @@ export default function EvidenceRoom({ archive = false }: { archive?: boolean })
   }, [preview]);
 
   return (
-    <main className={`evidence-page ${archive ? "evidence-archive" : "evidence-selected"} ${english ? "lang-en" : "lang-zh"}`}>
+    <LanguageProvider language={language}><main lang={english ? "en" : "zh-CN"} className={`evidence-page ${archive ? "evidence-archive" : "evidence-selected"} ${english ? "lang-en" : "lang-zh"}`}>
       <a className="skip-link" href="#evidence-main">{english ? "Skip to evidence" : "跳到证据内容"}</a>
 
       <header className="site-header archive-header evidence-header">
@@ -126,10 +128,14 @@ export default function EvidenceRoom({ archive = false }: { archive?: boolean })
       </section>
 
       <section className="evidence-section evidence-page-content">
-        <nav className={`evidence-category-index evidence-category-index-${visibleCategories.length}`} aria-label={english ? "Evidence categories" : "证据分类索引"}>
-          {visibleCategories.map((group, groupIndex) => (
-            <a href={`#evidence-category-${groupIndex + 1}`} key={group.label}>
-              <em>{String(groupIndex + 1).padStart(2, "0")}</em>
+        {archive ? <ArchiveFilters id="evidence" english={english} query={filters.q} value={activeType}
+          label={english ? "Material type" : "材料类型"} options={typeItems.map(([type, item]) => ({ value: type, label: evidenceType(item, english) }))}
+          count={resultCount} total={visibleCount} onQuery={(q) => updateFilters({ q }, true)} onValue={(type) => updateFilters({ type })}
+          onReset={() => updateFilters({ q: "", type: "" })} /> : null}
+        <nav className={`evidence-category-index evidence-category-index-${groups.length}`} aria-label={english ? "Evidence categories" : "证据分类索引"}>
+          {groups.map((group) => (
+            <a href={`#evidence-category-${group.groupIndex + 1}`} key={group.label}>
+              <em>{String(group.groupIndex + 1).padStart(2, "0")}</em>
               <span>{english ? group.labelEn : group.label}</span>
               <small>{group.items.length}</small>
             </a>
@@ -143,9 +149,9 @@ export default function EvidenceRoom({ archive = false }: { archive?: boolean })
           <Link href={archive ? "/evidence" : "/evidence/archive"}>{archive ? (english ? "Selected evidence" : "核心证据") : (english ? "Open full archive" : "进入完整归档")} <span aria-hidden="true">↗</span></Link>
         </div>
         <div className="evidence-groups">
-          {visibleCategories.map((group, groupIndex) => (
-            <section className="evidence-group" id={`evidence-category-${groupIndex + 1}`} key={group.label}>
-              <header><span>{String(groupIndex + 1).padStart(2, "0")}</span><h2>{english ? group.labelEn : group.label}</h2><small>{group.items.length}</small></header>
+          {groups.map((group) => (
+            <section className="evidence-group" id={`evidence-category-${group.groupIndex + 1}`} key={group.label}>
+              <header><span>{String(group.groupIndex + 1).padStart(2, "0")}</span><h2>{english ? group.labelEn : group.label}</h2><small>{group.items.length}</small></header>
               <div className={`evidence-grid evidence-grid-${group.items.length}`}>
                 {group.items.map((item) => (
                   <article className={`evidence-card${item.document ? " evidence-document" : ""}`} id={item.id} key={item.id}>
@@ -208,6 +214,6 @@ export default function EvidenceRoom({ archive = false }: { archive?: boolean })
         </nav>
         <span>Last updated · 2026.10.16</span>
       </footer>
-    </main>
+    </main></LanguageProvider>
   );
 }
