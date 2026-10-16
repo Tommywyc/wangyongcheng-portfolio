@@ -15,6 +15,7 @@ const periodDateLabels: Record<string, string> = {
   大一下: "2026.02—2026.07",
   大一暑假: "2026.07—2026.08",
   大二上: "2026.09—",
+  大二全年: "2026—2027",
 };
 
 const chronological = (items: Achievement[]) =>
@@ -73,7 +74,14 @@ export default function AchievementsExplorer({ english }: { english: boolean }) 
   return (
     <section className="archive-explorer" aria-label={english ? "Complete achievements archive" : "完整成就浏览器"}>
       <div className="view-toolbar">
-        <div className="view-switch" role="tablist" aria-label={english ? "Archive view" : "浏览方式"}>
+        <div className="view-switch" role="tablist" aria-label={english ? "Archive view" : "浏览方式"}
+          onKeyDown={(event) => {
+            if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+            event.preventDefault();
+            const next: ViewMode = event.key === "Home" ? "time" : event.key === "End" ? "tags" : view === "time" ? "tags" : "time";
+            setView(next);
+            document.getElementById(`achievements-tab-${next}`)?.focus();
+          }}>
           <button
             aria-controls="achievements-panel-time"
             aria-selected={view === "time"}

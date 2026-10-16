@@ -10,15 +10,16 @@ import MobileMenuButton from "../components/MobileMenuButton";
 const arrow = "↗";
 
 const evidenceTypeGroups = {
-  certificate: new Set(["evidence-moot-court", "evidence-speech", "evidence-livestream", "evidence-class-meeting", "evidence-yunda-run-certificate"]),
-  score: new Set(["evidence-cet4", "evidence-second-classroom"]),
-  appointment: new Set(["evidence-comprehensive-english-representative", "evidence-student-union-organization", "evidence-debate-team", "evidence-activity-project-department", "evidence-campus-civilization", "evidence-volunteer-assessment"]),
+  certificate: new Set(["evidence-campus-bus-1", "evidence-guocai-exam", "evidence-moot-court", "evidence-speech", "evidence-livestream", "evidence-class-meeting", "evidence-yunda-run-certificate"]),
+  score: new Set(["evidence-cet6", "evidence-etic-intermediate", "evidence-cet4", "evidence-second-classroom"]),
+  appointment: new Set(["evidence-volunteer-appointment", "evidence-comprehensive-english-representative", "evidence-student-union-organization", "evidence-debate-team", "evidence-activity-project-department", "evidence-campus-civilization", "evidence-volunteer-assessment"]),
   platform: new Set(["evidence-volunteer", "evidence-childrens-day", "evidence-gongga-cup-registration", "evidence-transport-approval"]),
   reference: new Set(["evidence-neccs-exam"]),
-  participation: new Set(["evidence-guocai-exam", "evidence-neccs-exam", "evidence-self-study-2025-site", "evidence-self-study-2025-field", "evidence-self-study-2026-materials", "evidence-self-study-2026-volunteer", "evidence-gongga-cup-registration", "evidence-gongga-cup-venue"]),
+  participation: new Set(["evidence-self-study-2025-site", "evidence-self-study-2025-field", "evidence-self-study-2026-materials", "evidence-self-study-2026-volunteer", "evidence-gongga-cup-venue"]),
 } as const;
 
 function evidenceType(item: EvidenceItem, english: boolean) {
+  if (item.id === "evidence-gpa") return english ? "Academic record" : "学业记录";
   if (item.document) return english ? "Research / project document" : "研究 / 项目文档";
   if (evidenceTypeGroups.certificate.has(item.id)) return english ? "Official certificate" : "官方证书";
   if (evidenceTypeGroups.score.has(item.id)) return english ? "Score record" : "成绩记录";
@@ -33,6 +34,7 @@ export default function EvidenceRoom({ archive = false }: { archive?: boolean })
   const [language, setLanguage] = useState<"zh" | "en">("zh");
   const [preview, setPreview] = useState<EvidenceItem | null>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
+  const dialogRef = useRef<HTMLElement | null>(null);
   const english = language === "en";
   const visibleCategories = archive ? archiveEvidenceCategories : coreEvidenceCategories;
   const visibleCount = visibleCategories.reduce((sum, group) => sum + group.items.length, 0);
@@ -63,6 +65,19 @@ export default function EvidenceRoom({ archive = false }: { archive?: boolean })
     const previousOverflow = document.body.style.overflow;
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") setPreview(null);
+      if (event.key === "Tab") {
+        const controls = dialogRef.current?.querySelectorAll<HTMLElement>('button, a[href]');
+        if (!controls?.length) return;
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", closeOnEscape);
@@ -168,7 +183,7 @@ export default function EvidenceRoom({ archive = false }: { archive?: boolean })
 
       {preview?.image ? (
         <div className="evidence-lightbox" onClick={() => setPreview(null)} role="presentation">
-          <section aria-label={english ? "Evidence image preview" : "证据图片预览"} aria-modal="true" className="evidence-lightbox-dialog" onClick={(event) => event.stopPropagation()} role="dialog">
+          <section ref={dialogRef} aria-label={english ? "Evidence image preview" : "证据图片预览"} aria-modal="true" className="evidence-lightbox-dialog" onClick={(event) => event.stopPropagation()} role="dialog">
             <button aria-label={english ? "Close evidence preview" : "关闭证据预览"} autoFocus className="evidence-lightbox-close" onClick={() => setPreview(null)} type="button">
               <span aria-hidden="true">×</span>{english ? "Close" : "关闭"}
             </button>
@@ -177,7 +192,7 @@ export default function EvidenceRoom({ archive = false }: { archive?: boolean })
               <span className="evidence-type">{evidenceType(preview, english)}</span>
               <p>{english ? preview.metaEn : preview.meta}</p>
               <h2>{english ? preview.titleEn : preview.title}</h2>
-              <a href={preview.href} rel="noopener noreferrer" target="_blank">{english ? "Open original" : "打开原图"} {arrow}</a>
+              <a href={preview.href} rel="noopener noreferrer" target="_blank">{english ? "Open public copy" : "打开公开版材料"} {arrow}</a>
             </div>
           </section>
         </div>
@@ -191,8 +206,7 @@ export default function EvidenceRoom({ archive = false }: { archive?: boolean })
           <Link href="/about-site#privacy">Privacy</Link>
           <Link href="/about-site#about">About This Site</Link>
         </nav>
-        <span className="evidence-privacy-note">{english ? "Sensitive content and additional evidence are available on request." : "敏感内容及更多证据联系后提供"}</span>
-        <span>Last updated · 2026.07</span>
+        <span>Last updated · 2026.10.16</span>
       </footer>
     </main>
   );

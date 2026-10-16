@@ -2,7 +2,9 @@
 
 ## 最新网站源码
 
-当前线上第 **56** 版的完整源码位于 [`wangyongcheng-portfolio/`](./wangyongcheng-portfolio/)。
+EdgeOne 实际部署目录为 [`wangyongcheng-portfolio-vite/`](./wangyongcheng-portfolio-vite/)，已同步第 **56** 版的全部页面和公开资源，使用 Next.js 构建。
+
+Sites 原始源码保留在 [`wangyongcheng-portfolio/`](./wangyongcheng-portfolio/)。两个目录的 `app/` 和 `public/` 内容一致，构建配置分别适配 EdgeOne 和 Sites。
 
 - 正式网站：https://wangyongcheng-portfolio.tommy-wyc.chatgpt.site
 - 源码版本：`7de298d18798a10674f509431aa6f0db76c09c04`
@@ -16,18 +18,18 @@
 需要 Node.js 22.13 或以上版本。
 
 ```bash
-cd wangyongcheng-portfolio
+cd wangyongcheng-portfolio-vite
 npm ci
 npm run dev
 ```
 
 ```bash
 npm run build
-node --test tests/rendered-html.test.mjs
+npm run start
 ```
 
-部署采用 Vinext / Cloudflare Worker，不是旧版纯静态 Vite 工程。构建、严格类型检查及4项测试已在该源码的发布版本上通过。
+EdgeOne 保持根目录 `wangyongcheng-portfolio-vite`、安装命令 `npm ci --no-audit --no-fund`、构建命令 `npm run build`，由现有 Next.js 适配器处理输出。Sites 目录使用 Vinext / Cloudflare Worker，不能直接替代 EdgeOne 的构建设置。
 
 ## 历史版本
 
-`wangyongcheng-portfolio-vite/` 和 `wangyongcheng-portfolio-vite (1)/` 保留为历史工程，未覆盖或删除。请使用上方的最新源码目录。
+`wangyongcheng-portfolio-vite (1)/` 为历史工程。`wangyongcheng-portfolio-vite/src/` 和其中已提交的旧 `dist/` 不参与当前 Next.js 构建；实际页面来自 `app/`，公开资源来自 `public/`。

@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.edgeone/
+.wrangler/
+*.tsbuildinfo
+next-env.d.ts
+.env*
+output/
+outputs/
+.DS_Store

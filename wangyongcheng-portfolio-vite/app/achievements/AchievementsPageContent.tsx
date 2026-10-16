@@ -69,7 +69,7 @@ export default function AchievementsPageContent() {
           <Link href="/about-site#privacy">Privacy</Link>
           <Link href="/about-site#about">About This Site</Link>
         </nav>
-        <span>Last updated · 2026.07</span>
+        <span>Last updated · 2026.10.16</span>
       </footer>
     </main>
   );

@@ -2006,6 +2006,13 @@ footer {
   color: var(--white);
 }
 
+.evidence-page-content .evidence-category-index a:hover em,
+.evidence-page-content .evidence-category-index a:hover small,
+.evidence-page-content .evidence-category-index a:focus-visible em,
+.evidence-page-content .evidence-category-index a:focus-visible small {
+  color: #d9e7f3;
+}
+
 .evidence-category-index-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -3772,8 +3779,8 @@ footer {
 
 /* Final homepage tone: quieter gold, centered portrait, and plain index links */
 .hero-media > img {
-  /* Shift the library portrait slightly left in the composition without cropping the subject. */
-  object-position: 80% center;
+  /* Move the subject slightly right within the Hero frame. */
+  object-position: 65% center;
 }
 
 @media (min-width: 701px) {
@@ -4587,7 +4594,7 @@ img {
 
 .inquiry-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
@@ -4784,7 +4791,7 @@ footer nav a:focus-visible {
   }
 
   .hero-media > img {
-    object-position: 80% center;
+    object-position: 65% center;
   }
 
   .lang-en .identity-layout-compact {
@@ -5369,7 +5376,7 @@ footer nav a:focus-visible {
 
 .about-progress > div {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   border: 1px solid var(--line);
   background: var(--line);
 }
@@ -5637,5 +5644,42 @@ footer nav a:focus-visible {
   .hero-section-links a:focus-visible {
     background: #fff5cc;
     color: var(--ink);
+  }
+}
+
+/* Keep the desktop hero as one composed unit, slightly lower beneath the header. */
+@media (min-width: 901px) {
+  .hero-copy,
+  .hero-monogram {
+    transform: translateY(1.5rem);
+  }
+
+  .hero-media {
+    transform: translate(-1.5rem, 1.5rem);
+  }
+}
+
+/* Allow full bilingual category labels and comfortable touch targets on phones. */
+@media (max-width: 620px) {
+  .evidence-page-content .evidence-category-index {
+    grid-template-columns: 1fr;
+  }
+
+  .evidence-page-content .evidence-category-index a {
+    grid-column: auto;
+    min-height: 52px;
+    padding: 0.85rem 1rem;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    gap: 0.8rem;
+    font-size: 0.875rem;
+  }
+
+  .evidence-page-content .evidence-category-index a:first-child {
+    border-top: 0;
+  }
+
+  .evidence-page-content .evidence-category-index span {
+    white-space: normal;
   }
 }

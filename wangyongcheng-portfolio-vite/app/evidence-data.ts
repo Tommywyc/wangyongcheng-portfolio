@@ -22,7 +22,9 @@ export const evidenceCategories: EvidenceCategory[] = [
     label: "学业与语言",
     labelEn: "Academic & Language",
     items: [
-      { id: "evidence-cet4", title: "CET-4 成绩：568分", titleEn: "CET-4 Score · 568", meta: "听力177 · 阅读220 · 写作和翻译171 · 证件信息已脱敏", metaEn: "Listening 177 · Reading 220 · Writing & Translation 171 · identifiers redacted", href: "/evidence/cet4-568-redacted.jpg", image: "/evidence/cet4-568-redacted.jpg" },
+      { id: "evidence-cet6", title: "CET-6 成绩：521分", titleEn: "CET-6 Score · 521", meta: "2026.08.24 成绩公布 · 听力190 · 阅读191 · 写作和翻译140", metaEn: "Results released 2026.08.24 · Listening 190 · Reading 191 · Writing & Translation 140", href: "/evidence/cet6-521-redacted.png", image: "/evidence/cet6-521-redacted.png" },
+      { id: "evidence-etic-intermediate", title: "国才考试（中级）· 良好", titleEn: "ETIC Intermediate · Good", meta: "2026.08.15 · 口头229 · 书面216 · 总分223", metaEn: "2026.08.15 · Oral 229 · Written 216 · Total 223", href: "/evidence/etic-intermediate-redacted.png", image: "/evidence/etic-intermediate-redacted.png" },
+      { id: "evidence-cet4", title: "CET-4 成绩：568分", titleEn: "CET-4 Score · 568", meta: "听力177 · 阅读220 · 写作和翻译171 · 口试良好", metaEn: "Listening 177 · Reading 220 · Writing & Translation 171 · Speaking: Good", href: "/evidence/cet4-568-redacted.jpg", image: "/evidence/cet4-568-redacted.jpg" },
       { id: "evidence-second-classroom", title: "第二课堂成绩单", titleEn: "Second Classroom Record", meta: "累计81学时 · 社会实践与志愿服务26学时", metaEn: "81 total hours · 26 hours in social practice and volunteering", href: "/evidence/second-classroom-record.jpg", image: "/evidence/second-classroom-record.jpg" },
       { id: "evidence-comprehensive-english-representative", title: "综合英语课代表工作文档", titleEn: "Comprehensive English Class Representative Record", meta: "2025—2026 · 班级课程日历与事务协调", metaEn: "2025—2026 · course calendar and class coordination", href: "/evidence/comprehensive-english-representative.png", image: "/evidence/comprehensive-english-representative.png" },
     ],
@@ -34,7 +36,7 @@ export const evidenceCategories: EvidenceCategory[] = [
       { id: "evidence-moot-court", title: "模拟法庭优胜奖", titleEn: "Moot Court Merit Award", meta: "校级竞赛 · 28支队伍第7名", metaEn: "University-level competition · 7th among 28 teams", href: "/evidence/moot-court-award-public.jpg", image: "/evidence/moot-court-award-public.jpg" },
       { id: "evidence-speech", title: "英语演讲比赛二等奖", titleEn: "English Speech · Second Prize", meta: "The Window and the Stone · 84.33分", metaEn: "The Window and the Stone · 84.33", href: "/evidence/speech-second-prize.jpg", image: "/evidence/speech-second-prize.jpg" },
       { id: "evidence-livestream", title: "跨境英文直播团体二等奖", titleEn: "Cross-border Livestream · Team Second Prize", meta: "英语专业认知实习 · 2026.07.06", metaEn: "English major practicum · 2026.07.06", href: "/evidence/livestream-second-prize.jpg", image: "/evidence/livestream-second-prize.jpg" },
-      { id: "evidence-guocai-exam", title: "外研社“国才杯”综合赛项考场", titleEn: "FLTRP National Talent Cup · Exam Room", meta: "2025.10.12 · 校赛参赛现场", metaEn: "2025.10.12 · campus competition participation", href: "/evidence/guocai-exam-room.jpg", image: "/evidence/guocai-exam-room.jpg" },
+      { id: "evidence-guocai-exam", title: "外研社“国才杯”校赛银奖", titleEn: "FLTRP National Talent Cup · University-round Silver Award", meta: "2025 · 英语组综合能力赛项 · 校赛银奖", metaEn: "2025 · English Integrated Skills · University-round Silver Award", href: "/evidence/guocai-silver-redacted.pdf", image: "/evidence/guocai-silver-redacted.jpg" },
       { id: "evidence-neccs-exam", title: "全国大学生英语竞赛考试形式", titleEn: "National English Competition · Exam Format", meta: "竞赛备考与题型参考", metaEn: "competition preparation and format reference", href: "/evidence/neccs-exam-format-public.jpg", image: "/evidence/neccs-exam-format-public.jpg" },
     ],
   },
@@ -42,7 +44,7 @@ export const evidenceCategories: EvidenceCategory[] = [
     label: "志愿服务",
     labelEn: "Volunteer Service",
     items: [
-      { id: "evidence-volunteer", title: "志愿服务50小时记录", titleEn: "50 Hours of Volunteer Service", meta: "志愿四川 · 截至2026.06 · 身份信息与二维码已脱敏", metaEn: "Sichuan Volunteer Service · through 2026.06 · identifiers and QR code redacted", href: "/evidence/volunteer-50-hours-redacted.jpg", image: "/evidence/volunteer-50-hours-redacted.jpg" },
+      { id: "evidence-volunteer", title: "志愿服务50小时记录", titleEn: "50 Hours of Volunteer Service", meta: "志愿四川 · 截至2026.06 · 累计50小时", metaEn: "Sichuan Volunteer Service · through 2026.06 · 50 total hours", href: "/evidence/volunteer-50-hours-redacted.jpg", image: "/evidence/volunteer-50-hours-redacted.jpg" },
       { id: "evidence-alma-mater-presentation", title: "母校返校宣讲", titleEn: "Alma Mater Outreach Presentation", meta: "2026.01.21 · 连续走进5个班级", metaEn: "2026.01.21 · presented in five classes", href: "/evidence/alma-mater-presentation.jpg", image: "/evidence/alma-mater-presentation.jpg" },
       { id: "evidence-zhouzhuang-promotion", title: "周庄古镇宣传推广", titleEn: "Zhouzhuang Ancient Town Promotion", meta: "2026.01.28 · “返家乡”志愿活动", metaEn: "2026.01.28 · Returning Home volunteer activity", href: "/evidence/zhouzhuang-scenery.jpg", image: "/evidence/zhouzhuang-scenery.jpg" },
       { id: "evidence-self-study-2025-site", title: "2025年10月自学考试考点", titleEn: "Self-Study Exam Site · October 2025", meta: "西南交通大学考点 · 现场记录", metaEn: "Southwest Jiaotong University site · field record", href: "/evidence/self-study-2025-site.jpg", image: "/evidence/self-study-2025-site.jpg" },
@@ -53,7 +55,7 @@ export const evidenceCategories: EvidenceCategory[] = [
       { id: "evidence-childrens-day-scene", title: "“缤纷六一，守护童心”现场", titleEn: "Children's Day Care Activity · On Site", meta: "2026.05.31 · 关爱活动物资与现场支持", metaEn: "2026.05.31 · activity materials and on-site support", href: "/evidence/childrens-day-supplement.jpg", image: "/evidence/childrens-day-supplement.jpg" },
       { id: "evidence-anniversary", title: "校庆志愿服务", titleEn: "University Anniversary Volunteer Service", meta: "2026.05.09 · 志愿者服装发放", metaEn: "2026.05.09 · volunteer uniform distribution", href: "/evidence/anniversary-volunteer.jpg", image: "/evidence/anniversary-volunteer.jpg" },
       { id: "evidence-transport-approval", title: "“交通·公益”审批材料", titleEn: "Transport · Public Welfare Approval", meta: "2026.04.18 · 志愿服务季材料", metaEn: "2026.04.18 · service-season materials", href: "/evidence/transport-public-welfare-approval.jpg", image: "/evidence/transport-public-welfare-approval.jpg" },
-      { id: "evidence-campus-bus-1", title: "“畅行校车，语暖中外”志愿活动", titleEn: "Multilingual Campus Bus Volunteer Service", meta: "2026.06 · 校车站点服务现场", metaEn: "2026.06 · campus bus stop service", href: "/evidence/school-bus-volunteer-1.jpg", image: "/evidence/school-bus-volunteer-1.jpg" },
+      { id: "evidence-campus-bus-1", title: "“畅行校车·语暖中外”优秀志愿者", titleEn: "Multilingual Campus Bus Service · Outstanding Volunteer", meta: "2026.09 · 外国语学院团委 · 荣誉证书", metaEn: "2026.09 · School of Foreign Languages Youth League Committee · certificate of honor", href: "/evidence/campus-bus-outstanding-volunteer.jpg", image: "/evidence/campus-bus-outstanding-volunteer.jpg" },
       { id: "evidence-campus-bus-2", title: "校园校车多语种暖心服务", titleEn: "Campus Bus Multilingual Support", meta: "2026.06 · 校车出行指引", metaEn: "2026.06 · campus bus travel guidance", href: "/evidence/school-bus-volunteer-2.jpg", image: "/evidence/school-bus-volunteer-2.jpg" },
       { id: "evidence-gongga-cup-registration", title: "“贡嘎杯”高校男排志愿服务", titleEn: "Gongga Cup Volleyball Volunteer Service", meta: "2026.04.22 · 志愿服务报名记录", metaEn: "2026.04.22 · volunteer registration record", href: "/evidence/gongga-cup-registration.jpg", image: "/evidence/gongga-cup-registration.jpg" },
       { id: "evidence-gongga-cup-venue", title: "“贡嘎杯”赛事现场", titleEn: "Gongga Cup Volleyball Venue", meta: "2026.04.22 · 高校男子排球专业组", metaEn: "2026.04.22 · university men's volleyball division", href: "/evidence/gongga-cup-venue.jpg", image: "/evidence/gongga-cup-venue.jpg" },
@@ -63,6 +65,7 @@ export const evidenceCategories: EvidenceCategory[] = [
     label: "学生工作与校园活动",
     labelEn: "Student Leadership & Campus Life",
     items: [
+      { id: "evidence-volunteer-appointment", title: "活动项目部任职证明 · 优秀", titleEn: "Volunteer Project Department Appointment · Excellent", meta: "2025.09—2026.07 · 工作成绩优秀", metaEn: "2025.09—2026.07 · Excellent performance", href: "/evidence/volunteer-appointment-excellent-redacted.png", image: "/evidence/volunteer-appointment-excellent-redacted.png" },
       { id: "evidence-student-union-organization", title: "学生会组织部任职通知", titleEn: "Student Union Organization Department Appointment", meta: "2025.09 · 外国语学院学生会组织部干事", metaEn: "2025.09 · School of Foreign Languages Student Union", href: "/evidence/student-union-organization.jpg", image: "/evidence/student-union-organization.jpg" },
       { id: "evidence-welcome-gala-group", title: "学院迎新晚会", titleEn: "College Welcome Gala", meta: "2025.12.14 · “文化之声·世界回响”", metaEn: "2025.12.14 · Voices · Echoes", href: "/evidence/welcome-gala-group.jpg", image: "/evidence/welcome-gala-group.jpg" },
       { id: "evidence-welcome-gala-field", title: "学院迎新晚会现场", titleEn: "College Welcome Gala · On Site", meta: "2025.12.14 · 组织工作现场", metaEn: "2025.12.14 · event operations on site", href: "/evidence/welcome-gala-field.jpg", image: "/evidence/welcome-gala-field.jpg" },
@@ -107,24 +110,24 @@ export const coreEvidenceCategories: EvidenceCategory[] = [
   {
     label: "学业证明",
     labelEn: "Academic Proof",
-    items: [gpaEvidence, ...selectEvidence(["evidence-cet4", "evidence-ai-paper", "evidence-literature-paper"])],
+    items: [gpaEvidence, ...selectEvidence(["evidence-cet6", "evidence-cet4", "evidence-etic-intermediate", "evidence-ai-paper", "evidence-literature-paper"])],
   },
   {
     label: "代表成果",
     labelEn: "Signature Work",
-    items: selectEvidence(["evidence-moot-court", "evidence-speech", "evidence-livestream"]),
+    items: selectEvidence(["evidence-guocai-exam", "evidence-moot-court", "evidence-speech", "evidence-livestream"]),
   },
   {
     label: "服务与领导力",
     labelEn: "Service & Leadership",
-    items: selectEvidence(["evidence-volunteer", "evidence-student-union-organization", "evidence-comprehensive-english-representative", "evidence-activity-project-department"]),
+    items: selectEvidence(["evidence-volunteer-appointment", "evidence-campus-bus-1", "evidence-volunteer", "evidence-student-union-organization", "evidence-comprehensive-english-representative"]),
   },
 ];
 
 const coreIds = new Set(coreEvidenceCategories.flatMap((group) => group.items).map((item) => item.id));
 
 // The complete archive deliberately retains every original record. The selected
-// page establishes evidence strength; this page preserves the full 38-item trail.
+// page establishes evidence strength; this page preserves the complete record.
 export const archiveEvidenceCategories: EvidenceCategory[] = evidenceCategories;
 
 export const coreEvidenceIds = coreIds;

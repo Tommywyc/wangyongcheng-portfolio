@@ -49,7 +49,7 @@ const featuredEnglish: Record<string, { category: string; period: string; role: 
   "“求索杯”模拟法庭": { category:"Competition Award", period:"Freshman · Spring", role:"Moot court team member", title:'“Quest Cup” Moot Court Competition', description:"Competed in the university-level moot court competition organized by the School of Public Administration at Southwest Jiaotong University.", result:"Merit Award · 7th among 28 teams" },
   "大一下学期期末英文研究论文": { category:"Academic Research", period:"Freshman · Spring", role:"Author", title:"Final-term English Research Paper", englishTitle:"Does AI Equalize Learners or Widen the Gap? Learner Agency and Skill Development in Generative AI-Assisted Learning", description:"A 2,990-word, 11-page paper examining learner agency, skill development and educational equity through literature review, mechanism analysis and counterargument.", result:"Generative AI · Learner Agency · Educational Equity" },
   "窗与石": { category:"Competition Award", period:"Freshman · Spring", role:"English speech contestant", title:"The Window and the Stone", description:"Beginning with a framed view in a Suzhou garden and the Yungang Grottoes, the speech explores how cultural exchange reshapes the ways people see and create.", result:"Second Prize · 84.33" },
-  "我们不是在争吵，而是在被算法推着争吵": { category:"Competition Project", period:"Freshman · Spring", role:"Project team member", title:"We Are Not Arguing—The Algorithm Is Pushing Us to Argue", description:"Created a competition micro-video on filter bubbles, recommendation algorithms and information-literacy-based retrieval.", result:"Information Literacy Competition · Result pending" },
+  "我们不是在争吵，而是在被算法推着争吵": { category:"Competition Project", period:"Freshman · Spring", role:"Project team member", title:"We Are Not Arguing—The Algorithm Is Pushing Us to Argue", description:"Created a competition micro-video on filter bubbles, recommendation algorithms and information-literacy-based retrieval. The competition has ended; no award was received.", result:"Information Literacy Competition · Completed without an award" },
   "非遗邛崃酒跨境英文直播": { category:"Project Practice", period:"Freshman · Spring", role:"Cross-border livestream team member", title:"Cross-border English Livestream for Qionglai Intangible-Cultural-Heritage Liquor", description:"Supported an English-language cross-border e-commerce livestream by bridging scripts, handling transitions and providing supplementary explanations.", result:"Team Second Prize" },
 };
 
@@ -59,23 +59,23 @@ const academicEnglish = {
     { term:"Freshman · Spring", gpa:"3.8 / 4.0", rank:"Major rank pending", note:"Grades confirmed" },
   ],
   qualifications:[
-    { label:"CET-4", value:"568", status:"Completed" },
-    { label:"CET-6", value:"—", status:"Result pending" },
+    { label:"CET-4", value:"568", status:"Score confirmed", evidenceId:"evidence-cet4" },
+    { label:"CET-6", value:"521", status:"Score confirmed", evidenceId:"evidence-cet6" },
+    { label:"ETIC Intermediate", value:"223 · Good", status:"Score confirmed", evidenceId:"evidence-etic-intermediate" },
     { label:"TEM-4", value:"—", status:"Not taken" },
     { label:"TEM-8", value:"—", status:"Not taken" },
   ],
   research:[
     "Two final-term English research papers completed",
-    "AI-assisted English writing assessment: application materials in preparation",
     "Research on AI in education and digital ethics",
-    "Research on accuracy and risk in AI-assisted legal translation",
+    "Research on work status and human originality in generative AI images",
   ],
 };
 
 const pathwayEnglish = [
   { stage:"LANGUAGE", time:"ONGOING", title:"Language and research foundation", description:"I turn English reading, writing, speaking and translation into reliable, verifiable academic and communicative ability.", focus:"Research Writing · Speech · Translation", actions:["Strengthen academic English", "Sustain research-oriented writing", "Build evidence-based expression"] },
   { stage:"RULES", time:"ONGOING", title:"Rules, texts and cross-context questions", description:"Through civil-law study, case briefs, moot court and legal English, I move beyond interest toward careful reading of rules, texts and responsibility.", focus:"Case Brief · Legal English · Moot Court", actions:["Build civil-law and case-analysis foundations", "Practice clear rule-based argumentation", "Test questions through legal-related practice"] },
-  { stage:"TECH / AI", time:"ONGOING", title:"Technology literacy and digital ethics", description:"I examine how intelligent systems reshape learning and legal texts, focusing on accuracy, human agency, accountability and risks when technology enters real decisions.", focus:"AI Literacy · Digital Ethics · Legal Tech", actions:["Advance AI-in-education and legal-translation research", "Connect technology questions with language and rules", "Keep claims grounded in verifiable texts and evidence"] },
+  { stage:"TECH / AI", time:"ONGOING", title:"Technology literacy and digital ethics", description:"I examine how intelligent systems reshape learning and creative work, focusing on accuracy, human agency, accountability and risks when technology enters real decisions.", focus:"AI Literacy · Digital Ethics · Legal Technology", actions:["Advance research on AI in education and generative-image work status", "Connect technology questions with language and rules", "Keep claims grounded in verifiable texts and evidence"] },
 ];
 
 export default function Home() {
@@ -164,7 +164,7 @@ export default function Home() {
         </div>
 
         <aside className="hero-media" aria-label={english ? "Portrait and profile statement" : "个人形象与定位"}>
-          <img alt={english ? "Portrait of Tommy in a library" : "王永城的个人肖像"} fetchPriority="high" height="844" src="/images/hero-library.webp" width="1500" />
+          <img alt={english ? "Portrait of Tommy in a library" : "王永城的个人肖像"} fetchPriority="high" height="1448" src="/images/hero-library.png" width="1086" />
           <div className="hero-note">
             <p>{english ? "Language is the entry point" : "语言是入口"}</p>
             <p>{english ? "Rules are the coordinate" : "规则是坐标"}</p>
@@ -187,7 +187,7 @@ export default function Home() {
           <div className="identity-heading">
             <p className="eyebrow">01 · Profile</p>
             <h2>{english ? "Language grounds my work. Rules and technology sharpen my questions." : "以语言为基，理解规则，也理解技术。"}</h2>
-            <p className="identity-side-note">{english ? "First-year undergraduate · English major" : "大一 · 英语专业 · 持续生长的学习档案"}</p>
+            <p className="identity-side-note">{english ? "English major · 2025 cohort" : "2025级 · 英语专业 · 持续生长的学习档案"}</p>
           </div>
 
           <div className="identity-copy">
@@ -195,7 +195,7 @@ export default function Home() {
               {english ? "I am Tommy, an English major at Southwest Jiaotong University. My path is not to place English, law and AI side by side, but to connect them: using language to enter complex texts, rules to examine responsibility, and technology literacy to understand change." : "我是王永城，西南交通大学外国语学院英语专业学生。我的主线不是简单地把英语、法律和 AI 并列，而是让三者彼此连接：以语言进入复杂文本，以规则审视责任，以技术理解变革。"}
             </p>
             <p>
-              {english ? "My current focus is to strengthen academic performance and research-based English writing, while turning questions about AI, digital ethics and legal translation into verifiable texts, projects and practical experience." : "现阶段，我关注学业表现、研究型英文写作与跨学科项目积累，并尝试将对 AI、数字伦理与法律翻译的关注沉淀为可验证的文本、成果与实践经历。"}
+              {english ? "My current focus is to strengthen academic performance and research-based English writing, while developing questions about AI, digital ethics and human originality in generative images through texts, projects and practical experience." : "现阶段，我关注学业表现、研究型英文写作与跨学科项目积累，并尝试将对 AI、数字伦理与生成式图像中人类独创性贡献的关注沉淀为可验证的文本、成果与实践经历。"}
             </p>
             <div className="identity-facts" aria-label={english ? "Profile facts" : "个人信息概览"}>
               <div><span>{english ? "Institution" : "学校"}</span><strong>{english ? "Southwest Jiaotong University" : "西南交通大学"}</strong></div>
@@ -288,7 +288,7 @@ export default function Home() {
             <div className="academic-glance" aria-label={english ? "Academic highlights" : "学术概况摘要"}>
               <span><small>{english ? "Fall GPA" : "大一上 GPA"}</small><strong>3.6 / 4.0</strong></span>
               <span><small>{english ? "Spring GPA" : "大一下 GPA"}</small><strong>3.8 / 4.0</strong></span>
-              <span><small>CET-4</small><strong>568</strong></span>
+              <span><small>CET-4 / CET-6</small><strong>568 / 521</strong></span>
               <span><small>{english ? "Research papers" : "英文研究论文"}</small><strong>2</strong></span>
             </div>
             <span className="disclosure-control"><span className="closed-label">{english ? "View details" : "展开详情"}</span><span className="open-label">{english ? "Close details" : "收起详情"}</span><i aria-hidden="true">＋</i></span>
@@ -314,7 +314,7 @@ export default function Home() {
               <h3>{english ? "English Qualifications" : "英语能力记录"}</h3>
               <div className="qualification-list">
                 {academics.qualifications.map((item) => (
-                  <div key={item.label}><span>{item.label}</span><strong>{item.value}</strong><small>{item.label === "CET-4" ? <a href="/evidence#evidence-cet4">{english ? "View Evidence ↗" : "查看证据 ↗"}</a> : item.status}</small></div>
+                  <div key={item.label}><span>{item.label}</span><strong>{item.value}</strong><small>{item.evidenceId ? <a href={`/evidence#${item.evidenceId}`}>{english ? "View evidence ↗" : "查看证据 ↗"}</a> : item.status}</small></div>
                 ))}
               </div>
             </article>
@@ -473,7 +473,7 @@ export default function Home() {
           <a href="/about-site#about">About This Site</a>
         </nav>
         <span>English × Law × AI</span>
-        <span>Last updated · 2026.07</span>
+        <span>Last updated · 2026.10.16</span>
       </footer>
     </main>
   );

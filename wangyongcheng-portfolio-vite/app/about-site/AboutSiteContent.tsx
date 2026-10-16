@@ -45,7 +45,7 @@ export default function AboutSiteContent() {
 
       <section className="information-hero" id="information-main">
         <div className="hero-grid" aria-hidden="true" />
-        <p className="eyebrow">{english ? "About this site · July 2026" : "网站说明 · 2026 年 7 月"}</p>
+        <p className="eyebrow">{english ? "About this site · October 2026" : "网站说明 · 2026 年 10 月"}</p>
         <h1>{english ? <>Clear, considered,<span>and continuously improving.</span></> : <>清晰、克制，<span>并持续改进。</span></>}</h1>
         <p>{english ? "This page explains the practical measures and current limits behind accessibility, privacy and content presentation on this site." : "本页说明网站在无障碍、隐私和内容呈现方面采取的实际做法与当前限制。"}</p>
       </section>
@@ -66,7 +66,7 @@ export default function AboutSiteContent() {
           <p>{english ? "Language preference is stored only in localStorage on the visitor’s device, so the Chinese or English interface can be remembered. Images, fonts, PDFs and evidence are served as first-party static assets, without automatically embedded third-party video or imagery." : "语言切换偏好会保存在访问设备的本地存储（localStorage）中，仅用于在下次访问时保留中文或英文界面选择。网站图片、字体、PDF 与证据资料均从本站静态资源加载，没有自动嵌入第三方视频或外部图片。"}</p>
           <p>{english ? "Contact uses a standard mail link. Information is used only for reply and follow-up when a visitor voluntarily opens an email client and sends a message. The hosting provider may process basic access logs for security, availability and operations." : "“联系我”使用标准邮件链接。只有当访客主动打开邮件客户端并发送邮件时，相关信息才会被用于回复和后续沟通。托管服务商可能出于网站安全、可用性与运行需要处理基础访问日志。"}</p>
           <p>{english ? "Public evidence removes student numbers, certificate numbers, QR codes, group numbers and other unnecessary verification data wherever possible. Sensitive materials and additional evidence are available only after contact and purpose confirmation." : "公开证据已尽量移除与核验无关的学号、证件号码、二维码、群号等信息；敏感内容及更多证据仅在联系并确认用途后提供。"}</p>
-          <p><strong>{english ? "Updated:" : "更新时间："}</strong>{english ? " July 2026" : "2026 年 7 月"}</p>
+          <p><strong>{english ? "Updated:" : "更新时间："}</strong>{english ? " October 15, 2026" : "2026 年 10 月 15 日"}</p>
         </section>
 
         <section aria-labelledby="about-title" id="about">
@@ -88,7 +88,7 @@ export default function AboutSiteContent() {
           <Link href="/achievements">{english ? "All Achievements" : "全部成就"}</Link>
           <Link href="/evidence">{english ? "Evidence Room" : "证据资料室"}</Link>
         </nav>
-        <span>Last updated · 2026.07</span>
+        <span>Last updated · 2026.10.15</span>
       </footer>
     </main>
   );

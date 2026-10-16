@@ -1,6 +1,6 @@
 export type Achievement = {
   id: string;
-  period: "大一全年" | "大一上" | "大一下" | "大一暑假" | "大二上";
+  period: "大一全年" | "大一上" | "大一下" | "大一暑假" | "大二全年" | "大二上";
   date: string;
   category:
     | "竞赛获奖"
@@ -16,7 +16,7 @@ export type Achievement = {
   title: string;
   description: string;
   sortDate?: string;
-  status?: "已完成" | "进行中" | "计划中";
+  status?: "已完成" | "进行中" | "任职中" | "计划中";
   featured?: boolean;
   result?: string;
   englishTitle?: string;
@@ -24,9 +24,34 @@ export type Achievement = {
   evidenceId?: string;
 };
 
-export const periodOrder = ["大一全年", "大一上", "大一下", "大一暑假", "大二上"] as const;
+export const periodOrder = ["大一全年", "大一上", "大一下", "大一暑假", "大二全年", "大二上"] as const;
 
 export const achievements: Achievement[] = [
+  {
+    id: "cet4",
+    period: "大一全年",
+    date: "成绩已确认",
+    category: "成长节点",
+    role: "大学英语四级考生",
+    title: "大学英语四级（CET-4）",
+    description: "四级笔试总分568分：听力177分、阅读220分、写作和翻译171分；口试成绩为良好。",
+    result: "CET-4 · 568分 · 口试良好",
+    status: "已完成",
+    evidenceId: "evidence-cet4",
+  },
+  {
+    id: "cet6",
+    period: "大一全年",
+    date: "2026.08.24 · 成绩公布",
+    sortDate: "2026-08-24",
+    category: "成长节点",
+    role: "大学英语六级考生",
+    title: "大学英语六级（CET-6）",
+    description: "2026年8月24日公布六级成绩，笔试总分521分：听力190分、阅读191分、写作和翻译140分。",
+    result: "CET-6 · 521分",
+    status: "已完成",
+    evidenceId: "evidence-cet6",
+  },
   {
     id: "comprehensive-english-representative",
     period: "大一全年",
@@ -55,15 +80,16 @@ export const achievements: Achievement[] = [
   {
     id: "youth-volunteer-projects",
     period: "大一全年",
-    date: "2025.09—2026.06",
+    date: "2025.09—2026.07",
     sortDate: "2025-09-03",
     category: "志愿服务",
     role: "西南交通大学青年志愿者联合会活动项目部干事",
-    title: "活动项目部干事",
+    title: "活动项目部干事 · 考核优秀",
     description:
-      "参与文明校园志愿者监督、文明校园物资交接，以及志愿服务项目执行与材料整理。",
+      "参与文明校园志愿者监督、文明校园物资交接，以及志愿服务项目执行与材料整理。任期为2025年9月至2026年7月，学生干部任职证明记载工作成绩为优秀。",
+    result: "任职考核：优秀",
     status: "已完成",
-    evidenceId: "evidence-activity-project-department",
+    evidenceId: "evidence-volunteer-appointment",
   },
   {
     id: "debate-team",
@@ -131,10 +157,11 @@ export const achievements: Achievement[] = [
     period: "大一上",
     date: "2025.10.12",
     sortDate: "2025-10-12",
-    category: "竞赛经历",
-    role: "参赛者",
+    category: "竞赛获奖",
+    role: "校赛银奖获得者",
     title: "外研社“国才杯”综合赛项",
-    description: "参加校赛，未获奖、未晋级。",
+    description: "获2025年外研社“国才杯”“理解当代中国”全国大学生外语能力大赛校赛英语组综合能力赛项银奖。",
+    result: "校赛 · 英语组综合能力赛项银奖",
     status: "已完成",
     evidenceId: "evidence-guocai-exam",
   },
@@ -351,19 +378,6 @@ export const achievements: Achievement[] = [
     evidenceId: "evidence-ai-paper",
   },
   {
-    id: "semantic-association-writing-assessment",
-    period: "大一暑假",
-    date: "2026.07—",
-    sortDate: "2026-07-11",
-    category: "学术成果",
-    role: "研究与专利方案负责人",
-    title: "基于语义关联分析的英语作文智能评估方法",
-    description:
-      "探索将语义关联分析用于英语作文的连贯性与表达质量评估，形成可用于智能评估的技术方法。",
-    status: "进行中",
-    result: "申请材料准备中",
-  },
-  {
     id: "ai-education-digital-ethics",
     period: "大一暑假",
     date: "2026.07—",
@@ -376,17 +390,17 @@ export const achievements: Achievement[] = [
     status: "进行中",
   },
   {
-    id: "ai-legal-translation",
+    id: "generative-ai-image-authorship",
     period: "大一暑假",
     date: "2026.07—",
     sortDate: "2026-07-13",
     category: "学术成果",
     role: "研究者",
-    title: "AI与法律翻译",
+    title: "生成式人工智能图像的作品属性认定与人类独创性贡献研究",
     englishTitle:
-      "Accuracy and Risk in Large Language Model Translation of Contracts, Regulations and Patent Texts",
+      "Work Status and Human Originality in Generative AI Images",
     description:
-      "研究大模型翻译合同、法规与专利文本时的准确性、术语一致性、责任边界与法律风险。",
+      "围绕生成式人工智能图像的作品属性认定，研究人类独创性贡献的识别与评价问题。",
     status: "进行中",
   },
   {
@@ -397,9 +411,9 @@ export const achievements: Achievement[] = [
     category: "竞赛经历",
     role: "信息素养大赛参赛成员",
     title: "我们不是在争吵，而是在被算法推着争吵",
-    description: "围绕信息茧房、算法推荐与检索意识完成竞赛微视频作品。",
-    status: "进行中",
-    result: "信息素养大赛参赛作品 · 结果待公布",
+    description: "围绕信息茧房、算法推荐与检索意识完成竞赛微视频作品，比赛已结束，未获奖。",
+    status: "已完成",
+    result: "信息素养大赛参赛作品 · 未获奖",
     evidenceId: "evidence-information-literacy-script",
   },
   {
@@ -428,27 +442,41 @@ export const achievements: Achievement[] = [
   },
   {
     id: "campus-bus-volunteer",
-    period: "大一下",
-    date: "2026.06.08、15",
-    sortDate: "2026-06-08",
+    period: "大二上",
+    date: "2026.09",
+    sortDate: "2026-09-01",
     category: "志愿服务",
-    role: "校园校车多语种暖心志愿者",
-    title: "“畅行校车，语暖中外”志愿活动",
-    description: "两次参加校园校车多语种暖心志愿活动，帮助留学生顺利乘坐校车出行。",
+    role: "优秀志愿者",
+    title: "“畅行校车·语暖中外”优秀志愿者",
+    description: "在2026年“畅行校车·语暖中外”校园校车多语种暖心志愿服务项目中表现突出，获共青团西南交通大学外国语学院委员会颁发的优秀志愿者荣誉。",
+    result: "优秀志愿者 · 2026年9月",
     status: "已完成",
     evidenceId: "evidence-campus-bus-1",
   },
   {
+    id: "etic-intermediate",
+    period: "大一暑假",
+    date: "2026.08.15",
+    sortDate: "2026-08-15",
+    category: "成长节点",
+    role: "国才中级考生",
+    title: "国际人才英语考试（中级）",
+    description: "参加国际人才英语考试（ETIC）中级考试，成绩等级为良好：口头沟通229分，书面沟通216分，总分223分。",
+    result: "良好 · 总分223",
+    status: "已完成",
+    evidenceId: "evidence-etic-intermediate",
+  },
+  {
     id: "course-development-minister",
-    period: "大二上",
-    date: "2026.09—",
-    sortDate: "2026-09-01",
+    period: "大二全年",
+    date: "2026.07—",
+    sortDate: "2026-07-18",
     category: "学生工作",
-    role: "西南交通大学青年志愿者联合会课程建设部部长（拟于2026年9月履任）",
+    role: "西南交通大学青年志愿者联合会课程建设部部长",
     title: "课程建设与宣讲运营",
     description:
-      "拟于2026年9月履任，届时将参与课程素材建设、劳育课程宣讲支持、宣讲人员统筹、课程运营台账、数据整理与反馈优化。",
-    status: "计划中",
+      "已正式就任，负责课程素材建设、劳育课程宣讲支持、宣讲人员统筹、课程运营台账、数据整理与反馈优化。",
+    status: "任职中",
   },
 ];
 
@@ -473,16 +501,16 @@ export const academicProfile = {
     },
   ],
   qualifications: [
-    { label: "CET-4", value: "568", status: "已取得" },
-    { label: "CET-6", value: "—", status: "成绩待公布" },
+    { label: "CET-4", value: "568", status: "成绩已确认", evidenceId: "evidence-cet4" },
+    { label: "CET-6", value: "521", status: "成绩已确认", evidenceId: "evidence-cet6" },
+    { label: "国才中级", value: "223 · 良好", status: "成绩已确认", evidenceId: "evidence-etic-intermediate" },
     { label: "TEM-4", value: "—", status: "未考" },
     { label: "TEM-8", value: "—", status: "未考" },
   ],
   research: [
     "2篇期末英文研究论文已完成",
-    "英语作文智能评估方法：申请材料准备中",
     "AI教育与数字伦理调研与研究",
-    "AI与法律翻译准确性与风险研究",
+    "生成式人工智能图像的作品属性认定与人类独创性贡献研究",
   ],
 };
 
@@ -510,8 +538,8 @@ export const pathway = [
     time: "持续推进",
     title: "技术理解与数字伦理",
     description:
-      "研究智能系统如何重塑学习与法律文本，重点关注技术进入真实决策时的准确性、学习者主体性、责任边界与潜在风险。",
-    focus: "AI 素养 · 数字伦理 · Legal Tech",
-    actions: ["推进 AI 教育与法律翻译研究", "把技术问题与语言、规则相互连接", "以可验证文本与证据约束技术判断"],
+      "研究智能系统如何重塑学习与创作，重点关注技术进入真实决策时的准确性、人的主体性、责任边界与潜在风险。",
+    focus: "AI 素养 · 数字伦理 · 法律科技",
+    actions: ["推进 AI 教育与生成式图像作品属性研究", "把技术问题与语言、规则相互连接", "以可验证文本与证据约束技术判断"],
   },
 ];

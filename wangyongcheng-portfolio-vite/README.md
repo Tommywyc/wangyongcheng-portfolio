@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Build a production-ready static artifact:
+Build the production Next.js application used by EdgeOne:
 
 ```bash
 npm run build
@@ -26,7 +26,15 @@ npm run build
 
 ## Language availability
 
-Chinese/English switching is provided on the homepage, Evidence Room, and the **Accessibility, Privacy & About This Site** page. Other archive pages remain Chinese-first so that original activity records keep their source context.
+Chinese/English switching is provided on the homepage, all achievements, Evidence Room, complete archive, work details and the **Accessibility, Privacy & About This Site** page.
+
+## EdgeOne deployment
+
+This directory is the configured EdgeOne project root. Keep the existing Next.js framework preset, installation command `npm ci --no-audit --no-fund`, and build command `npm run build`.
+
+The `app/` pages and `public/` assets are synchronized with the published Sites version 56. The homepage uses `/images/hero-library.png`, the latest portrait with a striped tie. CET-4 and CET-6 are both grouped under the full freshman year; CET-6 results were released on August 24, 2026.
+
+The legacy `src/` and committed `dist/` belong to an older Vite application and are not used by the current Next.js build. Do not select `dist` as the current deployment output.
 
 ## Résumé PDFs
 

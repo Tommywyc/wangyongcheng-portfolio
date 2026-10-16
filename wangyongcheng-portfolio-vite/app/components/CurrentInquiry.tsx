@@ -3,7 +3,7 @@ type CurrentInquiryProps = {
 };
 
 export const currentInquiryContent = {
-  updated: "July 2026",
+  updated: "October 2026",
   items: [
     {
       field: "AI & Education",
@@ -15,27 +15,25 @@ export const currentInquiryContent = {
         "Building on Does AI Equalize Learners or Widen the Gap?, I continue to examine the relationship among learner agency, institutional constraints and platform dependence.",
     },
     {
-      field: "Language & Law",
-      question: "当 AI 介入法律翻译，错误应由谁承担？",
-      questionEn: "When AI enters legal translation, who should bear responsibility for errors?",
+      field: "AI & Copyright",
+      question: "生成式人工智能图像能否构成作品，人类的独创性贡献如何认定？",
+      questionEn: "When can generative AI images qualify as works, and how should human originality be assessed?",
       description:
-        "关注合同、法规与专利文本中的准确性风险，尝试梳理语言偏差如何进一步转化为法律责任问题。",
+        "围绕生成式人工智能图像的作品属性认定，关注人类在生成过程中的独创性贡献及其识别与评价。",
       descriptionEn:
-        "I am examining accuracy risks in contracts, regulations and patent texts, and how linguistic bias may develop into questions of legal responsibility.",
-    },
-    {
-      field: "Writing Systems",
-      question: "机器能否实时识别文章“语法正确但逻辑断裂”的时刻？",
-      questionEn: "Can a machine detect, in real time, when writing is grammatical but logically disconnected?",
-      description:
-        "围绕语义连贯性检测方案，继续梳理概念流偏移、动态阈值与边缘设备实时处理的实现逻辑。",
-      descriptionEn:
-        "Around a semantic-coherence detection proposal, I am continuing to clarify concept-flow shifts, dynamic thresholds and real-time processing on edge devices.",
+        "I am examining the work status of generative AI images and how human contributions to originality during generation can be identified and assessed.",
     },
   ],
 } as const;
 
 export const progressUpdates = [
+  {
+    date: "2026.10",
+    title: "语言与任职证明",
+    titleEn: "Language and leadership evidence",
+    detail: "新增六级521分与国才中级良好成绩，补充活动项目部优秀任职证明、校车项目优秀志愿者及国才杯校赛银奖证书。",
+    detailEn: "Added CET-6 (521), ETIC Intermediate (Good), an Excellent leadership assessment, Outstanding Volunteer recognition and the FLTRP university-round Silver Award.",
+  },
   {
     date: "2026.07",
     title: "学业记录",
@@ -44,18 +42,18 @@ export const progressUpdates = [
     detailEn: "Freshman spring GPA confirmed at 3.8 / 4.0; major ranking pending.",
   },
   {
-    date: "2026.07",
+    date: "2026.10",
     title: "研究推进",
     titleEn: "Research progress",
-    detail: "英语作文语义连贯性检测与智能评估方案正在准备申请材料。",
-    detailEn: "Application materials are being prepared for the semantic-coherence writing assessment proposal.",
+    detail: "当前研究方向更新为生成式人工智能图像的作品属性认定与人类独创性贡献。",
+    detailEn: "The current research direction examines work status and human originality in generative AI images.",
   },
   {
     date: "NEXT",
     title: "下一次更新",
     titleEn: "Next review",
-    detail: "六级成绩公布、课程建设部职责启动或研究形成新材料后更新。",
-    detailEn: "The record will be updated after the CET-6 result, the start of course-construction responsibilities, or a new research output.",
+    detail: "课程建设部履职形成新成果，或研究有可核实进展后更新。",
+    detailEn: "The record will be updated when course-development work produces new outcomes or research makes verifiable progress.",
   },
 ] as const;
 
@@ -69,7 +67,7 @@ export default function CurrentInquiry({ english }: CurrentInquiryProps) {
         </div>
         <div className="inquiry-context">
           <p>{english ? "These are questions still in progress, not completed conclusions." : "不是已经完成的结论，而是目前仍在推进的问题。"}</p>
-          <time dateTime="2026-07">Updated {currentInquiryContent.updated}</time>
+          <time dateTime="2026-10">Updated {currentInquiryContent.updated}</time>
         </div>
       </header>
 

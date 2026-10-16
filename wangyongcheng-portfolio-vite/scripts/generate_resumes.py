@@ -28,8 +28,14 @@ INK_SOFT = colors.HexColor("#4E5B66")
 LINE = colors.HexColor("#C7C3B9")
 WHITE = colors.HexColor("#FFFDF8")
 
-pdfmetrics.registerFont(TTFont("DejaVuSans", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"))
-pdfmetrics.registerFont(TTFont("DejaVuSans-Bold", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"))
+latin_fonts = Path('/usr/share/fonts/truetype/dejavu')
+regular = latin_fonts / 'DejaVuSans.ttf'
+bold = latin_fonts / 'DejaVuSans-Bold.ttf'
+if not regular.exists():
+    regular = Path('/System/Library/Fonts/Supplemental/Arial.ttf')
+    bold = Path('/System/Library/Fonts/Supplemental/Arial Bold.ttf')
+pdfmetrics.registerFont(TTFont("DejaVuSans", str(regular)))
+pdfmetrics.registerFont(TTFont("DejaVuSans-Bold", str(bold)))
 pdfmetrics.registerFont(TTFont("NotoSerifSC", str(CN_FONT)))
 
 def style(size=8.5, leading=12.7, color=INK_SOFT, font="DejaVuSans", space_after=0):
@@ -124,10 +130,10 @@ def draw_sidebar(c, version):
             ("3.6 / 4.0", "Fall GPA"),
             ("3.8 / 4.0", "Spring GPA"),
             ("28 / 56", "Fall rank"),
-            ("568", "CET-4"),
+            ("568 / 521", "CET-4 / CET-6"),
             ("2", "Research papers"),
         ]
-        keywords = "Research Writing<br/>AI in Education<br/>Digital Ethics<br/>AI & Legal Translation"
+        keywords = "Research Writing<br/>AI in Education<br/>Digital Ethics<br/>AI Images & Copyright"
     else:
         profile = "English major developing public speaking, cross-cultural communication and project coordination through competitions, campus leadership and volunteer service."
         metrics = [
@@ -135,7 +141,7 @@ def draw_sidebar(c, version):
             ("7 / 28", "Moot court rank"),
             ("50 h", "Volunteer service"),
             ("81 h", "Second classroom"),
-            ("568", "CET-4"),
+            ("568 / 521", "CET-4 / CET-6"),
         ]
         keywords = "Public Speaking<br/>Cross-cultural Communication<br/>Project Coordination<br/>Volunteer Service"
 
@@ -169,7 +175,7 @@ def draw_footer(c, label):
     c.setFillColor(INK_SOFT)
     c.setFont("DejaVuSans", 6.5)
     c.drawString(205, 22, label)
-    c.drawRightString(w - 28, 22, "Updated 2026.07")
+    c.drawRightString(w - 28, 22, "Updated 2026.10.16")
 
 
 def cn_section(c, title, x, y_top, width):
@@ -200,7 +206,7 @@ def draw_cn_header(c, subtitle):
     c.setFont("DejaVuSans", 6.9)
     c.drawRightString(w - 30, h - 66, "w3194510963@gmail.com")
     c.setFont("NotoSerifSC", 7.2)
-    c.drawRightString(w - 30, h - 91, "一页中文简历 · 2026.07")
+    c.drawRightString(w - 30, h - 91, "一页中文简历 · 2026.10.16")
 
 
 def draw_cn_sidebar(c, version):
@@ -220,11 +226,11 @@ def draw_cn_sidebar(c, version):
     top -= 16
     if version == "academic":
         profile = "英语专业本科生，持续关注语言、规则与人工智能的交叉问题。"
-        metrics = [("3.6 / 4.0", "大一上 GPA"), ("3.8 / 4.0", "大一下 GPA"), ("28 / 56", "大一上排名"), ("568", "CET-4"), ("2", "英文研究论文")]
-        keywords = "学业表现<br/>英文研究写作<br/>AI 教育与伦理<br/>AI 与法律翻译"
+        metrics = [("3.6 / 4.0", "大一上 GPA"), ("3.8 / 4.0", "大一下 GPA"), ("28 / 56", "大一上排名"), ("568 / 521", "CET-4 / CET-6"), ("2", "英文研究论文")]
+        keywords = "学业表现<br/>英文研究写作<br/>AI 教育与伦理<br/>生成式图像与著作权"
     else:
         profile = "英语专业本科生，在演讲、竞赛、学生工作与志愿服务中训练表达、协作与项目执行。"
-        metrics = [("2", "二等奖成果"), ("7 / 28", "模拟法庭排名"), ("50 h", "志愿服务记录"), ("81 h", "第二课堂学时"), ("568", "CET-4")]
+        metrics = [("2", "二等奖成果"), ("7 / 28", "模拟法庭排名"), ("50 h", "志愿服务记录"), ("81 h", "第二课堂学时"), ("568 / 521", "CET-4 / CET-6")]
         keywords = "公众表达<br/>跨文化沟通<br/>项目协作<br/>志愿服务"
 
     top = para(c, profile, x + 16, top, width - 32, CN_SMALL) - 18
@@ -256,7 +262,7 @@ def draw_cn_footer(c, label):
     c.setFillColor(INK_SOFT)
     c.setFont("NotoSerifSC", 6.6)
     c.drawString(205, 22, label)
-    c.drawRightString(w - 28, 22, "更新于 2026.07")
+    c.drawRightString(w - 28, 22, "更新于 2026.10.16")
 
 
 def academic_resume(path):
@@ -267,8 +273,8 @@ def academic_resume(path):
 
     y = section(c, "EDUCATION & ACADEMIC PROFILE", x, y, width)
     y = bullets(c, [
-        "B.A. candidate in English, School of Foreign Languages, Southwest Jiaotong University. Freshman; developing an English x Law pathway with an AI research component.",
-        "Fall GPA: 3.6/4.0, major rank 28/56. Spring GPA: 3.8/4.0, rank pending. CET-4: 568.",
+        "B.A. candidate in English, Southwest Jiaotong University, 2025 cohort. Developing an English x Law pathway with an AI research component.",
+        "Freshman GPA: fall 3.6/4.0 (rank 28/56), spring 3.8/4.0 (rank pending). CET-4: 568; CET-6: 521; ETIC Intermediate: Good, 223.",
     ], x, y, width, gap=2.75) - 5
 
     y = section(c, "SELECTED ENGLISH RESEARCH PAPERS", x, y, width)
@@ -279,20 +285,19 @@ def academic_resume(path):
 
     y = section(c, "ONGOING RESEARCH", x, y, width)
     y = bullets(c, [
-        "Semantic-association-based intelligent assessment of English writing; patent application materials in preparation.",
         "AI in education and digital ethics: learner agency, educational equity, data responsibility and governance.",
-        "AI and legal translation: accuracy, terminology consistency and risk in contracts, regulations and patent texts.",
+        "Generative AI images: examining whether images qualify as works and how human contributions to originality can be identified and assessed.",
     ], x, y, width, gap=2.75) - 4
 
     y = section(c, "RELATED PRACTICE & RECOGNITION", x, y, width)
     y = bullets(c, [
         "Quest Cup Moot Court: analyzed rules, organized team arguments and earned a university-level Merit Award, ranking 7th among 28 teams.",
-        "The Window and the Stone: wrote and delivered the English speech (Second Prize, 84.33); also supported English script backup and live transitions in a cross-border livestream practicum (Team Second Prize).",
+        "English speech Second Prize (84.33); cross-border English livestream Team Second Prize; FLTRP National Talent Cup university-round Silver Award (English Integrated Skills).",
     ], x, y, width, gap=2.75) - 4
 
     y = section(c, "NEXT-STAGE PRIORITIES", x, y, width)
     bullets(c, [
-        "Improve GPA and major ranking; complete CET-6 and TEM-4; sustain research-oriented English writing.",
+        "Improve GPA and major ranking; prepare for TEM-4; sustain research-oriented English writing.",
         "Build foundations in civil law, case analysis and legal English, producing substantial English x Law work.",
     ], x, y, width, gap=3.5)
 
@@ -309,8 +314,8 @@ def practice_resume(path):
 
     y = section(c, "EDUCATION & POSITIONING", x, y, width)
     y = bullets(c, [
-        "B.A. candidate in English, School of Foreign Languages, Southwest Jiaotong University. Freshman focused on communication, rules and project collaboration.",
-        "CET-4: 568. Fall GPA: 3.6/4.0. Spring GPA: 3.8/4.0.",
+        "B.A. candidate in English, Southwest Jiaotong University, 2025 cohort. Focused on communication, rules and project collaboration.",
+        "CET-4: 568; CET-6: 521; ETIC Intermediate: Good, 223. Freshman GPA: fall 3.6/4.0, spring 3.8/4.0.",
     ], x, y, width, gap=2.75) - 5
 
     y = section(c, "COMPETITIONS & PROJECT PRACTICE", x, y, width)
@@ -324,13 +329,13 @@ def practice_resume(path):
     y = bullets(c, [
         "Comprehensive English class representative (freshman year): coordinated course notices and assignments, organized final-review materials and supported classroom operations.",
         "Organization Department member, School of Foreign Languages Student Union: supported on-site setup, attendance and order for the welcome gala, university sports meeting and multicultural campus event.",
-        "Project Department member, University Youth Volunteers Union; scheduled to assume the role of Curriculum Development Department head in September 2026.",
+        "Youth Volunteers Union Project Department member, Sep 2025-Jul 2026 (Excellent assessment); formally appointed Head of Course Development in July 2026.",
     ], x, y, width, gap=2.75) - 4
 
     y = section(c, "VOLUNTEER SERVICE", x, y, width)
     y = bullets(c, [
         "50 recorded volunteer hours; 81 total Second Classroom hours, including 26 hours in social practice and volunteer service.",
-        "Served twice at the National Higher Education Self-Study Examination site and twice in multilingual campus shuttle support, guiding travel and answering practical questions for international students.",
+        "Served twice at the Self-Study Examination site. Recognized as an Outstanding Volunteer in the 2026 multilingual campus bus project.",
         "Delivered additional service in Gongga Cup volleyball, university anniversary, children's community care, five-class alma mater outreach and hometown promotion.",
     ], x, y, width, gap=2.75) - 4
 
@@ -354,7 +359,7 @@ def academic_resume_cn(path):
     y = cn_section(c, "教育背景与学术概况", x, y, width)
     y = bullets(c, [
         "西南交通大学外国语学院英语专业本科生（2025年至今）。以学业表现和语言能力为基础，持续推进英语 × 法律 × AI 的交叉探索。",
-        "大一上 GPA 3.6/4.0，专业排名 28/56；大一下 GPA 3.8/4.0，排名待公布。CET-4 568 分。",
+        "大一上 GPA 3.6/4.0，专业排名 28/56；大一下 GPA 3.8/4.0，排名待公布。CET-4 568分，CET-6 521分；国才中级良好（223分）。",
     ], x, y, width, gap=5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "英文研究论文", x, y, width)
@@ -365,20 +370,19 @@ def academic_resume_cn(path):
 
     y = cn_section(c, "正在推进的研究", x, y, width)
     y = bullets(c, [
-        "基于语义关联分析的英语作文智能评估方法：探索连贯性与表达质量评估，申请材料准备中。",
         "AI 教育与数字伦理：关注学习者主体性、教育公平、数据责任与治理。",
-        "AI 与法律翻译：研究大模型翻译合同、法规与专利文本时的准确性、术语一致性与风险。",
+        "生成式人工智能图像的作品属性认定与人类独创性贡献研究：关注作品属性及人类贡献的识别与评价。",
     ], x, y, width, gap=4.5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "相关实践与成果", x, y, width)
     y = bullets(c, [
         "“求索杯”模拟法庭：完成规则分析与团队论证准备，获校级优胜奖、28 支队伍第 7 名；英语系实习活动演讲比赛二等奖，84.33 分。",
-        "非遗邛崃酒跨境英文直播实训团体二等奖：承担英文台词补位、流程衔接与补充说明。",
+        "非遗邛崃酒跨境英文直播实训团体二等奖；外研社“国才杯”校赛英语组综合能力赛项银奖。",
     ], x, y, width, gap=5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "下一阶段重点", x, y, width)
     bullets(c, [
-        "持续提升 GPA 与专业排名，完成 CET-6、TEM-4，保持研究型英文写作输出。",
+        "持续提升 GPA 与专业排名，备考 TEM-4，保持研究型英文写作输出。",
         "夯实民法、案例分析与法律英语基础，形成可提交的英语 × 法律成果。",
     ], x, y, width, gap=4.5, pstyle=CN_BODY)
 
@@ -396,7 +400,7 @@ def practice_resume_cn(path):
     y = cn_section(c, "教育背景与定位", x, y, width)
     y = bullets(c, [
         "西南交通大学外国语学院英语专业本科生（2025年至今），在公众表达、跨文化沟通、项目协作与志愿服务中持续训练实践能力。",
-        "CET-4 568 分；大一上 GPA 3.6/4.0，大一下 GPA 3.8/4.0。",
+        "CET-4 568分，CET-6 521分，国才中级良好（223分）；大一上 GPA 3.6/4.0，大一下 GPA 3.8/4.0。",
     ], x, y, width, gap=5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "竞赛与项目实践", x, y, width)
@@ -410,13 +414,13 @@ def practice_resume_cn(path):
     y = bullets(c, [
         "综合英语课代表（大一全年）：发布课程通知、协调作业收发、整理期末复习资料并支持课堂运行。",
         "外国语学院学生会组织部部员：参与迎新晚会、校运动会与“五洲风情”活动的现场布置、签到与秩序支持。",
-        "西南交通大学青年志愿者联合会活动项目部部员；拟于 2026 年 9 月履任课程建设部部长。",
+        "青年志愿者联合会活动项目部干事（2025.09—2026.07），任职考核优秀；2026年7月正式就任课程建设部部长。",
     ], x, y, width, gap=4.5, pstyle=CN_BODY) - 5
 
     y = cn_section(c, "志愿服务与综合素养", x, y, width)
     y = bullets(c, [
         "累计记录志愿服务 50 小时、第二课堂 81 学时，其中社会实践与志愿服务 26 学时。",
-        "两次参加高等教育自学考试志愿服务；两次参与“畅行校车，语暖中外”多语种暖心志愿活动，为留学生提供校车出行指引。",
+        "两次参加高等教育自学考试志愿服务；获2026年“畅行校车·语暖中外”多语种校园校车项目优秀志愿者。",
         "参与贡嘎杯高校男排、校庆、儿童关爱、五班母校宣讲与“返家乡”古镇推广等服务。",
     ], x, y, width, gap=4.5, pstyle=CN_BODY) - 5
 
