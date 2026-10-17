@@ -12,15 +12,22 @@ export default function BackToTopButton({ english = false }: { english?: boolean
     return () => window.removeEventListener("scroll", updateVisibility);
   }, []);
 
+  const returnToTop = () => {
+    // Cancel smooth scrolling and remove a stale section anchor while retaining
+    // language/filter parameters and the framework's existing history state.
+    if (window.location.hash) {
+      window.history.replaceState(window.history.state, "", `${window.location.pathname}${window.location.search}`);
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    document.querySelector<HTMLElement>(".site-header .wordmark")?.focus({ preventScroll: true });
+  };
+
   return (
     <button
       aria-label={english ? "Back to top" : "返回顶部"}
       aria-hidden={!visible}
       className={`back-to-top${visible ? " is-visible" : ""}`}
-      onClick={() => window.scrollTo({
-        top: 0,
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
-      })}
+      onClick={returnToTop}
       tabIndex={visible ? 0 : -1}
       type="button"
     >

@@ -106,6 +106,7 @@ export default function AchievementsExplorer({ english }: { english: boolean }) 
       </div>
 
       <ArchiveFilters id="achievements" english={english} query={filters.q} value={activeCategory === "全部" ? "" : activeCategory}
+        hideCategory={view === "tags"}
         label={english ? "Category" : "类别"} options={categories.map((category) => ({ value: category, label: english ? categoryEnglish[category] : category }))}
         count={filtered.length} total={achievements.length} onQuery={(q) => updateFilters({ q }, true)}
         onValue={(tag) => updateFilters({ tag })} onReset={() => updateFilters({ q: "", tag: "" })} />
@@ -133,16 +134,28 @@ export default function AchievementsExplorer({ english }: { english: boolean }) 
         </div>
       ) : (
         <div aria-labelledby="achievements-tab-tags" className="tag-view" id="achievements-panel-tags" role="tabpanel">
+          <nav className="category-buttons" aria-label={english ? "Achievement categories" : "成就标签"}>
+            {["全部", ...categories].map((category) => (
+              <button type="button" key={category} aria-pressed={activeCategory === category}
+                className={activeCategory === category ? "active" : ""}
+                onClick={() => updateFilters({ tag: category === "全部" ? "" : category, view: "tags" })}>
+                <span>{english ? (category === "全部" ? "All" : categoryEnglish[category]) : category}</span>
+                <small>{category === "全部" ? achievements.length : achievements.filter((item) => item.category === category).length}</small>
+              </button>
+            ))}
+          </nav>
           <div className="tag-results" aria-live="polite">
-            <div className="tag-results-heading">
-              <p className="eyebrow">Filtered archive</p>
-              <h2>{english ? (activeCategory === "全部" ? "All" : categoryEnglish[activeCategory]) : activeCategory}</h2>
-            </div>
-            <div className="timeline-items">
-              {filtered.map((item) => (
-                <AchievementCard english={english} item={item} key={item.id} />
-              ))}
-            </div>
+            {categories.filter((category) => activeCategory === "全部" || activeCategory === category).map((category) => {
+              const items = achievements.filter((item) => item.category === category && filtered.some((result) => result.id === item.id));
+              if (!items.length) return null;
+              return <section className="category-result-group" key={category}>
+                <div className="tag-results-heading">
+                  <p className="eyebrow">{english ? "Capability category" : "按标签浏览"} · {items.length}</p>
+                  <h2>{english ? categoryEnglish[category] : category}</h2>
+                </div>
+                <div className="timeline-items">{items.map((item) => <AchievementCard english={english} item={item} key={item.id} />)}</div>
+              </section>;
+            })}
           </div>
         </div>
       )}
