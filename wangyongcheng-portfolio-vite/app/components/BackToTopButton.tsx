@@ -13,12 +13,12 @@ export default function BackToTopButton({ english = false }: { english?: boolean
   }, []);
 
   const returnToTop = () => {
-    // Cancel smooth scrolling and remove a stale section anchor while retaining
-    // language/filter parameters and the framework's existing history state.
+    // Remove a stale section anchor while retaining language/filter parameters
+    // and history state. Native smooth scrolling preserves acceleration/easing.
     if (window.location.hash) {
       window.history.replaceState(window.history.state, "", `${window.location.pathname}${window.location.search}`);
     }
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    window.scrollTo({ top: 0, left: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
     document.querySelector<HTMLElement>(".site-header .wordmark")?.focus({ preventScroll: true });
   };
 
