@@ -43,3 +43,28 @@ test("all bilingual records retain unique IDs, evidence links and existing publi
   assert.equal(outreach.status, "已完成");
   assert.equal(outreach.sortDate, "2026-10-16");
 });
+
+test("timeline keeps CET-6 directly after CET-4 without altering release dates", () => {
+  const { achievements, timelinePeriodItems } = dataModule("content");
+  const input = achievements.filter((item) => item.period === "大一全年")
+    .sort((a, b) => a.sortDate.localeCompare(b.sortDate));
+  const ordered = timelinePeriodItems(input);
+  const index = ordered.findIndex((item) => item.id === "cet4");
+  assert.equal(ordered[index + 1].id, "cet6");
+  assert.equal(ordered[index + 1].sortDate, "2026-08-24");
+  assert.equal(input.find((item) => item.id === "cet4").sortDate, "2026-02-27");
+  assert.equal(timelinePeriodItems(input.filter((item) => item.id !== "cet4")).length, input.length - 1);
+});
+
+test("each complete-evidence category is chronological and retains every record", () => {
+  const { archiveEvidenceCategories, evidenceCategories, evidenceChronologicalKey } = dataModule("evidence-data");
+  archiveEvidenceCategories.forEach((group, index) => {
+    const keys = group.items.map(evidenceChronologicalKey);
+    assert.deepEqual([...keys], [...keys].sort(), group.label);
+    assert.deepEqual(group.items.map((item) => item.id).sort(), evidenceCategories[index].items.map((item) => item.id).sort());
+  });
+  const academic = archiveEvidenceCategories[0].items.map((item) => item.id);
+  assert.ok(academic.indexOf("evidence-cet4") < academic.indexOf("evidence-cet6"));
+  const papers = archiveEvidenceCategories.find((group) => group.label === "学术写作").items;
+  assert.equal(papers[0].id, "evidence-literature-paper");
+});

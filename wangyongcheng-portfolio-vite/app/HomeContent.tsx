@@ -297,13 +297,18 @@ export default function HomeContent({ initialLanguage }: { initialLanguage?: Lan
               <article className="academic-card academic-gpa-card">
               <p className="eyebrow">Academic performance</p>
               <h3>{english ? "GPA Progress" : "GPA 轨迹"}</h3>
-              <div className="gpa-track" aria-label={english ? "Freshman GPA progress" : "大一GPA变化"}>
+              <div className="gpa-track" aria-label={english ? "GPA progress and sophomore study in progress" : "GPA变化与大二学习进度"}>
                 {academics.semesters.map((semester) => (
                   <div className="gpa-step" key={semester.term}>
                     <div><span>{semester.term}</span><strong>{semester.gpa}</strong></div>
                     <p>{semester.rank}</p><small>{semester.note}</small>
                   </div>
                 ))}
+                <div className="gpa-step gpa-step-progress">
+                  <div><span>{english ? "Sophomore year" : "大二全年"}</span><strong>{english ? "Working towards it" : "努力中"}</strong></div>
+                  <p>{english ? "Continuing to strengthen academic foundations and research writing." : "继续夯实专业基础，推进研究型写作。"}</p>
+                  <small>{english ? "In progress · GPA not yet available" : "进行中 · 成绩尚未公布"}</small>
+                </div>
               </div>
             </article>
 
@@ -349,6 +354,7 @@ export default function HomeContent({ initialLanguage }: { initialLanguage?: Lan
               </div>
               <div className="work-title">
                 <h3>{item.title}</h3>
+                {!english ? <p className="work-english">{item.englishTitle ?? featuredEnglish[item.title]?.title}</p> : null}
               </div>
               <p className="work-summary">{english ? workCaseStudyBySlug.get(item.id)?.question.en : workCaseStudyBySlug.get(item.id)?.question.zh}</p>
               <div className="work-proof-line">
@@ -397,10 +403,11 @@ export default function HomeContent({ initialLanguage }: { initialLanguage?: Lan
       <section className="direction-section" id="direction">
         <div className="direction-intro">
           <p className="eyebrow">05 · English × Law × AI</p>
-          <h2>{english ? "Next steps, with a clear focus." : "把方向落实到下一步。"}</h2>
+          <h2>{english ? "Language, rules and intelligent systems." : "以语言理解规则，也理解技术如何重塑规则。"}</h2>
           <p>
-            {english ? "My next priorities are to strengthen English academic writing, practice close reading of legal cases, and refine the research question about human originality in AI-generated images. These are learning and research directions, not completed findings." : "下一步将继续夯实英文学术写作，练习法律案例精读，并收束生成式图像中人类独创性贡献的研究问题。以下是学习与研究方向，不代表已经取得的研究结论。"}
+            {english ? "English, law and AI are not three separate labels here. I use language to enter complex texts, rules to examine responsibility, and technology literacy to understand change. The question is not only what AI can do, but what accuracy, agency and accountability must remain when it enters real decisions." : "英语、法律与 AI 在这里不是三个并列标签。以语言进入复杂文本，以规则审视责任，以技术理解变革。关注的不只是 AI 能做什么，更是当技术进入真实决策时，准确性、主体性与责任如何被保留。"}
           </p>
+          <p className="direction-scope">{english ? "These are ongoing learning and research directions, not completed findings." : "以下为持续推进的学习与研究方向，不代表已经取得的研究结论。"}</p>
         </div>
 
         <div className="pathway" aria-label={english ? "Development pathways" : "发展路径"}>
@@ -432,12 +439,16 @@ export default function HomeContent({ initialLanguage }: { initialLanguage?: Lan
 
       <section className="site-about-section" id="site-note" aria-label={english ? "About this site" : "关于网站"}>
         <div className="about-strip">
+          <div className="about-overview">
           <p className="eyebrow">08 · About this site</p>
           <p>
             {english ? "This is a living academic portfolio. It brings together a central direction, representative work, academic profile and questions still in progress." : "这是一个持续更新的个人学习档案，汇集核心方向、代表性成果、学术概况与仍在推进的问题。"}
           </p>
+          </div>
+          <div className="about-notes">
           <span className="about-strip-note">{english ? "Sensitive details and additional evidence are available on request." : "敏感内容及更多证据联系后提供"}</span>
           <span className="about-strip-note about-strip-language-note">{english ? "Bilingual switching is available across the homepage, achievement archive, Evidence Room and key case-study pages." : "首页、全部成就、证据资料室与代表成果页均支持中英文切换。"}</span>
+          </div>
         </div>
         <div className="about-progress" aria-label={english ? "Portfolio progress updates" : "成长档案更新记录"}>
           <header>

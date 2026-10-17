@@ -28,6 +28,18 @@ export type Achievement = {
 
 export const periodOrder = ["大一全年", "大一上", "大一下", "大一暑假", "大二全年", "大二上"] as const;
 
+// Keep the two freshman language milestones adjacent without changing dates.
+export function timelinePeriodItems(items: Achievement[]): Achievement[] {
+  const ordered = [...items];
+  const cet4 = ordered.find((item) => item.id === "cet4");
+  const cet6 = ordered.find((item) => item.id === "cet6");
+  if (cet4 && cet6 && cet4.period === cet6.period) {
+    ordered.splice(ordered.indexOf(cet6), 1);
+    ordered.splice(ordered.indexOf(cet4) + 1, 0, cet6);
+  }
+  return ordered;
+}
+
 export const achievements: Achievement[] = [
   {
     id: "cet4",

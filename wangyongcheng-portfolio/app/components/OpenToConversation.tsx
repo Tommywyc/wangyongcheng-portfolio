@@ -34,16 +34,6 @@ export default function OpenToConversation({ english }: OpenToConversationProps)
           <p><strong>{english ? "Suggested email subject" : "英文邮件主题建议"}</strong><span>{emailSubject}</span></p>
           <p>{english ? "Transcript, full papers and supporting application materials are available on request." : "成绩单、论文全文和推荐材料可按需提供。"}</p>
         </div>
-        <div className="contact-copy-tools">
-          <div className="contact-copy-buttons">
-            <button type="button" onClick={() => void copy("email")}>{english ? "Copy email" : "复制邮箱"}</button>
-            <button type="button" onClick={() => void copy("subject")}>{english ? "Copy English subject" : "复制英文主题"}</button>
-          </div>
-          <p role="status" className="contact-copy-status">{copyState ? copyState.success
-            ? (english ? `${copyState.kind === "email" ? "Email" : "Subject"} copied.` : `${copyState.kind === "email" ? "邮箱" : "主题"}已复制。`)
-            : (english ? "Copy unavailable. Select and copy the text below." : "暂时无法自动复制，请选中下方文字手动复制。") : ""}</p>
-          {copyState && !copyState.success ? <label className="contact-copy-fallback"><span>{english ? "Text to copy" : "待复制文字"}</span><input readOnly value={copyState.kind === "email" ? email : emailSubject} onFocus={(event) => event.target.select()} /></label> : null}
-        </div>
       </div>
 
       <div className="conversation-actions">
@@ -62,6 +52,16 @@ export default function OpenToConversation({ english }: OpenToConversationProps)
           <small>{english ? "Research · Speaking · Moot Court · Practice" : "研究 · 演讲 · 模拟法庭 · 实践"}</small>
           <i aria-hidden="true">↑</i>
         </a>
+        <div className="contact-copy-tools">
+          <div className="contact-copy-buttons">
+            <button type="button" onClick={() => void copy("email")}>{english ? "Copy email" : "复制邮箱"}</button>
+            <button type="button" onClick={() => void copy("subject")}>{english ? "Copy English subject" : "复制英文主题"}</button>
+          </div>
+          <p role="status" className="contact-copy-status">{copyState ? copyState.success
+            ? (english ? `${copyState.kind === "email" ? "Email" : "Subject"} copied.` : `${copyState.kind === "email" ? "邮箱" : "主题"}已复制。`)
+            : (english ? "Copy unavailable. Select and copy the text below." : "暂时无法自动复制，请选中下方文字手动复制。") : ""}</p>
+          {copyState && !copyState.success ? <label className="contact-copy-fallback"><span>{english ? "Text to copy" : "待复制文字"}</span><input readOnly value={copyState.kind === "email" ? email : emailSubject} onFocus={(event) => event.target.select()} /></label> : null}
+        </div>
       </div>
     </section>
   );

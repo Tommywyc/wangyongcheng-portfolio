@@ -1178,10 +1178,13 @@ footer {
 }
 
 .tag-view {
-  display: grid;
-  grid-template-columns: minmax(210px, 0.6fr) 2fr;
-  gap: clamp(2rem, 6vw, 7rem);
-  padding-top: 5rem;
+  display: block;
+  padding-top: 1.5rem;
+}
+
+.tag-results {
+  width: 100%;
+  min-width: 0;
 }
 
 .category-filter {
@@ -3346,17 +3349,17 @@ footer {
 .identity-layout-compact {
   grid-template-columns: minmax(300px, 0.82fr) minmax(0, 1.18fr);
   gap: clamp(2.5rem, 6vw, 6rem);
-  align-items: stretch;
+  align-items: start;
 }
 
 .identity-layout-compact .identity-heading {
   display: flex;
   flex-direction: column;
-  min-height: 340px;
+  min-height: 0;
 }
 
 .identity-layout-compact .identity-side-note {
-  margin-top: auto;
+  margin-top: 1.5rem;
 }
 
 .identity-layout-compact .identity-copy {
@@ -3365,7 +3368,7 @@ footer {
 }
 
 .identity-layout-compact .identity-facts {
-  margin-top: auto;
+  margin-top: 1.5rem;
 }
 
 .identity-showcase {

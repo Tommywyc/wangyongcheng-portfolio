@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { achievements, periodOrder, type Achievement } from "../content";
+import { achievements, periodOrder, timelinePeriodItems, type Achievement } from "../content";
 import { achievementEnglish, categoryEnglish, periodEnglish, statusEnglish } from "../achievement-translations";
 import { coreEvidenceIds } from "../evidence-data";
 import { matchesQuery } from "../archive-search";
@@ -113,7 +113,7 @@ export default function AchievementsExplorer({ english }: { english: boolean }) 
       {view === "time" ? (
         <div aria-labelledby="achievements-tab-time" className="timeline-view" id="achievements-panel-time" role="tabpanel">
           {periodOrder.map((period) => {
-            const items = filtered.filter((item) => item.period === period);
+            const items = timelinePeriodItems(filtered.filter((item) => item.period === period));
             if (!items.length) return null;
             return (
               <section className="timeline-period" key={period}>

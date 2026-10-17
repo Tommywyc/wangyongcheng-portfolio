@@ -149,3 +149,20 @@ test("CET-4 release date and the new outreach record are consistent in both lang
     assert.doesNotMatch(html, /Work Status/);
   }
 });
+
+test("restores homepage detail and keeps pending GPA and copy controls explicit", async () => {
+  const chinese = await (await render("/?lang=zh")).text();
+  assert.equal((chinese.match(/class="work-english"/g) ?? []).length, 4);
+  assert.match(chinese, /gpa-step-progress/);
+  assert.match(chinese, /努力中/);
+  assert.match(chinese, /成绩尚未公布/);
+  assert.match(chinese, /以语言理解规则，也理解技术如何重塑规则。/);
+  const actions = chinese.slice(chinese.indexOf('class="conversation-actions"'), chinese.indexOf('class="site-about-section"'));
+  assert.match(actions, /contact-copy-tools/);
+  assert.equal((actions.match(/<button/g) ?? []).length, 2);
+  assert.match(chinese, /class="about-overview"/);
+  assert.match(chinese, /class="about-notes"/);
+  const english = await (await render("/?lang=en")).text();
+  assert.match(english, /GPA not yet available/);
+  assert.match(english, /Language, rules and intelligent systems/);
+});

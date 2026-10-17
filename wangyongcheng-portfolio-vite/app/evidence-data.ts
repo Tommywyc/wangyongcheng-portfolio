@@ -11,6 +11,7 @@ export type EvidenceItem = {
   document?: boolean;
   documentLabel?: string;
   restricted?: boolean;
+  sortDate?: string;
 };
 
 export type EvidenceCategory = {
@@ -132,7 +133,31 @@ const coreIds = new Set(coreEvidenceCategories.flatMap((group) => group.items).m
 
 // The complete archive deliberately retains every original record. The selected
 // page establishes evidence strength; this page preserves the complete record.
-export const archiveEvidenceCategories: EvidenceCategory[] = evidenceCategories;
+// Sort on the precision actually present in the record. Month/term keys are
+// ordering keys only, not invented event dates; undated materials remain last.
+export function evidenceChronologicalKey(item: EvidenceItem): string {
+  const verifiedDates: Record<string, string> = {
+    "evidence-guocai-exam": "2025-10-12",
+    "evidence-moot-court": "2026-06-06",
+    "evidence-speech": "2026-07-04",
+    "evidence-literature-paper": "2026-01-04",
+    "evidence-ai-paper": "2026-06-28",
+  };
+  if (item.sortDate || verifiedDates[item.id]) return item.sortDate ?? verifiedDates[item.id];
+  const date = item.meta.match(/(20\d{2})\.(\d{1,2})(?:\.(\d{1,2}))?/);
+  if (date) return `${date[1]}-${date[2].padStart(2, "0")}-${(date[3] ?? "00").padStart(2, "0")}`;
+  const month = `${item.title} ${item.meta}`.match(/(20\d{2})年(\d{1,2})月/);
+  if (month) return `${month[1]}-${month[2].padStart(2, "0")}-00`;
+  if (item.meta.includes("大一上期末")) return "2026-01-00";
+  if (item.meta.includes("大一下期末")) return "2026-07-00";
+  const year = item.meta.match(/20\d{2}/);
+  return year ? `${year[0]}-00-00` : "9999-12-31";
+}
+
+export const archiveEvidenceCategories: EvidenceCategory[] = evidenceCategories.map((group) => ({
+  ...group,
+  items: [...group.items].sort((a, b) => evidenceChronologicalKey(a).localeCompare(evidenceChronologicalKey(b))),
+}));
 
 export const coreEvidenceIds = coreIds;
 export const totalEvidenceCount = evidenceCategories.reduce((sum, group) => sum + group.items.length, 0);
